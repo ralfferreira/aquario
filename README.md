@@ -1,24 +1,69 @@
 # Aquário
 
-![Logo](logo.png)
+![Logo](logo.png) 
 
-O Aquário é um projeto open source com foco nos alunos do CI (pelo menos por enquanto), onde, teríamos três principais elementos, sendo eles:
+## Visão Geral
 
-## Blog/notícias/posts
+O **Aquário** é um projeto open source focado em centralizar informações relevantes para os alunos do Centro de Informática (CI). A plataforma visa resolver problemas como a falta de informação e o excesso de locais para buscar informações, facilitando o acesso e a comunicação entre alunos, professores e laboratórios.
 
-Seria uma página onde o usuário teria que ter uma conta cadastrada, e a partir disso ele poderia compartilhar posts e qualquer publicação na plataforma, isso abriria um leque enorme para: centros acadêmicos poderem reunir informações específicas sobre dicas para abrir um processo de forma correta, poderia ter pessoas postando sobre projetos pessoais que estão fazendo, ou até mesmo de laboratórios, além de dicas dos alunos mais veteranos para a graduação, dicas dos professores, enfim, qualquer coisa poderia ser postada, a ideia que achei parecida seria de um “Reddit” do CI e a plataforma que achei mais parecida com o que pensei foi o TabNews.
+## Funcionalidades
 
-## Laboratórios e seus projetos
+### 1. Blog/Notícias/Posts
+- **Usuários com contas cadastradas** podem compartilhar posts e publicações.
+- **Tipos de Publicações**:
+  - Informações específicas de centros acadêmicos.
+  - Projetos pessoais e de laboratórios.
+  - Dicas de alunos veteranos.
+  - Dicas de professores.
 
-Uma página onde teria um banco de dados dos laboratórios do CI, onde, cada laboratório teria uma conta para poder fazer posts na primeira página como uma ”conta verificada”, e também poder adicionar projetos nessa aba atual, onde, as pessoas poderiam ver todos os projetos que estão sendo desenvolvidos, os membros, linguagens de programação, detalhes que podem ser expostos a público né e até mesmo casos de uso de soluções naqueles projetos. seria uma aba no site
+### 2. Laboratórios e Seus Projetos
+- **Banco de Dados de Laboratórios**:
+  - Cada laboratório possui uma conta verificada.
+  - Publicações de projetos com informações como membros, linguagens de programação, detalhes públicos e casos de uso de soluções.
 
-## Vagas de estágio/emprego
+### 3. Vagas de Estágio/Emprego
+- **Publicações de Vagas**:
+  - Contas verificadas de laboratório e professores podem publicar vagas, abrangendo estágio, monitoria, projetos voluntários, iniciação científica e etc.
+- **Benefícios**:
+  - Redução da superlotação de e-mails.
+  - Melhor organização das informações de vagas.
 
-Atualmente isso é feito pelo e-mail, os professores sempre encaminham no e-mail as vagas que surgem nos laboratórios e etc, porque não permitir que as contas verificadas dos laboratórios e usuários postem as vagas? Isso resolveria problemas como superlotação do e-mail, além de uma organização melhor.
+### 4. Achados e Perdidos
+- **Scraping do E-mail Acadêmico** para adicionar itens automaticamente.
+- **Adições Manuais** de itens encontrados ou perdidos (Tadea terá seu perfil oficial)
 
-## Achados e Perdidos
+## Objetivo
 
-Poderia ter um scrapping do e-mail acadêmico e também uma forma de adicionar manualmente.
+O objetivo do projeto Aquário é centralizar as informações do CI e oferecer uma solução eficiente para problemas de comunicação e disseminação de informações, facilitando o acesso e o compartilhamento de informações importantes entre todos os membros da comunidade acadêmica.
 
-### Ideia
-A ideia é centralizar as informações do CI, e se torna parte da solução de problemas atuais, como a falta de informação e o excesso de locais para se buscar a informação.
+## Como Contribuir
+
+O **Aquário** é um projeto open source e as contribuições são muito bem-vindas! Veja como você pode contribuir:
+
+1. **Fork este repositório** e clone o fork para o seu ambiente local.
+2. **Crie uma nova branch** para a sua feature ou correção de bug:
+    ```sh
+    git checkout -b minha-feature
+    ```
+3. **Faça as modificações** necessárias no código.
+4. **Faça commit das suas alterações** (importante seguir o nosso padrão de commits)
+    ```sh
+    git commit -m "Minhas alterações"
+    ```
+5. **Envie as suas alterações** para o seu fork no GitHub:
+    ```sh
+    git push origin minha-feature
+    ```
+6. **Abra um Pull Request** neste repositório, descrevendo detalhadamente as suas alterações.
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
+
+## Contato
+
+Se você tiver alguma dúvida, sugestão ou feedback, sinta-se à vontade para abrir uma [issue](https://github.com/ralfferreira/aquario/issues) ou enviar um e-mail para [ralf.ferreira@academico.ufpb.br](mailto:ralf.ferreira@academico.ufpb.br).
+
+---
+
+Esperamos que você goste de usar o Aquário e que ele facilite a sua vida acadêmica. Contribua e ajude a melhorar esta plataforma!
