@@ -32,9 +32,18 @@ O **Aquário** é um projeto open source focado em centralizar informações rel
 - **Scraping do E-mail Acadêmico** para adicionar itens automaticamente.
 - **Adições Manuais** de itens encontrados ou perdidos (Tadea terá seu perfil oficial)
 
+### 5. FAQ
+- **Guias** sobre diversos assuntos para alunos dos períodos inicias.
+- **As Dúvidas e Respostas** mais buscadas por alunos acerca dos cursos, centros, processos e diversos outros assuntos.
+- **Documentos** mais importantes e utilizados pelos alunos.
+
 ## Objetivo
 
 O objetivo do projeto Aquário é centralizar as informações do CI e oferecer uma solução eficiente para problemas de comunicação e disseminação de informações, facilitando o acesso e o compartilhamento de informações importantes entre todos os membros da comunidade acadêmica.
+
+## Design
+
+O design, ainda em desenvolvimento, está no link do figma: https://www.figma.com/design/9got8rICitaYaapG3n1COx/Aquario?node-id=9-92&t=J3rS2QW7M6zhEWLI-1
 
 ## Como Contribuir
 
