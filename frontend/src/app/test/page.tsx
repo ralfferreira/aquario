@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 
 import ComponentWithTailwind from "../../Tests & Examples/Week1 - CSS, Tailwind and Shadcn/ComponentWithTailwind";
 import ComponentWithShadcn from "../../Tests & Examples/Week1 - CSS, Tailwind and Shadcn/ComponentWithShadcn";
-import ComponentWithCss from "../../Tests & Examples/Week1 - CSS, Tailwind and Shadcn/ComponentWithCss/ComponentWithCss";
+import ComponentWithCss from "../../Tests & Examples/Week1 - CSS, Tailwind and Shadcn/Exemplo/ComponentWithCss/ComponentWithCss";
 
 import WrapperComponent from "@/Tests & Examples/Week2 - Props/WrapperComponent";
 import ProfileComponent from "@/Tests & Examples/Week2 - Props/ProfileComponent";
