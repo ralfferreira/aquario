@@ -7,7 +7,7 @@ interface WrapperProps {
 
 function WrapperComponent({ children }: WrapperProps) {
   return (
-    <div className="p-4 border rounded-lg bg-gray-100">
+    <div className="p-4 border rounded-lg bg-blue-100">
       {children}
     </div>
   );
