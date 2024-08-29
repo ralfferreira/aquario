@@ -6,10 +6,10 @@ import ComponentWithTailwind from "../../Tests & Examples/Week1 - CSS, Tailwind 
 import ComponentWithShadcn from "../../Tests & Examples/Week1 - CSS, Tailwind and Shadcn/Exemplo/ComponentWithShadcn";
 import ComponentWithCss from "../../Tests & Examples/Week1 - CSS, Tailwind and Shadcn/Exemplo/ComponentWithCss/ComponentWithCss";
 
-import WrapperComponent from "@/Tests & Examples/Week2 - Props/WrapperComponent";
-import ProfileComponent from "@/Tests & Examples/Week2 - Props/ProfileComponent";
-import ButtonComponent from "@/Tests & Examples/Week2 - Props/ButtonComponent";
-import CardComponent from "@/Tests & Examples/Week2 - Props/CardComponent";
+import WrapperComponent from "@/Tests & Examples/Week2 - Props/Exemplo/WrapperComponent";
+import ProfileComponent from "@/Tests & Examples/Week2 - Props/Exemplo/ProfileComponent";
+import ButtonComponent from "@/Tests & Examples/Week2 - Props/Exemplo/ButtonComponent";
+import CardComponent from "@/Tests & Examples/Week2 - Props/Exemplo/CardComponent";
 
 export default function Test() {
     const handleButtonClick = () => {
