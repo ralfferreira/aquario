@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { SearchBar1 } from "@/components/ui/searchbar1"
 
 import { ModeToggle } from "./mode-toggle";
+import { IMAGES_MANIFEST } from "next/dist/shared/lib/constants";
 
 export default function NavBar() {
 
@@ -39,19 +42,19 @@ export default function NavBar() {
               TADEA
             </Link>
             <Link
-              href="/guias"
+              href="/faq"
               className="text-sm hover:underline dark:text-dark-text"
             >
-              GUIAS
+              FAQ
             </Link>
           </div>
+
           <div className="flex space-x-4 gap-5 justify-center items-center">
-            <Link
-              href="/test"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              TESTES
-            </Link>
+            <Image className="basis-20" src="/Image Card.png" width={75} height={75}></Image>
+          </div>
+
+          <div className="flex space-x-4 gap-5 justify-center items-center">
+            <SearchBar1 type="search" placeholder="Pesquisar"/>
             <Link
               href="/sobre"
               className="text-sm hover:underline dark:text-dark-text"
