@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { SearchBar1 } from "@/components/ui/searchbar1"
+import { SearchBar1 } from "@/components/ui/SearchBar1"
 
 import { ModeToggle } from "./mode-toggle";
 import { IMAGES_MANIFEST } from "next/dist/shared/lib/constants";
