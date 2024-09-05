@@ -19,55 +19,63 @@ export default function NavBar() {
           <div className="flex space-x-4 gap-5 justify-center items-center">
             <Link
               href="/blog"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               BLOG
+              {/* <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-blue-500"></span> */}
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white dark:bg-white"></span>
             </Link>
             <Link
               href="/usuarios"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               USUÁRIOS
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
             <Link
               href="/projetos"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               PROJETOS
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
             <Link
               href="/tadea"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               TADEA
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
             <Link
               href="/faq"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               FAQ
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
           </div>
 
           <div className="flex space-x-4 gap-5 justify-center items-center">
-            <Image className="basis-20" src="/Image Card.png" width={75} height={75}></Image>
+            <Image className="w-20" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"></Image>
           </div>
 
           <div className="flex space-x-4 gap-5 justify-center items-center">
             <SearchBar1 type="search" placeholder="Pesquisar"/>
             <Link
               href="/sobre"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               SOBRE
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
             <Link
               href="/login"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               LOGIN
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
-            <ModeToggle />
+            <ModeToggle/>
           </div>
         </div>
       </nav>
