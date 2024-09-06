@@ -1,7 +1,7 @@
 "use client"
 
 
-import GradientHeaderComponent from "@/components/Shared/gradient-header";
+import GradientHeaderComponent from "@/components/Shared/GradientHeader";
 
 
 
