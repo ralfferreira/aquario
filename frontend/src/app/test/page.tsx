@@ -1,8 +1,7 @@
 "use client"
 
 
-import GradientHeaderComponent from "@/components/Shared/gradient-header";
-import TypeBadge from "@/components/Shared/Badges";
+import GradientHeaderComponent from "@/components/Shared/GradientHeader";
 
 
 export default function Test() {

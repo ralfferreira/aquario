@@ -14,11 +14,13 @@ export default function NavBar() {
       >
         <div className="container mx-auto flex items-center justify-between h-full">
           <div className="flex space-x-4 gap-5 justify-center items-center">
-            <Link
+          <Link
               href="/blog"
-              className="text-sm hover:underline dark:text-dark-text"
+              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
             >
               BLOG
+              <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-blue-500"></span> 
+              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
             </Link>
             <Link
               href="/usuarios"
