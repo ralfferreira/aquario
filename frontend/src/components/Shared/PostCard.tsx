@@ -2,6 +2,7 @@ import React from 'react';
 import { Inter } from "next/font/google";
 import OverlappingImages from './OverlappingImages';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import TypeBadge from './Badges';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { Share } from 'lucide-react';
 import {
@@ -13,11 +14,6 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
   
 
 
@@ -25,6 +21,7 @@ import {
 interface User {
     name: string;
     image: string;
+    type: "laboratorio" | "pessoa" | "oficial" | "grupo" | "externo";
   }
   
   interface ProjectCardProps {
@@ -71,7 +68,7 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                 <OverlappingImages users={users}></OverlappingImages>
                 {users.length === 1 ? (
                     <Dialog>
-                    <DialogTrigger className={`pl-2 text-[12px] hover:underline ${inter.className}`}>{users[0].name}</DialogTrigger>
+                    <DialogTrigger className={`pl-2 text-[12px] ${inter.className}`}>{users[0].name}</DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
                         <DialogTitle>Autor do Projeto:</DialogTitle>
@@ -84,7 +81,7 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                     </Dialog>) 
                 :
                  (<Dialog>
-                    <DialogTrigger className='pl-4 italic hover:underline'>Grupo</DialogTrigger>
+                    <DialogTrigger className='pl-4  '>Grupo</DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
                         <DialogTitle>Participantes do Projeto:</DialogTitle>
@@ -96,9 +93,11 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                     </DialogContent>
                     </Dialog>
                     )}
+                <div className='pl-3 pb-[2px]'>
+                        <TypeBadge type={users[0].type} size='small'/>
+                    </div>
                 </div>
                 <div id='rightArea' className='flex items-center ml-auto text-gray-400'>
-                    {/* Card Identificador */}
                     <PeopleAltIcon fontSize='large'/>
                     <p className='ml-1 text-lg'>{users.length}</p>
                 </div>
