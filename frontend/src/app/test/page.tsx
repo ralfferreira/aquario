@@ -4,6 +4,7 @@
 import GradientHeaderComponent from "@/components/Shared/GradientHeader";
 
 
+
 export default function Test() {
     const handleButtonClick = () => {
       alert('Button clicked!');
@@ -16,34 +17,7 @@ export default function Test() {
           academicCenter="Centro de Informática" 
           courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 
           currentCourse="Ciência da Computação"
-      />  
-      <div>
-        <div className="flex gap-10 m-2">
-          <TypeBadge type="laboratorio" size="small" /> 
-          <TypeBadge type="laboratorio" size="large" />
-        </div>
-
-        <div className="flex gap-10 m-2">
-          <TypeBadge type="pessoa" size="small" />
-          <TypeBadge type="pessoa" size="large" />
-        </div>  
-        
-        <div className="flex gap-10 m-2">
-          <TypeBadge type="oficial" size="small" />
-          <TypeBadge type="oficial" size="large" />
-        </div>
-          
-        <div className="flex gap-10 m-2">
-          <TypeBadge type="grupo" size="small" />
-          <TypeBadge type="grupo" size="large" />
-        </div>
-        
-        <div className="flex gap-10 m-2">
-          <TypeBadge type="externo" size="small" />
-          <TypeBadge type="externo" size="large" />
-        </div>
-
-      </div>    
+      />      
       </div>
       
     );
