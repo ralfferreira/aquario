@@ -70,10 +70,18 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                 <div id='leftArea' className='flex items-center'>
                 <OverlappingImages users={users}></OverlappingImages>
                 {users.length === 1 ? (
-                    <Popover>
-                    <PopoverTrigger className={`pl-2 ${inter.className} hover:underline`}>{users[0].name}</PopoverTrigger>
-                    <PopoverContent> <p>Autor do projeto:</p>{/*Aqui dentro botar cada card*/} </PopoverContent>
-                    </Popover>) 
+                    <Dialog>
+                    <DialogTrigger className={`pl-2 text-[12px] hover:underline ${inter.className}`}>{users[0].name}</DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                        <DialogTitle>Autor do Projeto:</DialogTitle>
+                        <DialogDescription>
+                            This action cannot be undone. This will permanently delete your account
+                            and remove your data from our servers.
+                        </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                    </Dialog>) 
                 :
                  (<Dialog>
                     <DialogTrigger className='pl-4 italic hover:underline'>Grupo</DialogTrigger>
