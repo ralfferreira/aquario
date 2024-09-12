@@ -3,7 +3,7 @@
 
 import GradientHeaderComponent from "@/components/Shared/gradient-header";
 import TypeBadge from "@/components/Shared/Badges";
-
+import UserCard from "@/components/Shared/UserCard";
 
 export default function Test() {
     const handleButtonClick = () => {
@@ -18,6 +18,14 @@ export default function Test() {
           courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 
           currentCourse="Ciência da Computação"
       />  
+      <UserCard
+        name="Tiago Trindade de Oliveira"
+        profilePicture= "/fotoTiago.jpeg" 
+        major="Ciência da Computação"
+        type="pessoa"
+        site="site" 
+      />
+      
       <div>
         <div className="flex gap-10 m-2">
           <TypeBadge type="laboratorio" size="small" /> 
@@ -44,8 +52,10 @@ export default function Test() {
           <TypeBadge type="externo" size="large" />
         </div>
 
-      </div>    
+      </div> 
+
       </div>
+  
       
     );
 }
