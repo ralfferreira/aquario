@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Inter } from "next/font/google";
 import { Monitor } from 'lucide-react';
@@ -29,8 +31,7 @@ function GradientHeaderComponent({ academicCenter, courses , currentCourse}: Hea
         <div className='flex justify-start items-center w-full h-[100px] mt-[60px] bg-gradient-to-r from-violet-500 to-[#C450DE] dark:bg-gradient-to-r dark:from-violet-500 dark:to-[#C450DE]'>
             <div className='pl-[24px] flex text-white'>
                 <Monitor />
-                <p className={`text-2xl pl-4 pr-4 ${inter.className}`}>{academicCenter
-        }</p>
+                <p className={`text-2xl pl-4 pr-4 ${inter.className}`}>{academicCenter}</p>
                 <div className='flex flex-col items-center justify-center'>
                     <div className='pl-4 bg-white h-[1px] w-5'></div>
                 </div>
