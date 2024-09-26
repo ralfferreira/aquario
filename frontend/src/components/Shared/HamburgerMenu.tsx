@@ -18,7 +18,7 @@ export default function HamburgerMenu() {
           // className="fixed top-0 left-0 w-full text-light-text flex justify-between flex-col h-[60px]"
           className="fixed w-full text-light-text flex justify-between flex-col h-[60px]"
         >
-          <div className="container mx-auto flex items-center justify-around h-full">
+          <div className="container mx-auto flex items-center justify-between h-full">
             
             <div className="flex space-x-4 gap-5 justify-center items-center">
               <Image className="w-20" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"></Image>
@@ -49,7 +49,7 @@ export default function HamburgerMenu() {
 
               {/* Menu */}
               <div
-                className={`absolute top-12 left-0 bg-white dark:bg-neutral-800 shadow-md dark:shadow-neutral-400 rounded-md w-48 transition-all duration-300 ease-in-out ${
+                className={`absolute top-12 right-0 bg-white dark:bg-neutral-800 shadow-md dark:shadow-neutral-400 rounded-md w-48 transition-all duration-300 ease-in-out ${
                   isOpen ? "opacity-100 visible" : "opacity-0 invisible"
                 }`}
               >
