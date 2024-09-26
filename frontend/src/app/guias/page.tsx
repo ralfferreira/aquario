@@ -145,7 +145,7 @@ Morbi commodo magna in ex iaculis ultrices eu quis nisi. Donec at tincidunt ante
           </Sheet>
         </div>
         <div className="w-[1.5px] min-h-full bg-gray-500 opacity-30"></div>
-        <div className='px-8 w-full overscroll-contain'><MarkdownRenderer content={markdownContent} title={title} /></div>
+        <div className='px-8 w-full overscroll-contain '><MarkdownRenderer content={markdownContent} title={title} /></div>
       </div>
     </div>
   );

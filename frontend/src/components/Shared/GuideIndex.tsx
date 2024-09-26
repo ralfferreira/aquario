@@ -19,7 +19,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const GuideIndex: React.FC<GuideIndexProps> = ({ data }) => {
   return (
-    <div className="flex h-[100vh] overflow-y-auto">
+    <div className="flex h-[100vh] overflow-y-auto ">
         <div className={`space-y-4 w-full top-0 left-0 p-4 ${inter.className}`}>
         {data.map((section, sectionIndex) => {
             return (
