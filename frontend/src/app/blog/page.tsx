@@ -5,6 +5,7 @@ export default function Blog() {
     name: "TRIL",
     image: "/Image Card.png",
     type: "laboratorio",
+    type2: "oficial",
     url: "https://www.google.com"
   }
 
