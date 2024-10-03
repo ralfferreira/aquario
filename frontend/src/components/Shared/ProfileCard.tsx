@@ -71,7 +71,7 @@ export default function ProfileCard({profileUser, type, date, url}: ProfileCardP
 
       <CardFooter className="flex justify-center">
         <a href={url} target="blank">
-          <Button>Aplicar</Button>
+          <Button className="w-28 rounded-full">Aplicar</Button>
         </a>
       </CardFooter>
       
