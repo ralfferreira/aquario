@@ -1,41 +1,86 @@
 "use client"
 
-
+import React, { useState, useRef, useEffect } from 'react';
 import GradientHeaderComponent from "@/components/Shared/GradientHeader";
-import PostCard from "@/components/Shared/PostCard";
-
-
+import FullScreenTextarea from "@/components/Shared/TextArea";
 
 export default function Test() {
-    const handleButtonClick = () => {
-      alert('Button clicked!');
+    const [textareas, setTextareas] = useState<{ id: number; content: string }[]>([{ id: 1, content: '' }]);
+    const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
+    const [textareaToFocus, setTextareaToFocus] = useState<number | null>(null);
+
+    const addTextareaBelow = (index: number) => {
+        const newTextareas = [...textareas];
+        newTextareas.splice(index + 1, 0, { id: Math.random(), content: '' });
+        setTextareas(newTextareas);
+        setTextareaToFocus(index + 1);
+    };
+
+    useEffect(() => {
+        if (textareaToFocus !== null && textareaRefs.current[textareaToFocus]) {
+            textareaRefs.current[textareaToFocus].focus();
+            setTextareaToFocus(null);
+        }
+    }, [textareaToFocus]);
+
+    const removeTextarea = (index: number) => {
+        if (textareas.length === 1) {
+            const updatedTextareas = [...textareas];
+            updatedTextareas[0].content = '';
+            setTextareas(updatedTextareas);
+        } else {
+            const newTextareas = [...textareas];
+            newTextareas.splice(index, 1);
+            setTextareas(newTextareas);
+        }
+    };
+
+    const handleTextareaChange = (index: number, newContent: string) => {
+        const updatedTextareas = [...textareas];
+        updatedTextareas[index].content = newContent;
+        setTextareas(updatedTextareas);
     };
 
     return (
-      <div className="space-y-6 bg-gray-50 dark:bg-black min-h-screen flex flex-col">
+        <div className="space-y-6 bg-gray-50 dark:bg-black min-h-screen flex flex-col">
+            <div>
+                <GradientHeaderComponent 
+                academicCenter="Centro de Informática" 
+                courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 
+                currentCourse="Ciência da Computação"/>     
+            </div>
+          
+            <div className="mx-[100px] space-y-4">
+                {textareas.map((textarea, index) => (
+                    <div key={textarea.id} className="group"> {/* Adiciona a classe group para agrupar a div */}
+                        <div className="flex items-center space-x-4 mb-4">
+                            {/* Separação dos botões */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button
+                                    onClick={() => removeTextarea(index)}
+                                    className="px-4 py-2 border-solid text-red-500 text-2xl rounded-full hover:bg-neutral-200 dark:hover:bg-zinc-950 transition-opacity duration-300"
+                                >
+                                    -
+                                </button>
+                                <button
+                                    onClick={() => addTextareaBelow(index)}
+                                    className="px-4 py-2 border-solid text-gray-500 text-2xl rounded-full hover:bg-neutral-200 dark:hover:bg-zinc-950 transition-all duration-300"
+                                >
+                                    +
+                                </button>
+                            </div>
 
-      <GradientHeaderComponent 
-          academicCenter="Centro de Informática" 
-          courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 
-          currentCourse="Ciência da Computação"
-      />     
-
-      <PostCard
-          projectName="Site da TAIL"
-          projectImage="https://aria.ci.ufpb.br/wp-content/uploads/2020/08/Captura-de-Tela-2020-08-16-a%CC%80s-11.57.39.png"
-          users={[{name: "Nicholas", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRti0RAguUknG12sOt1xvIuxEx5r3rzC1It_K204hZxG779N4WSR3Vke2cFT2vRYWf3TlY&usqp=CAU", type:"pessoa"}, {name: "Candido", image: "https://avatars.githubusercontent.com/u/69730206?v=4", type:"pessoa"}, {name: "Mauro", image: "https://media.licdn.com/dms/image/D4D03AQFmv3KDcISwOA/profile-displayphoto-shrink_200_200/0/1715379518076?e=2147483647&v=beta&t=Y9rNZfEc4_gVMlt6h6QL-UwTvS69vCRmmh44_v9Bhr4", type: "pessoa"}, {name: "Guilherme Huther", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_jdzX8hzHgjtUSDdeo9VPCFQbGy_yfLjZYnXw_AEpAuMxgMf6HmpN38r5knckOl_OJ6g&usqp=CAU", type:"pessoa"}]} 
-          ></PostCard>
-
-      <PostCard
-        projectName="WaveFlow"
-        projectImage="https://images.squarespace-cdn.com/content/v1/6101b5092ca2836967ed7b15/cc15288d-a008-4108-a4d7-4f387641eb29/1.jpg"
-        users={[{name: "TAIL", image: "https://media.licdn.com/dms/image/v2/C4D0BAQE-lG_lJ9CTew/company-logo_200_200/company-logo_200_200/0/1630463497639/tailufpb_logo?e=2147483647&v=beta&t=VQCri_9uJ2Z1F6XT3IEGCy1SzmcXBR6-mW3ymJWlB5g", type: "laboratorio"}]}
-        ></PostCard>
-
-      </div>
-
-      
-      
+                            {/* Textarea sempre visível */}
+                            <FullScreenTextarea 
+                                ref={(el) => {textareaRefs.current[index] = el;}}
+                                value={textarea.content}
+                                onChange={(e) => handleTextareaChange(index, e.target.value)}
+                                onEnterPress={() => addTextareaBelow(index)}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
-  
