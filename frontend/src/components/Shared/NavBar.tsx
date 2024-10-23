@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+
+import { SearchBar1 } from "@/components/ui/SearchBar1"
+import LinkHover from "@/components/Shared/LinkHover"
 
 import { ModeToggle } from "./mode-toggle";
 
@@ -14,59 +18,22 @@ export default function NavBar() {
       >
         <div className="container mx-auto flex items-center justify-between h-full">
           <div className="flex space-x-4 gap-5 justify-center items-center">
-          <Link
-              href="/blog"
-              className="relative text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300"
-            >
-              BLOG
-              <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-0.5 bg-blue-500"></span> 
-              <span className="block absolute left-1/2 transform -translate-x-1/2 w-0 group-hover:w-full transition-all duration-300 h-0.5 bg-blue-500 dark:bg-white"></span>
-            </Link>
-            <Link
-              href="/usuarios"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              USUÁRIOS
-            </Link>
-            <Link
-              href="/projetos"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              PROJETOS
-            </Link>
-            <Link
-              href="/tadea"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              TADEA
-            </Link>
-            <Link
-              href="/guias"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              GUIAS
-            </Link>
+            <LinkHover href="/blog">BLOG</LinkHover>
+            <LinkHover href="/usuarios">USUÁRIOS</LinkHover>
+            <LinkHover href="/projetos">PROJETOS</LinkHover>
+            <LinkHover href="/tadea">TADEA</LinkHover>
+            <LinkHover href="/faq">FAQ</LinkHover>
           </div>
+
           <div className="flex space-x-4 gap-5 justify-center items-center">
-            <Link
-              href="/test"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              TESTES
-            </Link>
-            <Link
-              href="/sobre"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              SOBRE
-            </Link>
-            <Link
-              href="/login"
-              className="text-sm hover:underline dark:text-dark-text"
-            >
-              LOGIN
-            </Link>
-            <ModeToggle />
+            <Image className="w-20" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"></Image>
+          </div>
+
+          <div className="flex space-x-4 gap-5 justify-center items-center">
+            <SearchBar1 type="search" placeholder="Pesquisar"/>
+            <LinkHover href="/sobre">SOBRE</LinkHover>
+            <LinkHover href="/login">LOGIN</LinkHover>
+            <ModeToggle/>
           </div>
         </div>
       </nav>
