@@ -79,28 +79,28 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                 <div className="w-full h-[10vh] pl-12 flex gap-12 justify-start items-center pt-5">
                     <div
                         className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                          activeTab === 'Projetos' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                          activeTab === 'Projetos' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
                       }`} 
                         onClick={() => setActiveTab('Projetos')}>
                         <p>Projetos</p>
                     </div>
                     <div
                         className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                          activeTab === 'Pessoas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                          activeTab === 'Pessoas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
                       }`} 
                         onClick={() => setActiveTab('Pessoas')}>
                         <p>Pessoas</p>
                     </div>
                     <div
                         className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                          activeTab === 'Sobre' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                          activeTab === 'Sobre' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
                       }`} 
                         onClick={() => setActiveTab('Sobre')}>
                         <p>Sobre</p>
                     </div>
                     <div
                         className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                          activeTab === 'Publicações' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                          activeTab === 'Publicações' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
                       }`} 
                         onClick={() => setActiveTab('Publicações')}>
                         <p>Publicações</p>
