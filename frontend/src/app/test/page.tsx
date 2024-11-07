@@ -10,6 +10,7 @@ import { CalendarCog } from 'lucide-react';
 import { Instagram } from 'lucide-react';
 import { Linkedin } from 'lucide-react';
 import { Globe } from 'lucide-react';
+import PostCardTitle from "@/components/Shared/PostCardTitle";
 
 
 export default function Perfil() {
@@ -34,13 +35,29 @@ Rip bear trap steed, whip free ride apres pow pow white room Whistler shred. Der
 Glades bunny slope deck 180 glades freshies over the bars north shore bowl spread eagle. Slash flow face shots grip tape free ride ACL first tracks pow pow. Brain bucket method gnar steed rail frontside hot dogging back country endo free ride giblets grind taco glove face shots huckfest. Dirtbag slash titanium brain bucket sucker hole ripper line face shots. Snowboard ripper death cookies, steed yard sale core shot cork. Grunt clipless groomer death cookies wheelie schwag T-bar. Bomb hole dust on crust huck, table top dirt flow snake bite hardtail acro berm.`;
     
     const professores = [
-        { name: "Moisés", image: "/prof_joao.jpg" },
-        { name: "Gustavo", image: "/prof_ana.jpg" }
+        { name: "Moisés", image: "/ian.jpeg" },
+        { name: "Gustavo", image: "/fotoTiago.jpeg" }
     ];
 
     const alunos = [
         { name: "Ian", image: "/ian.jpeg" },
-        { name: "Tiago", image: "/fotoTiago.jpeg" }
+        { name: "Tiago", image: "/fotoTiago.jpeg" },
+        { name: "João", image: "/ian.jpeg" },
+        { name: "Ana", image: "/fotoTiago.jpeg" }
+    ];
+
+    const posts = [
+        { title: "Teste", votes: 10, minutes: 5, comments: 3, user: users[0] },
+        { title: "Teste 2", votes: 5, minutes: 10, comments: 2, user: users[0] },
+        { title: "Teste 3", votes: 15, minutes: 15, comments: 5, user: users[0] },
+        { title: "Teste 4", votes: 20, minutes: 20, comments: 10, user: users[0] }
+    ];
+
+    const projetos = [
+        { name: "Projeto Trilzada", image: "/fotoTiago.jpeg" },
+        { name: "Projeto Tril", image: "/ian.jpeg" },
+        { name: "Projeto Trilha", image: "/fotoTiago.jpeg" },
+        { name: "Davi Nasiasene", image: "/ian.jpeg" }
     ];
 
     return (
@@ -95,8 +112,13 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
 
             <div className="h-[85vh]">
                 {activeTab === 'Projetos' && (
-                    <div className="flex gap-4 mx-12 pt-12">
-                        <PostCard projectName="Projeto do TRilzada" projectImage="/fotoTiago.jpeg" users={users} />
+                    <div className="mx-12 pt-12">
+                      <p className="pl-10 text-3xl font-semibold">Projetos</p>
+                      <div className="flex gap-10 justify-center items-center pt-10">
+                      {projetos.map((projeto, index) => (
+                                        <PostCard projectName={projeto.name} projectImage={projeto.image} users={users} />
+                                    ))}
+                      </div> 
                     </div>
                 )}
 
@@ -124,9 +146,9 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                         </div>
 
                         {activeTab2 === 'Alunos' && (
-                            <div className="flex justify-center mx-12 pt-12">
-                                <div className="flex-col w-[500px]">
+                            <div className="flex flex-wrap gap-4 items-center justify-center mx-12 pt-10">
                                     {alunos.map((aluno, index) => (
+                                      <div className="flex justify-center items-center">
                                         <UserCard
                                             key={index}
                                             name={aluno.name}
@@ -135,14 +157,14 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                                             type="pessoa"
                                             site=""
                                         />
-                                    ))}
-                                </div>               
+                                      </div> 
+                                    ))}            
                             </div>
                         )}
                         {activeTab2 === 'Professores' && (
-                            <div className="flex justify-center mx-12 pt-12">
-                                <div className="flex-col w-[500px]">
+                            <div className="flex flex-wrap gap-4 items-center justify-center mx-12 pt-10">
                                     {professores.map((professor, index) => (
+                                      <div className="flex justify-center items-center">
                                         <UserCard
                                             key={index}
                                             name={professor.name}
@@ -151,8 +173,8 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                                             type="pessoa"
                                             site=""
                                         />
-                                    ))}
-                                </div>               
+                                      </div>
+                                    ))}              
                             </div>
                         )}
 
@@ -200,7 +222,21 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
 
                 {activeTab === 'Publicações' && (
                     <div className="mx-12 pt-12">
-                        <p className="text-3xl">Cards Publicações</p>
+                      <p className="pl-10 text-3xl font-semibold">Publicações</p>
+                        <div className="flex flex-col gap-10 justify-center items-center h-auto w-full pt-10">
+                          {posts.map((post, index) => (
+                            <div className="border-neutral-100 dark:border-neutral-800 rounded-xl border-[1px] px-5 py-2 pt-3 shadow-md">
+                              <PostCardTitle
+                                  key={index}
+                                  postTitle={post.title}
+                                  numVotes={post.votes}
+                                  numMinutes={post.minutes}
+                                  numComments={post.comments}
+                                  postUser={post.user}
+                              />
+                            </div>
+                        ))}
+                        </div>
                     </div>
                 )}
 

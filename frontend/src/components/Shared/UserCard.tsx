@@ -15,7 +15,7 @@ interface User {
 const  UserCard: React.FC<User> = ({ name, profilePicture, major, type, site }) => {
 
  return (
-    <div className= "bg-white rounded-lg p-5 w-full shadow-sm">
+    <div className= "bg-white dark:bg-transparent dark:border-neutral-800 rounded-lg p-5 w-[450px] shadow-md border-neutral-100 border-[1px]">
         <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-3 items-center">
                 <img className="w-8 h-8 object-cover rounded-full" src={profilePicture} alt="profile picture" />
@@ -28,7 +28,7 @@ const  UserCard: React.FC<User> = ({ name, profilePicture, major, type, site }) 
                 </div>
             </div>
             <div className='flex items-center'>
-                <Badge className=""><a className="text-[11px] px-4" href={site}>Site</a></Badge>
+                <Badge className=""><a className="text-[11px] py-1 px-4" href={site}>Site</a></Badge>
             </div>
         </div>  
     </div>
