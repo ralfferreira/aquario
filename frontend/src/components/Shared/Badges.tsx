@@ -45,7 +45,7 @@ const TypeBadge: React.FC<BadgeProps> = ({ type, size }) => {
 
   if (size === "large") {
     return (
-        <Badge className={`${colorsBig[type]}rounded-full border text-xs`}>
+        <Badge className={`${colorsBig[type]} rounded-full border text-xs`}>
             {corrsBig[type]}
         </Badge>
     )

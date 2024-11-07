@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { SearchBar1 } from "@/components/ui/SearchBar1"
+import { SearchBar1 } from "@/components/ui/searchbar1"
 import LinkHover from "@/components/Shared/LinkHover"
 
 import { ModeToggle } from "./mode-toggle";

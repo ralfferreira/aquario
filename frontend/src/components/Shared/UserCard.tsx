@@ -15,7 +15,8 @@ interface User {
 const  UserCard: React.FC<User> = ({ name, profilePicture, major, type, site }) => {
 
  return (
-    <div className= "bg-white rounded-lg p-5 w-full shadow-sm">
+    <div className= "bg-gray-50 rounded-lg p-5 w-full border-[1.3px] border-gray-200">
+    
         <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-3 items-center">
                 <img className="w-8 h-8 object-cover rounded-full" src={profilePicture} alt="profile picture" />
