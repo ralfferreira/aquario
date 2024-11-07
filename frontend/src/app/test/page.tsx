@@ -1,85 +1,210 @@
-"use client"
+// OutraPagina.tsx
+"use client";
+import LabHeader from "@/components/Pages/Users/labCard";
+import PostCard from "@/components/Shared/PostCard";
+import UserCard from "@/components/Shared/UserCard";
+import React, { useState } from 'react';
+import { MapPin } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
+import { CalendarCog } from 'lucide-react';
+import { Instagram } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
+import { Globe } from 'lucide-react';
 
-import React, { useState, useRef, useEffect } from 'react';
-import GradientHeaderComponent from "@/components/Shared/GradientHeader";
-import FullScreenTextarea from "@/components/Shared/TextArea";
 
-export default function Test() {
-    const [textareas, setTextareas] = useState<{ id: number; content: string }[]>([{ id: 1, content: '' }]);
-    const textareaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
-    const [textareaToFocus, setTextareaToFocus] = useState<number | null>(null);
+export default function Perfil() {
+    const [activeTab, setActiveTab] = useState<'Projetos' | 'Pessoas' | 'Sobre' | 'Publicações'>('Projetos');
+    const [activeTab2, setActiveTab2] = useState<'Alunos' | 'Professores'>('Alunos');
+    const users = [{ name: "TRIL", image: "/lab.jpg", type: "laboratorio" as const, website: "tril.ci.ufpb.br", room: "CI - 307", foundDate: "08/2015" }];
 
-    const addTextareaBelow = (index: number) => {
-        const newTextareas = [...textareas];
-        newTextareas.splice(index + 1, 0, { id: Math.random(), content: '' });
-        setTextareas(newTextareas);
-        setTextareaToFocus(index + 1);
-    };
+    const especializacoes = [
+      "Carbono",
+      "LLM",
+      "ChatBots",
+      "IA Generativa",
+      "Pesquisa",
+      "Matemática",
+      "Física"
+  ];
 
-    useEffect(() => {
-        if (textareaToFocus !== null && textareaRefs.current[textareaToFocus]) {
-            textareaRefs.current[textareaToFocus].focus();
-            setTextareaToFocus(null);
-        }
-    }, [textareaToFocus]);
+    const description = `Bro ipsum dolor sit amet aCL pipe steed, death cookies groomer moguls back country clean over the bars frontside fatty gaper gorby. Betty dirtbag groomer north shore face plant caballerial crank misty piste laps bonk flow. Wheelie yard sale gondy chain ring stoked. Brain bucket 360 dope bail, stoked line travel huck Whistler ride twister 180 stunt.
 
-    const removeTextarea = (index: number) => {
-        if (textareas.length === 1) {
-            const updatedTextareas = [...textareas];
-            updatedTextareas[0].content = '';
-            setTextareas(updatedTextareas);
-        } else {
-            const newTextareas = [...textareas];
-            newTextareas.splice(index, 1);
-            setTextareas(newTextareas);
-        }
-    };
+Rip bear trap steed, whip free ride apres pow pow white room Whistler shred. Derailleur phat dope bomb hole bro whip. Endo saddle wheelie drop pow pow poaching switch. Epic Whistler ollie, huck liftie yard sale bunny slope yard sale groomer greasy hero schwag stomp brain bucket. Fatty heli dirt afterbang pillow popping face plant, backside chowder chillax Whistler backside.
 
-    const handleTextareaChange = (index: number, newContent: string) => {
-        const updatedTextareas = [...textareas];
-        updatedTextareas[index].content = newContent;
-        setTextareas(updatedTextareas);
-    };
+Glades bunny slope deck 180 glades freshies over the bars north shore bowl spread eagle. Slash flow face shots grip tape free ride ACL first tracks pow pow. Brain bucket method gnar steed rail frontside hot dogging back country endo free ride giblets grind taco glove face shots huckfest. Dirtbag slash titanium brain bucket sucker hole ripper line face shots. Snowboard ripper death cookies, steed yard sale core shot cork. Grunt clipless groomer death cookies wheelie schwag T-bar. Bomb hole dust on crust huck, table top dirt flow snake bite hardtail acro berm.`;
+    
+    const professores = [
+        { name: "Moisés", image: "/prof_joao.jpg" },
+        { name: "Gustavo", image: "/prof_ana.jpg" }
+    ];
+
+    const alunos = [
+        { name: "Ian", image: "/ian.jpeg" },
+        { name: "Tiago", image: "/fotoTiago.jpeg" }
+    ];
 
     return (
-        <div className="space-y-6 bg-gray-50 dark:bg-black min-h-screen flex flex-col">
-            <div>
-                <GradientHeaderComponent 
-                academicCenter="Centro de Informática" 
-                courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 
-                currentCourse="Ciência da Computação"/>     
+        <div className="mt-20">
+            <div className="">
+                <LabHeader
+                    nome="TRIL"
+                    subnome="Technology, Research and Innovation Laboratory"
+                    imagemPerfil="/git.jpeg"
+                    imagemLaboratorio="/lab.jpg"
+                    numeroProjetos={5}
+                    numeroProjetosAtivos={3}
+                    numeroColaboradores={10}
+                    numeroColaboradoresAtivos={7}
+                    website="https://tril.ci.ufpb.br"
+                />
             </div>
-          
-            <div className="mx-[100px] space-y-4">
-                {textareas.map((textarea, index) => (
-                    <div key={textarea.id} className="group"> {/* Adiciona a classe group para agrupar a div */}
-                        <div className="flex items-center space-x-4 mb-4">
-                            {/* Separação dos botões */}
-                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button
-                                    onClick={() => removeTextarea(index)}
-                                    className="px-4 py-2 border-solid text-red-500 text-2xl rounded-full hover:bg-neutral-200 dark:hover:bg-zinc-950 transition-opacity duration-300"
-                                >
-                                    -
-                                </button>
-                                <button
-                                    onClick={() => addTextareaBelow(index)}
-                                    className="px-4 py-2 border-solid text-gray-500 text-2xl rounded-full hover:bg-neutral-200 dark:hover:bg-zinc-950 transition-all duration-300"
-                                >
-                                    +
-                                </button>
+            <div className="flex">
+                <div className="w-full h-[10vh] pl-12 flex gap-12 justify-start items-center pt-5">
+                    <div
+                        className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
+                          activeTab === 'Projetos' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                      }`} 
+                        onClick={() => setActiveTab('Projetos')}>
+                        <p>Projetos</p>
+                    </div>
+                    <div
+                        className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
+                          activeTab === 'Pessoas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                      }`} 
+                        onClick={() => setActiveTab('Pessoas')}>
+                        <p>Pessoas</p>
+                    </div>
+                    <div
+                        className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
+                          activeTab === 'Sobre' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                      }`} 
+                        onClick={() => setActiveTab('Sobre')}>
+                        <p>Sobre</p>
+                    </div>
+                    <div
+                        className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
+                          activeTab === 'Publicações' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 hover:border-[1px]'
+                      }`} 
+                        onClick={() => setActiveTab('Publicações')}>
+                        <p>Publicações</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="w-full h-[1px] bg-slate-400 opacity-40"></div>
+
+            <div className="h-[85vh]">
+                {activeTab === 'Projetos' && (
+                    <div className="flex gap-4 mx-12 pt-12">
+                        <PostCard projectName="Projeto do TRilzada" projectImage="/fotoTiago.jpeg" users={users} />
+                    </div>
+                )}
+
+                {activeTab === 'Pessoas' && (
+                    <div className="mx-12 pt-12">
+                        <div className="flex"> 
+                            <div
+                                className="py-2 px-10 flex items-center cursor-pointer relative"
+                                onClick={() => setActiveTab2('Alunos')}
+                            >
+                                <p className={`text-3xl hover:text-neutral-800 hover:underline transition-all duration-150 relative ${
+                                      activeTab2 === 'Alunos' ? 'underline font-bold' : ''}`} >
+                                    Alunos
+                                </p>
+                            </div>  
+                            <div
+                                className="py-2 px-10 rounded-full flex items-center cursor-pointer"
+                                onClick={() => setActiveTab2('Professores')}
+                            >
+                                <p className={`text-3xl hover:text-neutral-800 hover:underline transition-all duration-150 relative ${
+                                      activeTab2 === 'Professores' ? 'underline font-bold' : ''}`} >
+                                    Professores
+                                </p>
+                            </div> 
+                        </div>
+
+                        {activeTab2 === 'Alunos' && (
+                            <div className="flex justify-center mx-12 pt-12">
+                                <div className="flex-col w-[500px]">
+                                    {alunos.map((aluno, index) => (
+                                        <UserCard
+                                            key={index}
+                                            name={aluno.name}
+                                            profilePicture={aluno.image}
+                                            major="Aluno"
+                                            type="pessoa"
+                                            site=""
+                                        />
+                                    ))}
+                                </div>               
+                            </div>
+                        )}
+                        {activeTab2 === 'Professores' && (
+                            <div className="flex justify-center mx-12 pt-12">
+                                <div className="flex-col w-[500px]">
+                                    {professores.map((professor, index) => (
+                                        <UserCard
+                                            key={index}
+                                            name={professor.name}
+                                            profilePicture={professor.image}
+                                            major="Professor"
+                                            type="pessoa"
+                                            site=""
+                                        />
+                                    ))}
+                                </div>               
+                            </div>
+                        )}
+
+
+                    </div>
+                )}
+
+                {activeTab === 'Sobre' && (
+                    <div className="mx-[225px] pt-12">
+                        <div className="w-full h-[70vh] flex">
+                          <div className="flex flex-col w-4/6 h-full">
+                            <p className="text-2xl">Descrição</p>
+                            <p style={{ whiteSpace: "pre-line" }} className="text-xl font-light pt-2">{description}</p>
+                            
+                          
+                            <div className="mt-auto flex-col items-center  h-auto w-full pt-4">
+                              <p className="text-2xl">Especializações</p>
+                              <div className="flex flex-wrap items-center gap-4 pt-6">
+                                {especializacoes.map((especializacao, index) => (
+                                  <div key={index} className="bg-neutral-200 dark:bg-neutral-800 rounded-full py-2 px-6 transition-colors duration-300 ease-[ease] hover:bg-gray-300 dark:hover:bg-gray-800">
+                                    <p className="text-xs">{especializacao}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col w-2/6 h-full pl-10">
+                            <div className="flex flex-col gap-6 pt-10">
+                                <p className="font-light inline-flex items-center gap-4"> <MapPin className="w-5 h-5" /> {users[0].room}</p>
+                                <p className="font-light inline-flex items-center gap-4"><CalendarDays className="w-5 h-5"/> Fundado em {users[0].foundDate}</p>
+                                <p className="font-light inline-flex items-center gap-4"><CalendarCog className="w-5 h-5"/> Cadastrado em 10/2024</p>
                             </div>
 
-                            {/* Textarea sempre visível */}
-                            <FullScreenTextarea 
-                                ref={(el) => {textareaRefs.current[index] = el;}}
-                                value={textarea.content}
-                                onChange={(e) => handleTextareaChange(index, e.target.value)}
-                                onEnterPress={() => addTextareaBelow(index)}
-                            />
+                            <div className="mt-auto flex flex-col gap-4">
+                                <p className="text-xl">Mídia</p>
+                                <p className="font-light inline-flex items-center gap-4"><Globe className="w-5 h-5"/>{users[0].website}</p>
+                                <p className="font-light inline-flex items-center gap-4"><Linkedin className="w-5 h-5"/>Linkedin</p>
+                                <p className="font-light inline-flex items-center gap-4"><Instagram className="w-5 h-5"/>Instagram</p>
+                            </div>
+                          </div>
                         </div>
                     </div>
-                ))}
+                )}
+
+                {activeTab === 'Publicações' && (
+                    <div className="mx-12 pt-12">
+                        <p className="text-3xl">Cards Publicações</p>
+                    </div>
+                )}
+
+
             </div>
         </div>
     );
