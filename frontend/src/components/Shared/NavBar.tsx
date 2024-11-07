@@ -14,7 +14,7 @@ export default function NavBar() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 w-full text-light-text flex justify-between flex-col h-[60px]"
+        className="fixed top-2 left-0 w-full text-light-text flex justify-between flex-col h-[60px]"
       >
         <div className="container mx-auto flex items-center justify-between h-full">
           <div className="flex space-x-4 gap-5 justify-center items-center">
@@ -23,6 +23,7 @@ export default function NavBar() {
             <LinkHover href="/projetos">PROJETOS</LinkHover>
             <LinkHover href="/tadea">TADEA</LinkHover>
             <LinkHover href="/faq">FAQ</LinkHover>
+            <LinkHover href="/vagas">VAGAS</LinkHover>
           </div>
 
           <div className="flex space-x-4 gap-5 justify-center items-center">

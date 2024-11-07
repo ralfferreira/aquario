@@ -39,7 +39,7 @@ export default function ProfileCard({profileUser, type, date, url}: ProfileCardP
 
       <CardHeader className="flex flex-col items-center pb-0">
         <CardTitle className="flex flex-col items-center gap-3">
-          <Image src={profileUser.image} width={100} height={100} className="object-none h-16 w-16 rounded-full"/>
+          <img src={profileUser.image} width={100} height={100} className="object-none h-16 w-16 rounded-full"/>
           <div className="flex justify-around gap-2">
             <h1>{profileUser.name}</h1>
             <div className="self-center flex justify-start">

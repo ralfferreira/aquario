@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import { Inter } from "next/font/google";
 import OverlappingImages from './OverlappingImages';
@@ -14,33 +16,28 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 
-  
-
-
-
 interface User {
     name: string;
     image: string;
     type: "laboratorio" | "pessoa" | "oficial" | "grupo" | "externo";
-  }
+}
   
-  interface ProjectCardProps {
+interface ProjectCardProps {
     projectName: string;
     projectImage: string;
     users: User[];
-  }
+}
 
 const inter = Inter({ subsets: ["latin"] });
 
 function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
-    return (
-        
-        <div id='OuterCard' className='flexbox pl-5 w-[294px] h-[283.2px]' >
+    return ( 
+        <div id='OuterCard' className='flexbox min-w-[200px] max-w-[350px] min-h-[283.2px] max-h-[283.2px]' >
             {/* REMOVER PADDING */}
             <a href="https://google.com">
                 <div className='relative'>
                     <div id='projectImage' className='rounded-xl w-full h-[207px] relative'>
-                        <img src={projectImage} alt={projectName} className='h-full w-full rounded-xl absolute inset-0' />
+                        <img src={projectImage} alt={projectName} className='h-full w-full rounded-xl absolute inset-0 object-cover' />
                     </div>
                     <div id='projectImageHover' className='w-full h-[207px] flex absolute inset-0 rounded-xl opacity-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent transition-opacity duration-300 ease-[ease] hover:opacity-100'>
                      
@@ -62,7 +59,7 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                     </div>
                 </div>
             </a>
-      
+
             <div id='projectDetails' className='flex items-center w-full h-[34px] px-1 pt-3 '>
                 <div id='leftArea' className='flex items-center'>
                 <OverlappingImages users={users}></OverlappingImages>
@@ -101,12 +98,8 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                     <PeopleAltIcon fontSize='large'/>
                     <p className='ml-1 text-lg'>{users.length}</p>
                 </div>
-                
             </div>
-
-
         </div>
-        
     );
 }
 
