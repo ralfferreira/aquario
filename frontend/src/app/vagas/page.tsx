@@ -57,7 +57,7 @@ export default function Blog() {
 
   return (
     <main className='px-[10%]'>
-      <div className="space-y-6 dark:bg-black flex flex-col"> 
+      <div className="space-y-6 flex flex-col"> 
         <div className="pt-28">
           <Banner 
             title="Explore vagas de emprego, estágio e de projetos voluntários no CI e afora"

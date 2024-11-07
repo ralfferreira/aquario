@@ -59,7 +59,7 @@ const postCardTitles: PostCardTitleProps[] = [
 export default function Blog() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="space-y-6 dark:bg-black flex flex-col">
+      <div className="space-y-6 flex flex-col">
         <div className="pt-28">
           <Banner
             title="Explore o que as pessoas, laboratórios e grupos do CI estão falando"
@@ -68,7 +68,7 @@ export default function Blog() {
           />
         </div>
         <SearchFilters />
-        <div className="space-y-6 dark:bg-black min-h-screen flex flex-col w-full gap-6 ">
+        <div className="space-y-6 min-h-screen flex flex-col w-full gap-6 ">
         {postCardTitles.map((post, index) => (
           <PostCardTitle
             key={index}

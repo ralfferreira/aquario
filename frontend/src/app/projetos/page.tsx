@@ -99,7 +99,7 @@ const fakeProjects: ProjectCardProps[] = [
 export default function Projetos() {
   return (
     <main className="px-[10%]">
-      <div className="space-y-6 dark:bg-black flex flex-col">
+      <div className="space-y-6 flex flex-col">
         <div className="pt-28">
           <Banner
             title="Explore os projetos do Centro de Informática"
