@@ -36,7 +36,6 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
     return (
         
         <div id='OuterCard' className='flexbox pl-5 w-[294px] h-[283.2px]' >
-            {/* REMOVER PADDING */}
             <a href="https://google.com">
                 <div className='relative'>
                     <div id='projectImage' className='rounded-xl w-full h-[207px] relative'>
