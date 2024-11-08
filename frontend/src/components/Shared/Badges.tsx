@@ -4,28 +4,26 @@ import { Badge } from '../ui/badge';
 interface BadgeProps {
   type: "laboratorio" | "pessoa" | "oficial" | "grupo" | "externo";
   size: "large" | "small";
+  smallSize?: { height?: string; padding?: string; fontSize?: string };
 }
 
-const TypeBadge: React.FC<BadgeProps> = ({ type, size }) => {
-
-
+const TypeBadge: React.FC<BadgeProps> = ({ type, size, smallSize }) => {
   const corrsBig = {
     laboratorio: "Laboratório",
-    pessoa : "Pessoa",
+    pessoa: "Pessoa",
     oficial: "Oficial",
     grupo: "Grupo",
     externo: "Externo"
-
   };
+
   const corrsSmall = {
     laboratorio: "LAB",
-    pessoa : "PES",
+    pessoa: "PES",
     oficial: "ADM",
     grupo: "GRP",
     externo: "EXT"
-
   };
-  
+
   const colorsBig = {
     laboratorio: 'text-violet-700 bg-violet-200 border-violet-700 hover:bg-violet-200',
     pessoa: 'text-red-700 bg-red-200 border-red-700 hover:bg-red-200',
@@ -34,29 +32,37 @@ const TypeBadge: React.FC<BadgeProps> = ({ type, size }) => {
     externo: 'text-amber-700 bg-amber-200 border-amber-700 hover:bg-amber-200',
   };
 
-
   const colorsSmall = {
-    laboratorio: 'text-violet-200 bg-violet-700 hover:bg-purple-200 hover:text-violet-700 h-[16px] px-2',
-    pessoa: 'text-red-200 bg-red-700 hover:bg-red-200 hover:text-red-700 h-[16px] px-2',
-    oficial: 'text-fuchsia-200 bg-fuchsia-700 hover:bg-fuchsia-200 hover:text-fuchsia-700 h-[16px] px-2',
-    grupo: 'text-emerald-200 bg-emerald-700 hover:bg-emerald-200 hover:text-emerald-700 h-[16px] px-2',
-    externo: 'text-amber-200 bg-amber-700 hover:bg-amber-200 hover:text-amber-700 h-[16px] px-2 items-center',
+    laboratorio: 'text-violet-200 bg-violet-700 hover:bg-purple-200 hover:text-violet-700',
+    pessoa: 'text-red-200 bg-red-700 hover:bg-red-200 hover:text-red-700',
+    oficial: 'text-fuchsia-200 bg-fuchsia-700 hover:bg-fuchsia-200 hover:text-fuchsia-700',
+    grupo: 'text-emerald-200 bg-emerald-700 hover:bg-emerald-200 hover:text-emerald-700',
+    externo: 'text-amber-200 bg-amber-700 hover:bg-amber-200 hover:text-amber-700',
   };
 
   if (size === "large") {
     return (
-        <Badge className={`${colorsBig[type]} rounded-full border text-xs`}>
-            {corrsBig[type]}
-        </Badge>
-    )
-  }else {
-    return (
-        <Badge className={`${colorsSmall[type]} rounded-sm text-[8px] text-center`}>
-          {corrsSmall[type]}
-        </Badge>
-      );
-  }
+      <Badge className={`${colorsBig[type]} rounded-full border text-xs`}>
+        {corrsBig[type]}
+      </Badge>   );
+  } else {
+    const smallHeight = smallSize?.height || '22px';
+    const smallPadding = smallSize?.padding || 'px-2';
+    const smallFontSize = smallSize?.fontSize || '10px';
 
+    return (
+      <Badge
+        className={`${colorsSmall[type]} rounded-sm text-center`}
+        style={{
+          height: smallHeight,
+          padding: `0 ${smallPadding}`, 
+          fontSize: smallFontSize
+        }}
+      >
+        {corrsSmall[type]}
+      </Badge>
+    );
+  }
 };
 
 export default TypeBadge;
