@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTheme } from "next-themes";
+import { useTheme } from "next-themes"; 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 
 export default function SearchFilters() {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); 
   const [activeButton, setActiveButton] = useState("Todos");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCollaborators, setSelectedCollaborators] = useState("");
@@ -23,158 +23,91 @@ export default function SearchFilters() {
   };
 
   const handleClear = () => {
-    setSelectedCollaborators("");
+    setSelectedCollaborators(""); 
   };
 
+// Determine icons according to the theme (dark or light)
   const searchIcon = theme === "dark" ? "lupa_Dark.png" : "lupa.png";
   const filterIcon = theme === "dark" ? "list-filter_Dark.png" : "list-filter.png";
 
   return (
     <>
-      {/* Top-level flex container with flex-wrap */}
-      <div className="flex flex-wrap items-center text-neutral-800">
-        {/* Container for "Pesquisar" Input and "Filtros" Button */}
-        <div className="flex items-center w-full flex-nowrap">
-          {/* "Pesquisar" Input */}
-          <div className="relative flex-shrink-0 mr-3">
+      <div className="flex flex-row justify-between text-neutral-800">
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="relative w-68">
             <span className="absolute inset-y-0 flex items-center pl-3">
-              <img
-                src={searchIcon}
-                alt="icon search"
-                className="h-4 w-4 text-gray-400"
-              />
+              <img src={searchIcon} alt="icon search" className="h-4 w-4 text-gray-400" />
             </span>
-            <Input
-              className="w-68 pl-10 text-xs h-8 bg-gray-50 border-[1.3px] border-gray-400 dark:bg-black dark:text-gray-200"
-              type="text"
-              placeholder="Pesquisar"
-            />
+            <Input type="text" placeholder="Pesquisar" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"/>
           </div>
 
-          {/* Spacer to push "Filtros" Button to the right */}
-          <div className="flex-grow"></div>
-
-          {/* "Filtros" Button */}
           <Button
             variant="outline"
-            className="bg-gray-50 w-24 h-8 flex gap-2 text-xs rounded-full border-gray-400 dark:bg-black dark:text-gray-200 dark:hover:bg-neutral-800 flex-shrink-0"
-            onClick={toggleFilters}
-          >
-            <img src={filterIcon} alt="icon filter" className="h-4 w-4" />
-            Filtros
-          </Button>
-        </div>
-
-        {/* Buttons ("Todos", "Pessoais", etc.) */}
-        <div className="flex items-center gap-3 flex-wrap mt-2 w-full">
-          <Button
-            variant="outline"
-            className={`rounded-full w-24 h-8 text-xs ${
-              isActive("Todos")
-                ? "bg-gray-200"
-                : "bg-transparent border-transparent dark:text-gray-200 "
-            }`}
-            onClick={() => setActiveButton("Todos")}
-          >
+            className={`rounded-full w-24 h-8 text-xs ${isActive("Todos") ? "bg-gray-200" : "bg-transparent border-transparent dark:text-gray-200 "}`}
+            onClick={() => setActiveButton("Todos")}>
             Todos
           </Button>
 
           <Button
             variant="outline"
-            className={`rounded-full w-28 h-8 text-xs ${
-              isActive("Pessoais")
-                ? "bg-gray-200"
-                : "bg-transparent  dark:text-gray-200 border-transparent"
-            }`}
-            onClick={() => setActiveButton("Pessoais")}
-          >
+            className={`rounded-full w-28 h-8 text-xs ${isActive("Pessoais") ? "bg-gray-200" : "bg-transparent  dark:text-gray-200 border-transparent"}`}
+            onClick={() => setActiveButton("Pessoais")}>
             Pessoais
           </Button>
 
           <Button
             variant="outline"
-            className={`rounded-full w-32 h-8 text-xs ${
-              isActive("Laboratórios")
-                ? "bg-gray-200"
-                : "bg-transparent dark:text-gray-200 border-transparent"
-            }`}
-            onClick={() => setActiveButton("Laboratórios")}
-          >
+            className={`rounded-full w-32 h-8 text-xs ${isActive("Laboratórios") ? "bg-gray-200" : "bg-transparent dark:text-gray-200 border-transparent"}`}
+            onClick={() => setActiveButton("Laboratórios")}>
             Laboratórios
           </Button>
 
           <Button
             variant="outline"
-            className={`rounded-full w-32 h-8 text-xs ${
-              isActive("Grupos e Ligas")
-                ? "bg-gray-200"
-                : "bg-transparent dark:text-gray-200 border-transparent"
-            }`}
-            onClick={() => setActiveButton("Grupos e Ligas")}
-          >
+            className={`rounded-full w-32 h-8 text-xs ${isActive("Grupos e Ligas") ? "bg-gray-200" : "bg-transparent dark:text-gray-200 border-transparent"}`}
+            onClick={() => setActiveButton("Grupos e Ligas")}>
             Grupos e Ligas
           </Button>
         </div>
+
+        <Button
+          variant="outline" 
+          className="bg-transparent w-24 h-8 flex gap-2 text-xs rounded-full border-gray-400 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"
+          onClick={toggleFilters}>
+          <img src={filterIcon} alt="icon filter" className="h-4 w-4" />
+          Filtros
+        </Button>
       </div>
 
-      {/* Filters Section */}
       <div
         className={`mt-4 rounded-lg transition-shadow delay-100 ease-in-out ${
-          showFilters ? "translate-y-2" : "-translate-y-2"
-        }`}
-      >
+          showFilters ? 'translate-y-2' : '-translate-y-2'}`}>
+
         {showFilters && (
           <div className="flex flex-row gap-3">
             <div className="relative h-8">
               <span className="absolute inset-y-0 left-3 flex items-center">
-                <img
-                  src={searchIcon}
-                  alt="icon search"
-                  className="h-4 w-4 text-gray-400"
-                />
+                <img src={searchIcon} alt="icon search" className="h-4 w-4 text-gray-400" />
               </span>
-              <Input
-                id="tag"
-                type="text"
-                placeholder="Pesquise por Tag"
-                className="pl-10 text-xs h-8 bg-gray-50 border-[1.3px] border-gray-400 w-46 dark:bg-black dark:text-gray-200"
-              />
+              <Input id="tag" type="text" placeholder="Pesquise por Tag" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 w-46 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"/>
             </div>
             <div>
-              <Select
-                value={selectedCollaborators}
-                onValueChange={setSelectedCollaborators}
-              >
-                <SelectTrigger className="text-xs text-gray-500 h-8 bg-gray-50 border-gray-400 w-46 dark:bg-black dark:text-gray-200">
+              <Select value={selectedCollaborators} onValueChange={setSelectedCollaborators}>
+                <SelectTrigger className="text-xs text-gray-500 h-8 bg-transparent border-gray-400 w-46 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800">
                   <SelectValue placeholder="Número de colaboradores" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1" className="text-xs">
-                    1
-                  </SelectItem>
-                  <SelectItem value="2" className="text-xs">
-                    2
-                  </SelectItem>
-                  <SelectItem value="3" className="text-xs">
-                    3
-                  </SelectItem>
-                  <SelectItem value="4" className="text-xs">
-                    4
-                  </SelectItem>
-                  <SelectItem value="5" className="text-xs">
-                    5+
-                  </SelectItem>
-                  <SelectItem value="10" className="text-xs">
-                    10+
-                  </SelectItem>
+                  <SelectItem value="1" className="text-xs">1</SelectItem>
+                  <SelectItem value="2" className="text-xs">2</SelectItem>
+                  <SelectItem value="3" className="text-xs">3</SelectItem>
+                  <SelectItem value="4" className="text-xs">4</SelectItem>
+                  <SelectItem value="5" className="text-xs">5+</SelectItem>
+                  <SelectItem value="10" className="text-xs">10+</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <Button
-                onClick={handleClear}
-                className="rounded-full w-28 h-8 text-xs bg-gray-200 text-gray-900 hover:bg-gray-100 hover:border dark:border dark:bg-black dark:text-gray-200 dark:hover:bg-neutral-800"
-              >
+              <Button onClick={handleClear} className="rounded-full w-28 h-8 text-xs  border-[0.5px] bg-gray-200 text-gray-900 dark:border-white dark:bg-transparent dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-neutral-800 ">
                 Limpar
               </Button>
             </div>
