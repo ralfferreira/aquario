@@ -20,7 +20,7 @@ const OverlappingImages: React.FC<OverlappingImagesProps> = ({ users }) => {
           key={index}
           src={user.image}
           alt={user.name}
-          className="w-9 h-9 rounded-full"
+          className="w-9 h-9 rounded-full object-cover"
           style={{ zIndex: limitedUsers.length - index }}
         />
       ))}
