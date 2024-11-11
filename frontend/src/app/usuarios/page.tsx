@@ -26,7 +26,11 @@ export default function Usuarios() {
             projectName: "Projeto 3",
             projectImage: "/lab.jpg",
             users: [
-                { name: "Github", image: "/git.jpeg", type: "externo" as const }
+                { name: "User5", image: "/fotoTiago.jpeg", type: "oficial" as const },
+                { name: "User6", image: "/ian.jpeg", type: "pessoa" as const },
+                { name: "User7", image: "/fotoTiago.jpeg", type: "pessoa" as const },
+                { name: "User8", image: "/ian.jpeg", type: "pessoa" as const },
+                { name: "User9", image: "/fotoTiago.jpeg", type: "pessoa" as const }
             ]
         },
         {
@@ -34,7 +38,8 @@ export default function Usuarios() {
             projectImage: "/lab.jpg",
             users: [
                 { name: "User5", image: "/fotoTiago.jpeg", type: "oficial" as const },
-                { name: "User6", image: "/ian.jpeg", type: "pessoa" as const }
+                { name: "User6", image: "/ian.jpeg", type: "pessoa" as const },
+                { name: "User7", image: "/fotoTiago.jpeg", type: "pessoa" as const }
             ]
         }
     ];
