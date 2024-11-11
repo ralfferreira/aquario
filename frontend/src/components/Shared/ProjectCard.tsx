@@ -43,7 +43,7 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
                     <div id='projectImage' className='rounded-xl w-full h-[217px] relative'>
                         <img src={projectImage} alt={projectName} className='h-full w-full rounded-xl absolute inset-0 object-cover' />
                     </div>
-                    <div id='projectImageHover' className='w-full h-[207px] flex absolute inset-0 rounded-xl opacity-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent transition-opacity duration-300 ease-[ease] hover:opacity-100'>
+                    <div id='projectImageHover' className='w-full h-[217px] flex absolute inset-0 rounded-xl opacity-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent transition-opacity duration-300 ease-[ease] hover:opacity-100'>
                      
                         <div id='textHover' className='flex absolute bottom-4 left-4'>
                             <p  className={`text-white ${inter.className}`}>{truncateName(projectName, 25)}</p>
