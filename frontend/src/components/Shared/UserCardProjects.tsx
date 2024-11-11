@@ -2,7 +2,7 @@
 
 import React from 'react';
 import TypeBadge from './Badges';
-import PostCard from './PostCard';
+import PostCard from './ProjectCard';
 
 interface User {
     name: string;

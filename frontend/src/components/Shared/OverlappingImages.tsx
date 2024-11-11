@@ -14,13 +14,13 @@ const OverlappingImages: React.FC<OverlappingImagesProps> = ({ users }) => {
     const limitedUsers = users.slice(0, 3);
 
   return (
-    <div className="flex -space-x-6">
+    <div className="flex -space-x-5">
       {limitedUsers.map((user, index) => (
         <img
           key={index}
           src={user.image}
           alt={user.name}
-          className="w-9 h-9 rounded-full object-cover"
+          className="w-7 h-7 rounded-full object-cover"
           style={{ zIndex: limitedUsers.length - index }}
         />
       ))}

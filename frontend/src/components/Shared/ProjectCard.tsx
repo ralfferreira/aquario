@@ -30,19 +30,23 @@ interface ProjectCardProps {
 
 const inter = Inter({ subsets: ["latin"] });
 
-function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
+function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
+
+    const truncateName = (name: string, limit: number) =>
+        name.length > limit ? name.slice(0, limit) + '...' : name;
+
     return ( 
-        <div id='OuterCard' className='flexbox min-w-[200px] max-w-[350px] min-h-[283.2px] max-h-[283.2px]' >
+        <div id='OuterCard' className='flexbox min-w-[200px] max-w-[350px] min-h-[293.2px] max-h-[293.2px]' >
             {/* REMOVER PADDING */}
             <a href="https://google.com">
                 <div className='relative'>
-                    <div id='projectImage' className='rounded-xl w-full h-[207px] relative'>
+                    <div id='projectImage' className='rounded-xl w-full h-[217px] relative'>
                         <img src={projectImage} alt={projectName} className='h-full w-full rounded-xl absolute inset-0 object-cover' />
                     </div>
                     <div id='projectImageHover' className='w-full h-[207px] flex absolute inset-0 rounded-xl opacity-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent transition-opacity duration-300 ease-[ease] hover:opacity-100'>
                      
                         <div id='textHover' className='flex absolute bottom-4 left-4'>
-                            <p  className={`text-white ${inter.className}`}>{projectName}</p>
+                            <p  className={`text-white ${inter.className}`}>{truncateName(projectName, 25)}</p>
                         </div>
 
                         <div id='circularTags' className='flex space-x-2 absolute bottom-4 right-4'>
@@ -60,7 +64,7 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                 </div>
             </a>
 
-            <div id='projectDetails' className='flex items-center w-full h-[34px] px-1 pt-3 '>
+            <div id='projectDetails' className='flex items-center w-full h-[34px] px-1 pt-1 '>
                 <div id='leftArea' className='flex items-center'>
                 <OverlappingImages users={users}></OverlappingImages>
                 {users.length === 1 ? (
@@ -78,7 +82,7 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                     </Dialog>) 
                 :
                  (<Dialog>
-                    <DialogTrigger className='pl-4  '>Grupo</DialogTrigger>
+                    <DialogTrigger className='pl-2  '>Grupo</DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
                         <DialogTitle>Participantes do Projeto:</DialogTitle>
@@ -90,17 +94,17 @@ function PostCard({ projectName, projectImage , users}: ProjectCardProps) {
                     </DialogContent>
                     </Dialog>
                     )}
-                <div className='pl-3 pb-[2px]'>
+                <div className='pl-2 pb-[2px]'>
                         <TypeBadge type={users[0].type} size='small'/>
                     </div>
                 </div>
-                <div id='rightArea' className='flex items-center ml-auto text-gray-400'>
-                    <PeopleAltIcon fontSize='large'/>
-                    <p className='ml-1 text-lg'>{users.length}</p>
+                <div id='rightArea' className='flex items-center ml-auto pt-1 text-gray-400'>
+                    <PeopleAltIcon className='w-[22px]'/>
+                    <p className='pt-0.5 ml-1 text-base'>{users.length}</p>
                 </div>
             </div>
         </div>
     );
 }
 
-export default PostCard;
+export default ProjectCard;
