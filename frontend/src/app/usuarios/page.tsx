@@ -41,6 +41,15 @@ export default function Usuarios() {
                 { name: "User6", image: "/ian.jpeg", type: "pessoa" as const },
                 { name: "User7", image: "/fotoTiago.jpeg", type: "pessoa" as const }
             ]
+        },
+        {
+            projectName: "Projeto 5",
+            projectImage: "/lab.jpg",
+            users: [
+                { name: "User5", image: "/fotoTiago.jpeg", type: "oficial" as const },
+                { name: "User6", image: "/ian.jpeg", type: "pessoa" as const },
+                { name: "User7", image: "/fotoTiago.jpeg", type: "pessoa" as const }
+            ]
         }
     ];
 

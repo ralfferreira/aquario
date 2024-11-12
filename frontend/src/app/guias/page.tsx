@@ -5,20 +5,28 @@ import MarkdownRenderer from '@/components/Shared/MarkdownRender';
 import { GuideIndex } from '@/components/Shared/GuideIndex';
 import GradientHeaderComponent from '@/components/Shared/GradientHeader';
 import { usePathname } from 'next/navigation';
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
+} from "@/components/ui/sheet";
 import { AlignJustify } from 'lucide-react';
 
 
 export default function Home() {
+  const formatTitleFromPath = (path: string) => {
+    return path
+      .replace(/\//g, ' ')         
+      .replace(/-/g, ' ')          
+      .replace(/\b\w/g, (char) => char.toUpperCase()); 
+  };
+
   const pathname = usePathname();
+
+  const title = formatTitleFromPath(pathname);
 
   const data = [
     {
@@ -65,21 +73,6 @@ export default function Home() {
       ]
     }
   ];
-
-  let title = 'Página não encontrada';
-  if (pathname.includes('/guias-iniciais')) {
-    title = 'Guias Iniciais';
-  } else if (pathname.includes('/matriculas')) {
-    title = 'Matrículas e Cadeiras';
-  } else if (pathname.includes('/estagio')) {
-    title = 'Estágio';
-  } else if (pathname.includes('/extensao')) {
-    title = 'Extensão';
-  } else if (pathname.includes('/monitoria-e-tutoria')) {
-    title = 'Monitoria e Tutoria';
-  } else if (pathname.includes('/documentos-uteis')) {
-    title = 'Documentos Úteis';
-  }
 
   const markdownContent = `
   # Título
