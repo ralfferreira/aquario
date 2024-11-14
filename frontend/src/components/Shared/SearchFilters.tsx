@@ -26,7 +26,7 @@ export default function SearchFilters() {
     setSelectedCollaborators(""); 
   };
 
-// Determine icons according to the theme (dark or light)
+  // Determine icons according to the theme (dark or light)
   const searchIcon = theme === "dark" ? "lupa_Dark.png" : "lupa.png";
   const filterIcon = theme === "dark" ? "list-filter_Dark.png" : "list-filter.png";
 
@@ -38,7 +38,11 @@ export default function SearchFilters() {
             <span className="absolute inset-y-0 flex items-center pl-3">
               <img src={searchIcon} alt="icon search" className="h-4 w-4 text-gray-400" />
             </span>
-            <Input type="text" placeholder="Pesquisar" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"/>
+            <Input
+              className="pl-10 text-xs h-8 bg-gray-50 border-[1.3px] border-gray-400 dark:bg-transparent dark:text-gray-200"
+              type="text"
+              placeholder="Pesquisar"
+            />
           </div>
 
           <Button
@@ -80,20 +84,21 @@ export default function SearchFilters() {
       </div>
 
       <div
-        className={`mt-4 rounded-lg transition-shadow delay-100 ease-in-out ${
-          showFilters ? 'translate-y-2' : '-translate-y-2'}`}>
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+          showFilters ? "[grid-template-rows:1fr]" : "[grid-template-rows:0fr]"
+        } mt-4 rounded-lg`}>
 
-        {showFilters && (
+        <div className="overflow-hidden">
           <div className="flex flex-row gap-3">
             <div className="relative h-8">
               <span className="absolute inset-y-0 left-3 flex items-center">
                 <img src={searchIcon} alt="icon search" className="h-4 w-4 text-gray-400" />
               </span>
-              <Input id="tag" type="text" placeholder="Pesquise por Tag" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 w-46 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"/>
+              <Input id="tag" type="text" placeholder="Pesquise por Tag" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 w-46 dark:bg-transparent dark:text-gray-200"/>
             </div>
             <div>
               <Select value={selectedCollaborators} onValueChange={setSelectedCollaborators}>
-                <SelectTrigger className="text-xs text-gray-500 h-8 bg-transparent border-gray-400 w-46 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800">
+                <SelectTrigger className="text-xs text-gray-500 h-8 bg-transparent border-gray-400 w-46 dark:bg-transparent dark:text-gray-200">
                   <SelectValue placeholder="Número de colaboradores" />
                 </SelectTrigger>
                 <SelectContent>
@@ -112,7 +117,7 @@ export default function SearchFilters() {
               </Button>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </>
   );
