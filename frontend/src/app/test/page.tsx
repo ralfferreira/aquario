@@ -1,10 +1,11 @@
 "use client"
 
-export default function Test() {
-    return (
-      <div className="space-y-6 min-h-screen flex flex-col">
+import Tiptap from "@/components/Shared/TipTap"
 
-      </div>
-    );
+export default function Test() {
+  return (
+    <div className="mt-40 p-20">
+      <Tiptap />
+    </div>)
 }
   

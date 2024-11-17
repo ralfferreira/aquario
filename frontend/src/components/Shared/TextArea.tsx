@@ -42,4 +42,6 @@ const FullScreenTextarea = forwardRef<HTMLTextAreaElement, FullScreenTextareaPro
     }
 );
 
+FullScreenTextarea.displayName = "FullScreenTextarea";
+
 export default FullScreenTextarea;

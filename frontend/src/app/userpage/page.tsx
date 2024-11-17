@@ -1,5 +1,5 @@
-// OutraPagina.tsx
 "use client";
+
 import LabHeader from "@/components/Pages/Users/labCard";
 import PostCard from "@/components/Shared/PostCard";
 import UserCard from "@/components/Shared/UserCard";
@@ -116,7 +116,7 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                       <p className="pl-10 text-3xl font-semibold">Projetos</p>
                       <div className="flex gap-10 justify-center items-center pt-10">
                       {projetos.map((projeto, index) => (
-                                        <PostCard projectName={projeto.name} projectImage={projeto.image} users={users} />
+                                        <PostCard projectName={projeto.name} projectImage={projeto.image} users={users} key={index}/>
                                     ))}
                       </div> 
                     </div>
