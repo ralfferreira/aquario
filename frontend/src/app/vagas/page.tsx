@@ -13,24 +13,24 @@ export default function Blog() {
       profileUser: {
         name: "TRIL",
         image: "/ian.jpeg",
-        type: "laboratorio",
-        type2: "oficial",
+        type: "laboratorio" as "laboratorio",
+        type2: "oficial" as "oficial",
         url: "https://tril.com.br",
         funcao: "UX/UI Designer"
       },
-      type: "voluntario",
+      type: "voluntario" as "voluntario",
       url: "https://detalhes-da-vaga-tril.com"
     },
     {
       profileUser: {
         name: "Google",
         image: "/ian.jpeg",
-        type: "externo",
-        type2: "externo",
+        type: "externo" as "externo",
+        type2: "externo"as "externo",
         url: "https://google.com",
         funcao: "Desenvolvedor"
       },
-      type: "remunerado",
+      type: "remunerado" as "remunerado",
       date: "2024-11-01",
       url: "https://detalhes-da-vaga-google.com"
     }
@@ -106,7 +106,6 @@ export default function Blog() {
                 key={index} 
                 profileUser={vaga.profileUser}
                 type={vaga.type}
-                date={vaga.date}
                 url={vaga.url}
               />
             ))}
