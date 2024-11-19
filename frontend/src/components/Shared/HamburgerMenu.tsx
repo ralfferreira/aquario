@@ -53,7 +53,7 @@ export default function HamburgerMenu() {
                   isOpen ? "opacity-100 visible" : "opacity-0 invisible"
                 }`}
               >
-                <ul className="flex flex-col p-4 space-y-2">
+                <ul className="flex flex-col p-6 space-y-4 text-3xl">
                   <li>
                     <LinkHover href="/blog">BLOG</LinkHover>
                   </li>
