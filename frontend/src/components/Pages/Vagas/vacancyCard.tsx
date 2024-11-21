@@ -17,7 +17,6 @@ interface ProfileCardProps {
   profileUser: User;
   type: "voluntario" | "remunerado";
   url: string;
-  funcao: string;
 }
 
 export default function VacancyCard({ profileUser, type, url }: ProfileCardProps) {

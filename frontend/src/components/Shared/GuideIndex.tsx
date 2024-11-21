@@ -27,7 +27,7 @@ export const GuideIndex: React.FC<GuideIndexProps> = ({ data }) => {
                 <div key={sectionName + sectionIndex}>
                 <p className="text-sm mb-1 ml-6 text-gray-500">{sectionName}</p>
                     {section[sectionName].map((page) => (
-                    <a href="https://google.com"><p key={page.id} className="ml-6 py-1.5 hover:underline">{page.nomedapagina}</p></a>
+                    <a href="https://google.com" key={page.id + sectionIndex + 'a'}><p key={page.id + sectionIndex} className="ml-6 py-1.5 hover:underline">{page.nomedapagina}</p></a>
                     ))}
                     <div key={sectionName + sectionIndex + '1'} className="h-[1.5px] w-full rounded bg-gray-500 opacity-30 mt-2 ml-2"></div>
                 </div>

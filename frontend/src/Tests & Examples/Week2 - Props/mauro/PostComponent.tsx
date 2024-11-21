@@ -48,7 +48,7 @@ function PostComponent({ title, photo, name, votes, minutes, comments, type }: P
     <div className="flex flex-col justify-around w-[500px]">
       <h3 className="h-4 mb-4 font-medium">{title}</h3>
       <div className="flex justify-between items-center">
-        <Image className="object-none h-8 w-8 rounded-full" src={photo} width={30} height={30}/>
+        <Image className="object-none h-8 w-8 rounded-full" src={photo} width={30} height={30} alt={"Post Imagem"}/>
         <h4 className="text-md font-medium">{name}</h4>
         <Badge variant="default" className="h-5 bg-blue-600 hover:bg-blue-700">{type}</Badge>
         <p className="text-gray-600 text-sm">• {votes} votos</p>

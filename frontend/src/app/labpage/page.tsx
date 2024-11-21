@@ -1,5 +1,5 @@
-// OutraPagina.tsx
 "use client";
+
 import LabHeader from "@/components/Pages/Users/labCard";
 import PostCard from "@/components/Shared/ProjectCard";
 import UserCard from "@/components/Shared/UserCard";
@@ -116,7 +116,7 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                       <p className="pl-10 text-3xl font-semibold">Projetos</p>
                       <div className="flex gap-10 justify-center items-center pt-10">
                       {projetos.map((projeto, index) => (
-                                        <PostCard projectName={projeto.name} projectImage={projeto.image} users={users} />
+                                        <PostCard projectName={projeto.name} projectImage={projeto.image} users={users} key={index}/>
                                     ))}
                       </div> 
                     </div>
@@ -148,7 +148,7 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                         {activeTab2 === 'Alunos' && (
                             <div className="flex flex-wrap gap-4 items-center justify-center mx-12 pt-10">
                                     {alunos.map((aluno, index) => (
-                                      <div className="flex justify-center items-center">
+                                      <div className="flex justify-center items-center" key={index}>
                                         <UserCard
                                             key={index}
                                             name={aluno.name}
@@ -164,7 +164,7 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                         {activeTab2 === 'Professores' && (
                             <div className="flex flex-wrap gap-4 items-center justify-center mx-12 pt-10">
                                     {professores.map((professor, index) => (
-                                      <div className="flex justify-center items-center">
+                                      <div className="flex justify-center items-center" key={index}>
                                         <UserCard
                                             key={index}
                                             name={professor.name}
@@ -225,7 +225,7 @@ Glades bunny slope deck 180 glades freshies over the bars north shore bowl sprea
                       <p className="pl-10 text-3xl font-semibold">Publicações</p>
                         <div className="flex flex-col gap-10 justify-center items-center h-auto w-full pt-10">
                           {posts.map((post, index) => (
-                            <div className="border-neutral-100 dark:border-neutral-800 rounded-xl border-[1px] px-5 py-2 pt-3 shadow-md">
+                            <div className="border-neutral-100 dark:border-neutral-800 rounded-xl border-[1px] px-5 py-2 pt-3 shadow-md" key={index}>
                               <PostCardTitle
                                   key={index}
                                   postTitle={post.title}
