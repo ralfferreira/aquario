@@ -28,18 +28,21 @@ const UserCardProjects: React.FC<UserCardProjectsProps> = ({ name, profilePictur
 
     useEffect(() => {
         const updateMaxProjects = () => {
-            if (window.innerWidth >= 1024) {
-                setMaxProjects(3); // até 3 projetos para telas grandes (lg)
-            } else if (window.innerWidth >= 768) {
-                setMaxProjects(4); // até 4 projetos para telas médias (md)
+            const width = typeof window !== 'undefined' ? window.innerWidth : 0;
+            if (width >= 1024) {
+                setMaxProjects(3);
+            } else if (width >= 768) {
+                setMaxProjects(4);
             } else {
-                setMaxProjects(2); // até 2 projetos para telas pequenas (sm)
+                setMaxProjects(2);
             }
         };
 
         updateMaxProjects();
-        window.addEventListener("resize", updateMaxProjects);
-        return () => window.removeEventListener("resize", updateMaxProjects);
+        if (typeof window !== 'undefined') {
+            window.addEventListener("resize", updateMaxProjects);
+            return () => window.removeEventListener("resize", updateMaxProjects);
+        }
     }, []);
 
     return (
@@ -55,7 +58,6 @@ const UserCardProjects: React.FC<UserCardProjectsProps> = ({ name, profilePictur
                         <p className="text-lg text-neutral-500 font-inter">{description}</p>
                     </div>
                 </div>
-                {/* Falta ainda tornar a grande div toda clicável para levar para a página do usuário*/}
                 <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10'>
                     {projects.slice(0, maxProjects).map((project, index) => (
                         <PostCard

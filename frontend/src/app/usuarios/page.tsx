@@ -60,23 +60,28 @@ export default function Usuarios() {
                 <div className="w-full h-[40vh]"></div>
             </div>
             <div className="flex">
-                <div className="w-full h-[10vh] pl-10 flex justify-between items-center gap-10">
-                    <Input className="w-[250px]" type="search" placeholder="Pesquisar" />
-                    <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                        activeTab === 'Laboratórios' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
-                    }`} onClick={() => setActiveTab('Laboratórios')}>
-                        <p>Laboratórios</p>
+                <div className="w-full h-[10vh] pl-10 flex items-center gap-6">
+                    <div>
+                        <Input className="w-[250px]" type="search" placeholder="Pesquisar" />
                     </div>
-                    <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                        activeTab === 'Grupos e Ligas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
-                    }`} onClick={() => setActiveTab('Grupos e Ligas')}>
-                        <p>Grupos e Ligas</p>
+                    <div className='flex items-center justify-between gap-10'>
+                        <div className={`transition-all duration-200 py-2 px-6 rounded-full flex items-center cursor-pointer ${
+                            activeTab === 'Laboratórios' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
+                        }`} onClick={() => setActiveTab('Laboratórios')}>
+                            <p className='text-sm'>Laboratórios</p>
+                        </div>
+                        <div className={`transition-all duration-200 py-2 px-6 rounded-full flex items-center cursor-pointer ${
+                            activeTab === 'Grupos e Ligas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
+                        }`} onClick={() => setActiveTab('Grupos e Ligas')}>
+                            <p className='text-sm'>Grupos e Ligas</p>
+                        </div>
+                        <div className={`transition-all duration-200 py-2 px-6 rounded-full flex items-center cursor-pointer ${
+                            activeTab === 'Pessoas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
+                        }`} onClick={() => setActiveTab('Pessoas')}>
+                            <p className='text-sm'>Pessoas</p>
+                        </div>
                     </div>
-                    <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${
-                        activeTab === 'Pessoas' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'
-                    }`} onClick={() => setActiveTab('Pessoas')}>
-                        <p>Pessoas</p>
-                    </div>
+                    
                 </div>
                 <div className="w-[500px] h-[10vh]"></div>
             </div>
