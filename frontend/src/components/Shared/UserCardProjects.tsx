@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TypeBadge from './Badges';
-import PostCard from './ProjectCard';
+import ProjectCard from './ProjectCard';
 
 interface User {
     name: string;
@@ -60,7 +60,7 @@ const UserCardProjects: React.FC<UserCardProjectsProps> = ({ name, profilePictur
                 </div>
                 <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10'>
                     {projects.slice(0, maxProjects).map((project, index) => (
-                        <PostCard
+                        <ProjectCard
                             key={index}
                             projectName={project.projectName}
                             projectImage={project.projectImage}
