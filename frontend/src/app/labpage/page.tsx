@@ -1,7 +1,7 @@
 "use client";
 
 import LabHeader from "@/components/Pages/Users/labCard";
-import PostCard from "@/components/Shared/PostCard";
+import PostCard from "@/components/Shared/ProjectCard";
 import UserCard from "@/components/Shared/UserCard";
 import React, { useState } from 'react';
 import { MapPin } from 'lucide-react';
@@ -10,7 +10,7 @@ import { CalendarCog } from 'lucide-react';
 import { Instagram } from 'lucide-react';
 import { Linkedin } from 'lucide-react';
 import { Globe } from 'lucide-react';
-import PostCardTitle from "@/components/Shared/PostCardTitle";
+import PostCardTitle from "@/components/Shared/ProjectCardTitle";
 
 
 export default function Perfil() {

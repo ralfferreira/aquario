@@ -6,7 +6,7 @@ interface MarkdownRendererProps {
   title: string;
 }
 
-const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({title, content }) => {
+const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ title, content }) => {
   return (
     <div className='md:pt-14 h-[100vh] overflow-y-auto'>
         <p className="text-base text-gray-500 mb-4">{title}</p>
@@ -14,7 +14,6 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({title, content }) =>
             <ReactMarkdown>{content}</ReactMarkdown>
         </div>
     </div>
-    
   );
 };
 

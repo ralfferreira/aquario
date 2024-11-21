@@ -1,6 +1,6 @@
 "use client";
 
-import PostCardTitle from "@/components/Shared/PostCardTitle";
+import PostCardTitle from "@/components/Shared/ProjectCardTitle";
 import SearchFilters from "@/components/Shared/SearchFilters";
 import Banner from "@/components/Shared/Banner";
 

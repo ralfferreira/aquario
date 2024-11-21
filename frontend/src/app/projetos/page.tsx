@@ -2,7 +2,7 @@
 
 import SearchFilters from "@/components/Shared/SearchFilters";
 import Banner from "@/components/Shared/Banner";
-import PostCard from "@/components/Shared/PostCard";
+import PostCard from "@/components/Shared/ProjectCard";
 
 interface User {
   name: string;
