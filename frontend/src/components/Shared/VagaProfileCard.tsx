@@ -15,14 +15,14 @@ interface User {
   url: string;
 }
 
-interface ProfileCardProps {
+interface VagaProfileCardProps {
   profileUser: User;
   type: "voluntario" | "remunerado";
   date: string;
   url: string;
 }
 
-export default function ProfileCard({profileUser, type, date, url}: ProfileCardProps) {
+export default function VagaProfileCard({profileUser, type, date, url}: VagaProfileCardProps) {
   var newType;
   if(type === "voluntario")
     newType = "Voluntário";
