@@ -23,7 +23,7 @@ export default function Vagas() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      <Button className="self-start mb-6">Voltar</Button>
+      <Button className="self-start mb-6 rounded-full">Voltar</Button>
 
       <div className="flex flex-col md:flex-row md:w-4/5 items-center justify-between">
         <div className="self-start mb-4 md:mb-0 md:mr-6">
