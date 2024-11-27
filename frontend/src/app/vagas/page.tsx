@@ -1,51 +1,117 @@
-import { Button } from "@/components/ui/button";
-import VagaProfileCard from "@/components/Shared/VagaProfileCard";
+"use client";
 
-export default function Vagas() {
-  const user = {
-    name: "Mauro",
-    image: "/ian.jpeg",
-    type: "laboratorio",
-    type2: "oficial",
-    url: "https://www.google.com"
-  };
+import Checkbox from '@/components/Pages/Vagas/checkboxFilter';
+import VacancyCard from '@/components/Pages/Vagas/vacancyCard';
+import { SearchBar1 } from "@/components/ui/searchbar1"
 
-  const VagaprofileCardProps = {
-    type: "voluntario",
-    date: "2021-10-10",
-    url: "https://www.google.com",
-  }
+import SearchFilters from "@/components/Shared/SearchFilters";
+import Banner from "@/components/Shared/Banner";
 
-  const post = {
-    title: "UX/UI Designer",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nunc. Sed nec sodales nisl. Donec vestibulum, ex et varius aliquet, mi justo tempor nulla, eget tincidunt dui nisl ut est. Sed sit amet semper tortor."
-  }
+export default function Blog() {
+  const vagas = [
+    {
+      profileUser: {
+        name: "TRIL",
+        image: "/ian.jpeg",
+        type: "laboratorio" as "laboratorio",
+        type2: "oficial" as "oficial",
+        url: "https://tril.com.br",
+        funcao: "UX/UI Designer"
+      },
+      type: "voluntario" as "voluntario",
+      url: "https://detalhes-da-vaga-tril.com"
+    },
+    {
+      profileUser: {
+        name: "Google",
+        image: "/ian.jpeg",
+        type: "externo" as "externo",
+        type2: "externo"as "externo",
+        url: "https://google.com",
+        funcao: "Desenvolvedor"
+      },
+      type: "remunerado" as "remunerado",
+      date: "2024-11-01",
+      url: "https://detalhes-da-vaga-google.com"
+    }
+  ];
+
+  const vagasFiltradas = vagas.filter(vaga => {
+    return vaga.profileUser.name.toLowerCase();
+  });
+  
+  const data = [
+    {
+      titulo: 'Entidades',
+      elementos: ['Laboratórios', 'Grupos e Ligas', 'UFPB', 'Externo'],
+    },
+    {
+      titulo: 'Áreas',
+      elementos: ['FrontEnd', 'BackEnd', 'Dados', 'Infraestrutura', 'Design', 'Pesquisa', 'Robótica', 'Otimização e Algoritmos'],
+    },
+    {
+      titulo: 'None',
+      elementos: ['Remunerado', 'Voluntário'],
+    },
+  ];
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <Button className="self-start mb-6 rounded-full">Voltar</Button>
+    <main className='px-[10%]'>
+      <div className="space-y-6 flex flex-col"> 
+        <div className="pt-28">
+          <Banner 
+            title="Explore vagas de emprego, estágio e de projetos voluntários no CI e afora"
+            description="Nosso mural de vagas permite que qualquer pessoa ou laboratório busque alunos interessados em vagas em projetos ou estágios."
+            buttonText="Divulgar uma vaga"
+            // link do botão
+          />
+          </div>
+        <SearchFilters/>
+      </div>
+      
+      <div className="flex p-5 px-0 gap-6">
+        <div className="hidden flex-col md:flex w-full md:w-3/4">
+          <div className="mb-6 w-full">
+            <SearchBar1 type='search' placeholder='Pesquisar' />
+          </div>
 
-      <div className="flex flex-col md:flex-row md:w-4/5 items-center justify-between">
-        <div className="self-start mb-4 md:mb-0 md:mr-6">
-          <p className="text-gray-500 text-sm mb-2">Detalhes</p>
-          <h1 className="text-2xl font-semibold mb-4">{post.title}</h1>
-          <p className="text-gray-700 whitespace-pre-line leading-relaxed">{post.description}</p>
+          <div className="space-y-4 w-full">
+            {vagasFiltradas.map((vaga, index) => (
+              <VacancyCard 
+                key={index} 
+                profileUser={vaga.profileUser}
+                type={vaga.type}
+                url={vaga.url}
+              />
+            ))}
+          </div>
         </div>
-        
-        <div className="">
-          <VagaProfileCard profileUser={user} type={VagaprofileCardProps.type} date={VagaprofileCardProps.date} url={VagaprofileCardProps.url}/>
+
+        <div className="hidden md:flex w-full md:w-1/4">
+          <Checkbox data={data} />
+        </div>
+
+        <div className="flex flex-col md:hidden w-full">
+          <div className="mb-6 w-full">
+            <SearchBar1 type='search' placeholder='Pesquisar' />
+          </div>
+
+          <div className="mb-6 w-full">
+            <Checkbox data={data} />
+          </div>
+
+          <div className="space-y-4 w-full">
+            {vagasFiltradas.map((vaga, index) => (
+              <VacancyCard 
+                key={index} 
+                profileUser={vaga.profileUser}
+                type={vaga.type}
+                url={vaga.url}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>
   );
 }
-
-// export default function Vagas() {
-//     return (
-//       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-//         <p>Vagas Page</p>
-//         <Button>Voltar</Button>
-//       </main>
-//     );
-//   }
-  
