@@ -25,14 +25,14 @@ export default function Vagas() {
     <main className="flex min-h-screen flex-col items-center p-24">
       <Button className="self-start mb-6">Voltar</Button>
 
-      <div className="grid grid-cols-1 md:grid-cols-10 gap-8">
-        <div className="md:col-span-5">
+      <div className="flex flex-col md:flex-row md:w-4/5 items-center justify-between">
+        <div className="self-start mb-4 md:mb-0 md:mr-6">
           <p className="text-gray-500 text-sm mb-2">Detalhes</p>
           <h1 className="text-2xl font-semibold mb-4">{post.title}</h1>
           <p className="text-gray-700 whitespace-pre-line leading-relaxed">{post.description}</p>
         </div>
         
-        <div className="md:col-span-3 flex flex-col items-center">
+        <div className="">
           <VagaProfileCard profileUser={user} type={VagaprofileCardProps.type} date={VagaprofileCardProps.date} url={VagaprofileCardProps.url}/>
         </div>
       </div>
