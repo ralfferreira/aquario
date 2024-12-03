@@ -54,7 +54,7 @@ export default function Usuarios() {
     ];
 
     return (
-        <div className="h-[100vh] my-20 mx-36">
+        <div className="px-[10%]">
             <div className="w-full h-[40vh] flex justify-start items-center"> 
                 <p className="pl-10 text-4xl">Procure Laboratórios, grupos acadêmicos, pessoas e outros</p>
                 <div className="w-full h-[40vh]"></div>

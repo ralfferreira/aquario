@@ -14,7 +14,7 @@ export default function NavBar() {
   return (
     <>
       <nav
-        className="fixed left-0 w-full text-light-text flex justify-between flex-col h-[60px] bg-white dark:bg-black"
+        className="fixed left-0 w-full text-light-text flex justify-between flex-col h-[60px] bg-white dark:bg-black z-50"
       >
         <div className="container mx-auto flex items-center justify-between h-full">
           <div className="flex space-x-4 gap-5 justify-center items-center">

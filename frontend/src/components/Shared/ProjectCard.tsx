@@ -68,14 +68,14 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
                 </div>
             </a>
 
-            <div id='projectDetails' className='flex items-center w-full h-[34px] px-1 pt-1 pb-1 '>
+            <div id='projectDetails' className='flex items-center w-full h-[34px] px-1 pt-4 pb-1'>
                 <div id='leftArea' className='flex items-center'>
-                    <div className='pb-1'>
+                    <div className=''>
                         <OverlappingImages users={users}></OverlappingImages>
                     </div>
                 {users.length === 1 ? (
                     <Dialog>
-                    <DialogTrigger className={`pl-2 text-[12px] ${inter.className}`}>{users[0].name}</DialogTrigger>
+                    <DialogTrigger className={`pl-2 text-sm ${inter.className}`}>{users[0].name}</DialogTrigger>
                     <DialogContent className='max-w-[500px] h-auto'>
                         <DialogHeader>
                         <DialogTitle className='text-2xl'>Autor do Projeto:</DialogTitle>
@@ -96,12 +96,12 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
                     </Dialog>) 
                 :
                  (<Dialog>
-                    <DialogTrigger className='pl-2 pb-1'>Grupo</DialogTrigger>
+                    <DialogTrigger className={`pl-2 text-sm ${inter.className} !italic`}>Grupo</DialogTrigger>
                     <DialogContent className="max-w-[500px]">
                         <DialogHeader>
                         <DialogTitle className='text-2xl'>Participantes do Projeto:</DialogTitle>
                         </DialogHeader>
-                    <div className='pt-2 flex-col flex gap-4'>
+                    <div className='flex-col flex gap-4'>
                     {users.map((user, index) => (
                                       <div key={index}>
                                         <UserCard
@@ -120,7 +120,7 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
                     )}
                 <div className='pl-2 pb-1'>
                         <TypeBadge type={users[0].type} size='small'/>
-                    </div>
+                </div>
                 </div>
                 <div id='rightArea' className='flex items-center ml-auto text-gray-400'>
                     <PeopleAltIcon className='w-[22px]'/>
