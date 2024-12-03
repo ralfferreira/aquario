@@ -103,7 +103,7 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
                         </DialogHeader>
                     <div className='pt-2 flex-col flex gap-4'>
                     {users.map((user, index) => (
-                                      <div>
+                                      <div key={index}>
                                         <UserCard
                                             key={index}
                                             name={user.name}

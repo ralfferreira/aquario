@@ -5,13 +5,13 @@ export default function Vagas() {
   const user = {
     name: "Mauro",
     image: "/ian.jpeg",
-    type: "laboratorio",
-    type2: "oficial",
+    type: "laboratorio" as "laboratorio",
+    type2: "oficial" as "oficial",
     url: "https://www.google.com"
   };
 
   const VagaprofileCardProps = {
-    type: "voluntario",
+    type: "voluntario" as "voluntario",
     date: "2021-10-10",
     url: "https://www.google.com",
   }
