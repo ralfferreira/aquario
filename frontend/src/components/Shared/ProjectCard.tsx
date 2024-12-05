@@ -52,11 +52,11 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
 
                             <div id='circularTags' className='flex space-x-2 p-4'>
                                 <a href="https://google.com.br" target='_blank'>
-                                    <div className='bg-white rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'> 
+                                    <div className='bg-white dark:bg-black rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'> 
                                         <SquareArrowOutUpRight className="h-4 w-4" />
                                     </div>
                                 </a>    
-                                    <div className='bg-white rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'>
+                                    <div className='bg-white dark:bg-black rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'>
                                         <Share className="h-4 w-4" />
                                     </div>
                             </div>
