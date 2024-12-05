@@ -33,9 +33,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
 
-    const truncateName = (name: string, limit: number) =>
-        name.length > limit ? name.slice(0, limit) + '...' : name;
-
     const capitalizeFirstLetter = (str: string) =>
         str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
@@ -47,23 +44,24 @@ function ProjectCard({ projectName, projectImage , users}: ProjectCardProps) {
                     <div id='projectImage' className='rounded-xl w-full h-[217px] relative'>
                         <img src={projectImage} alt={projectName} className='h-full w-full rounded-xl absolute inset-0 object-cover' />
                     </div>
-                    <div id='projectImageHover' className='w-full h-[217px] flex absolute inset-0 rounded-xl opacity-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent transition-opacity duration-300 ease-[ease] hover:opacity-100'>
-                     
-                        <div id='textHover' className='flex absolute bottom-4 left-4'>
-                            <p  className={`text-white ${inter.className}`}>{truncateName(projectName, 25)}</p>
-                        </div>
+                    <div id='projectImageHover' className='w-full h-[217px] flex absolute justify-between items-end inset-0 rounded-xl opacity-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent transition-opacity duration-300 ease-[ease] hover:opacity-100'>
+                        <div className='flex w-full'>
+                            <div id='textHover' className='flex px-4 pt-5 flex-1 min-w-0'>
+                                <p className={`text-white ${inter.className} whitespace-nowrap overflow-hidden text-ellipsis w-full`}>{projectName}</p>
+                            </div>
 
-                        <div id='circularTags' className='flex space-x-2 absolute bottom-4 right-4'>
-                        <a href="https://google.com.br" target='_blank'>
-                            <div className='bg-white rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'> 
-                                <SquareArrowOutUpRight className="h-4 w-4" />
+                            <div id='circularTags' className='flex space-x-2 p-4'>
+                                <a href="https://google.com.br" target='_blank'>
+                                    <div className='bg-white rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'> 
+                                        <SquareArrowOutUpRight className="h-4 w-4" />
+                                    </div>
+                                </a>    
+                                    <div className='bg-white rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'>
+                                        <Share className="h-4 w-4" />
+                                    </div>
                             </div>
-                        </a>    
-                            <div className='bg-white rounded-full h-8 w-8 flex items-center justify-center transition-colors duration-300 ease-[ease] hover:bg-gray-300'>
-                            <Share className="h-4 w-4" />
-                            </div>
-                            
                         </div>
+                        
                     </div>
                 </div>
             </a>
