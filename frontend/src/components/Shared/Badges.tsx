@@ -4,10 +4,10 @@ import { Badge } from '../ui/badge';
 interface BadgeProps {
   type: "laboratorio" | "pessoa" | "oficial" | "grupo" | "externo";
   size: "large" | "small";
-  smallSize?: { height?: string; padding?: string; fontSize?: string };
+  className?: string; //customizable component
 }
 
-const TypeBadge: React.FC<BadgeProps> = ({ type, size, smallSize }) => {
+const TypeBadge: React.FC<BadgeProps> = ({ type, size, className }) => {
   const corrsBig = {
     laboratorio: "Laboratório",
     pessoa: "Pessoa",
@@ -40,24 +40,18 @@ const TypeBadge: React.FC<BadgeProps> = ({ type, size, smallSize }) => {
     externo: 'text-amber-200 bg-amber-700 hover:bg-amber-200 hover:text-amber-700',
   };
 
+  const badgeClassName = className ? className : '';
+
   if (size === "large") {
     return (
-      <Badge className={`${colorsBig[type]} rounded-full border text-xs`}>
+      <Badge className={`${colorsBig[type]} rounded-full border text-xs ${badgeClassName}`}>
         {corrsBig[type]}
-      </Badge>   );
+      </Badge>
+    );
   } else {
-    const smallHeight = smallSize?.height || '22px';
-    const smallPadding = smallSize?.padding || 'px-2';
-    const smallFontSize = smallSize?.fontSize || '10px';
-
     return (
       <Badge
-        className={`${colorsSmall[type]} rounded-sm text-center`}
-        style={{
-          height: smallHeight,
-          padding: `0 ${smallPadding}`, 
-          fontSize: smallFontSize
-        }}
+        className={`${colorsSmall[type]} rounded-sm text-center ${badgeClassName}`}
       >
         {corrsSmall[type]}
       </Badge>
