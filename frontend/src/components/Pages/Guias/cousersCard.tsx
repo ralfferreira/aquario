@@ -17,8 +17,8 @@ const CourseCard: FC<CourseCardProps> = ({ iconName, children }) => {
   const Icon = iconMap[iconName as keyof typeof iconMap];
 
   return (
-    <Card className="h-auto dark:text-dark-text dark:border-white hover:border-gray-900 hover:cursor-pointer 
-                     transform hover:scale-105 transition-all duration-300 hover:text-gray-900">
+    <Card className="h-auto dark:text-dark-text dark:border-slate-600 hover:border-gray-900 hover:cursor-pointer 
+                     hover:text-gray-900 dark:hover:border-slate-200">
       <CardHeader>
         <Icon className="w-6 h-6" />
       </CardHeader>
