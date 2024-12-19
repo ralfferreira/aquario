@@ -1,47 +1,41 @@
 import React from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from "@/components/ui/label"
+import { LoginForm } from '@/components/ui/login-form';
 
 export default function Login() {
   return (
-    <div className="flex h-screen p-28">
+    <div className="flex items-center justify-center min-h-screen p-2 bg-gray-50 dark:bg-transparent ">
+      <div className="grid w-full max-w-7xl h-[85vh] gap-0 lg:grid-cols-2 border border-gray-200 dark:border-gray-700 dark:bg-transparent rounded-lg overflow-hidden mt-12">
+        <div className="relative hidden lg:flex items-center justify-center bg-sky-300 dark:bg-sky-800">
+          <img
+            src="logo_removebg.png"
+            alt="Logo"
+            className="absolute top-6 left-6 w-24 h-24 object-contain"
+          />
+        </div>
 
-      <div className="relative w-1/2 bg-sky-300 border-t-2 border-l-2 border-b-2 border-gray-200 rounded-l-2xl">
-        <img 
-          src="logo_removebg.png" 
-          alt="Logo" 
-          className="absolute top-0 left-0 m-4 w-20 h-20 object-contain"
-        />
-      </div>
-
-      <div className="w-1/2 flex items-center justify-center border-t-2 border-r-2 border-b-2 border-gray-200 rounded-r-2xl">
-        <div className="max-w-md w-full space-y-6">
-          <h1 className='text-4xl font-inter text-center font-bold	'>Faça seu login</h1>
-          <p className='font-inter text-center'>Insira as mesmas credencias do Sigaa</p>
-
-          <form className="flex flex-col items-center w-full">
-  
-            <div className="flex flex-col items-start w-96">
-              <Label htmlFor="Nome">Usuário</Label>
-              <Input className="mt-2 w-full" type="text" id="nome-de-usuario" placeholder="Usuário" />
+        {/* Formulário de Login */}
+        <div className="flex items-center justify-center p-6 md:p-8 bg-white dark:bg-transparent">
+          <div className="w-full max-w-md space-y-6 flex flex-col items-center">
+            <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-white">Faça seu login</h1>
+            <p className="text-center text-sm text-muted-foreground dark:text-muted-foreground">
+              Insira as mesmas credenciais do SIGAA
+            </p>
+            <div className="space-y-4 w-full flex flex-col items-center">
+              <input
+                type="text"
+                placeholder="Usuário"
+                className="w-full max-w-xs px-4 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 hover:ring-2 hover:ring-sky-500/50 dark:bg-transparent dark:text-white dark:border-gray-600 dark:focus:ring-sky-400 transition duration-300 ease-in-out"
+              />
+              <input
+                type="password"
+                placeholder="Senha"
+                className="w-full max-w-xs px-4 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 hover:ring-2 hover:ring-sky-500/50  dark:bg-transparent dark:text-white dark:border-gray-600 dark:focus:ring-sky-400 transition duration-300 ease-in-out"
+              />
+              <button className="w-full max-w-xs px-4 py-2 text-sm font-medium text-white bg-sky-500 dark:bg-sky-800 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                Login
+              </button>
             </div>
-
-            <div className="flex flex-col items-start w-96 mt-4">
-              <Label htmlFor="email">Senha</Label>
-              <Input className="mt-2 w-full" type="password" id="senha" placeholder="Senha" />
-            </div>
-
-            <div className="flex justify-center w-full mt-6">
-              <Button
-                variant="outline"
-                className="w-[100px] bg-gray-900 text-white dark:bg-white dark:text-gray-900"
-                >
-                Entrar
-              </Button>
-            </div>
-
-          </form>
+          </div>
         </div>
       </div>
     </div>
