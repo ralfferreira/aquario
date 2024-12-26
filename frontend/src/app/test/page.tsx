@@ -8,11 +8,11 @@ export default function PostPage() {
 
 A reportagem, que foi ao ar no dia 20 de julho, aborda o impacto do produto desenvolvido pelos alunos do laboratório no início do ano. O sistema já está em operação e corrigiu mais de 200 mil redações em mais de 2000 escolas da rede pública de Minas Gerais.`}
       user={{
-        image: "https://via.placeholder.com/150",
+        image: "/logo-tril.png",
         name: "TRIL",
-        type: "LAB",
+        type: "laboratorio",
       }}
-      datePublished="5 dias atrás"
+      timePublished={360}
       upVotes={23}
     />
   );
