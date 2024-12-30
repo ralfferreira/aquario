@@ -1,4 +1,6 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import TypeBadge from "@/components/Shared/Badges";
 
 type PostComponentProps = {
@@ -10,7 +12,6 @@ type PostComponentProps = {
     type: string;
   };
   timePublished: number;
-  upVotes: number;
 };
 
 const PostComponent: React.FC<PostComponentProps> = ({
@@ -18,15 +19,24 @@ const PostComponent: React.FC<PostComponentProps> = ({
   text,
   user,
   timePublished,
-  upVotes,
 }) => {
+  const [votes, setVotes] = useState(0);
+
+  const handleUpvote = () => {
+    setVotes((prevVotes) => (prevVotes < 1000 ? prevVotes + 1 : 1000));
+  };
+
+  const handleDownvote = () => {
+    setVotes((prevVotes) => (prevVotes > 0 ? prevVotes - 1 : 0));
+  };
+
   const paragraphs = text.split("\n").filter((paragraph) => paragraph.trim() !== "");
 
   const timePosted = () => {
     if (timePublished < 60) {
       return `${timePublished} minutos atrás`;
     }
-    
+
     const hours = Math.floor(timePublished / 60);
     const minutes = timePublished % 60;
 
@@ -41,7 +51,10 @@ const PostComponent: React.FC<PostComponentProps> = ({
     <div className="flex justify-center items-start min-h-screen bg-gray-100">
       <div className="flex pt-24 p-6 bg-white rounded-lg shadow-md max-w-3xl relative">
         <div className="flex flex-col items-center pr-4 relative">
-          <button className="text-gray-500 hover:text-blue-500">
+          <button
+            className="text-gray-500 hover:text-blue-500"
+            onClick={handleUpvote}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -57,8 +70,11 @@ const PostComponent: React.FC<PostComponentProps> = ({
               />
             </svg>
           </button>
-          <span className="text-lg font-semibold text-gray-700">{upVotes}</span>
-          <button className="text-gray-500 hover:text-red-500">
+          <span className="text-lg font-semibold text-gray-700">{votes}</span>
+          <button
+            className="text-gray-500 hover:text-red-500"
+            onClick={handleDownvote}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -74,7 +90,7 @@ const PostComponent: React.FC<PostComponentProps> = ({
               />
             </svg>
           </button>
-          <div className="absolute top-20 bottom-[4.5rem] w-px bg-gray-300"></div>
+          <div className="absolute top-20 bottom-[6.5rem] w-px bg-gray-300"></div>
         </div>
 
         <div className="pl-4 w-full">

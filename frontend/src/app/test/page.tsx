@@ -1,19 +1,26 @@
-import PostComponent from "@/components/Pages/PostPage";
+"use client"
 
-export default function PostPage() {
+import { useState } from 'react';
+
+import dynamic from 'next/dynamic';
+
+const Editor = dynamic(() => import('../../components/Shared/Editor/Editor'), { ssr: false });
+
+export default function Test() {
+  const [content, setContent] = useState('');
+  const handleContentChange = (content: any) => {
+    console.log('Content updated:', content);
+    setContent(content);
+  };
+
   return (
-    <PostComponent
-      title="Projeto do LASER e TRIL é matéria do Jornal Nacional"
-      text={`Desenvolvido por alunos do TRIL, o sistema de correção de redações do ENEM, feito em parceria com Estudo Play e o laboratório @LASER, foi destaque em uma reportagem no Jornal Nacional.
-
-A reportagem, que foi ao ar no dia 20 de julho, aborda o impacto do produto desenvolvido pelos alunos do laboratório no início do ano. O sistema já está em operação e corrigiu mais de 200 mil redações em mais de 2000 escolas da rede pública de Minas Gerais.`}
-      user={{
-        image: "/logo-tril.png",
-        name: "TRIL",
-        type: "laboratorio",
-      }}
-      timePublished={360}
-      upVotes={23}
-    />
+    <div className="container mx-auto p-4 pt-40">
+      <Editor
+        defaultContent=""
+        onContentChange={handleContentChange}
+        characterLimit={1000}
+      />
+    </div>
   );
 }
+  
