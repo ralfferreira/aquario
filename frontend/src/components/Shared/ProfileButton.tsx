@@ -25,7 +25,7 @@ export function ProfileButton() {
   if (!isAuthenticated || !user) {
     return (
       <Link href="/login" passHref>
-        <Button variant="ghost">Login</Button>
+        <Button variant="ghost">LOGIN</Button>
       </Link>
     );
   }

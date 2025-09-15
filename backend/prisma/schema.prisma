@@ -26,19 +26,31 @@ enum StatusItemAchadoEPerdido {
   PERDIDO
 }
 
+enum TipoEntidade {
+  LABORATORIO
+  GRUPO_PESQUISA
+  LIGA_ACADEMICA
+  OUTRO
+}
+
+enum PapelMembro {
+  ADMIN
+  MEMBRO
+}
+
 enum TipoProjeto {
   PESSOAL
   ENTIDADE
 }
 
 model Campus {
-  id      String   @id @default(cuid())
+  id      String   @id @default(uuid())
   nome    String   @unique
   centros Centro[]
 }
 
 model Centro {
-  id        String @id @default(cuid())
+  id        String @id @default(uuid())
   nome      String @unique
   sigla     String @unique
   descricao String?
@@ -52,10 +64,11 @@ model Centro {
   vagas       Vaga[]
   usuarios    Usuario[]
   itensFAQ    ItemFAQ[]
+  entidades   Entidade[]
 }
 
 model Curso {
-  id       String @id @default(cuid())
+  id       String @id @default(uuid())
   nome     String @unique
   centroId String
 
@@ -64,9 +77,11 @@ model Curso {
 }
 
 model Usuario {
-  id              String   @id @default(cuid())
+  id              String   @id @default(uuid())
+  membroDeEntidades MembroEntidade[]
   nome            String
   email           String   @unique
+  matricula       String?  @unique
   senhaHash       String
   papel           PapelUsuario
   permissoes      String[] @default([])
@@ -87,10 +102,13 @@ model Usuario {
   vagasPublicadas Vaga[]
   itensAchadosEPerdidos ItemAchadoEPerdido[]
   projetos        Projeto[]
+  entidadesCriadas Entidade[] @relation("CriadorDeEntidade")
 }
 
 model Publicacao {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
+  entidadeId   String?
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id])
   titulo       String
   conteudo     String
   autorId      String
@@ -103,7 +121,9 @@ model Publicacao {
 }
 
 model Projeto {
-  id           String      @id @default(cuid())
+  id           String      @id @default(uuid())
+  entidadeId   String?
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id])
   titulo       String
   descricao    String
   criadorId    String
@@ -120,7 +140,9 @@ model Projeto {
 }
 
 model Vaga {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
+  entidadeId   String?
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id])
   titulo       String
   descricao    String
   tipoVaga     TipoVaga
@@ -136,7 +158,7 @@ model Vaga {
 }
 
 model ItemAchadoEPerdido {
-  id           String                  @id @default(cuid())
+  id           String                  @id @default(uuid())
   titulo       String
   descricao    String
   urlsFotos    String[]                @default([])
@@ -148,8 +170,40 @@ model ItemAchadoEPerdido {
   autor Usuario @relation(fields: [autorId], references: [id])
 }
 
+model Entidade {
+  id          String    @id @default(uuid())
+  nome        String
+  descricao   String?
+  tipo        TipoEntidade
+  urlFoto     String?
+  contato     String?
+  centroId    String
+  criadorId   String // Usuário que criou a entidade
+
+  centro      Centro          @relation(fields: [centroId], references: [id])
+  criador     Usuario         @relation("CriadorDeEntidade", fields: [criadorId], references: [id])
+  membros     MembroEntidade[]
+  projetos    Projeto[]
+  publicacoes Publicacao[]
+  vagas       Vaga[]
+
+  @@unique([nome, tipo])
+}
+
+model MembroEntidade {
+  id         String      @id @default(uuid())
+  usuarioId  String
+  entidadeId String
+  papel      PapelMembro
+
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id])
+  entidade Entidade @relation(fields: [entidadeId], references: [id])
+
+  @@unique([usuarioId, entidadeId])
+}
+
 model ItemFAQ {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   pergunta     String
   resposta     String
   categoria    String

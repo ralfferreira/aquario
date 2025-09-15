@@ -3,6 +3,39 @@ import { IUsuariosRepository } from '@/domain/usuarios/repositories/IUsuariosRep
 import { prisma } from '..';
 
 export class PrismaUsuariosRepository implements IUsuariosRepository {
+
+  async findMany(): Promise<Usuario[]> {
+    const usuarios = await prisma.usuario.findMany({
+      include: {
+        centro: true,
+        curso: true,
+      },
+      orderBy: {
+        nome: 'asc',
+      },
+    });
+
+    return usuarios
+      .filter((usuario) => usuario.centro)
+      .map((usuario) =>
+        Usuario.create(
+          {
+            nome: usuario.nome,
+            email: usuario.email,
+            senhaHash: usuario.senhaHash,
+            papel: usuario.papel,
+            permissoes: usuario.permissoes,
+            centro: usuario.centro!,
+            curso: usuario.curso,
+            bio: usuario.bio,
+            urlFotoPerfil: usuario.urlFotoPerfil,
+            periodo: usuario.periodo,
+          },
+          usuario.id,
+        ),
+      );
+  }
+
   async create(usuario: Usuario): Promise<void> {
     await prisma.usuario.create({
       data: {

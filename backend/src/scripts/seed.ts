@@ -8,6 +8,12 @@ async function main() {
 
   // Limpar dados existentes para evitar duplicatas
   await prisma.publicacao.deleteMany();
+  await prisma.itemAchadoEPerdido.deleteMany();
+  await prisma.vaga.deleteMany();
+  await prisma.projeto.deleteMany();
+  await prisma.membroEntidade.deleteMany(); // Primeiro, os membros
+  await prisma.entidade.deleteMany();      // Depois, as entidades
+  await prisma.itemFAQ.deleteMany();
   await prisma.usuario.deleteMany();
   await prisma.curso.deleteMany();
   await prisma.centro.deleteMany();
@@ -44,8 +50,28 @@ async function main() {
 
   const usersData = [
     {
+      nome: 'Thais',
+      email: 'thais@ci.ufpb.br',
+      senhaHash: passwordHash,
+      papel: 'DOCENTE' as const,
+      permissoes: [],
+      eVerificado: true,
+      centroId: ci.id,
+    },
+    {
+      nome: 'Itamar',
+      email: 'itamar@aquario.com',
+      matricula: '20220060783',
+      senhaHash: passwordHash,
+      papel: 'DISCENTE' as const,
+      permissoes: [],
+      eVerificado: true,
+      centroId: ci.id,
+    },
+    {
       nome: 'Usuário de Teste',
       email: 'teste@aquario.com',
+      matricula: '20220000000',
       senhaHash: passwordHash,
       papel: 'DISCENTE' as const,
       permissoes: [],
@@ -72,16 +98,65 @@ async function main() {
     },
   ];
 
-  await prisma.usuario.createMany({
-    data: usersData,
-  });
+  for (const userData of usersData) {
+    try {
+      await prisma.usuario.create({ data: userData });
+      console.log(`- Usuário '${userData.nome}' criado com sucesso.`);
+    } catch (error) {
+      console.error(`Falha ao criar o usuário '${userData.nome}':`, error);
+      throw error; // Re-lança o erro para parar o script
+    }
+  }
+
+  console.log('Usuários criados.');
 
   const user = await prisma.usuario.findUnique({ where: { email: 'teste@aquario.com' } });
   const tadea = await prisma.usuario.findUnique({ where: { email: 'tadea@ci.ufpb.br' } });
   const rivailda = await prisma.usuario.findUnique({ where: { email: 'rivailda@ci.ufpb.br' } });
   const cc = await prisma.curso.findUnique({ where: { nome: 'Ciência da Computação' } });
 
-  if (!user || !tadea || !rivailda || !cc) throw new Error('Erro ao buscar entidades no seed.');
+  const thais = await prisma.usuario.findUnique({ where: { email: 'thais@ci.ufpb.br' } });
+  const itamar = await prisma.usuario.findUnique({ where: { email: 'itamar@aquario.com' } });
+
+  if (!user || !tadea || !rivailda || !cc || !thais || !itamar) throw new Error('Erro ao buscar entidades no seed.');
+
+  const aria = await prisma.entidade.create({
+    data: {
+      nome: 'ARIA - Laboratório de Aplicações de Inteligência Artificial',
+      tipo: 'LABORATORIO',
+      centroId: ci.id,
+      criadorId: thais.id,
+    },
+  });
+
+  const tail = await prisma.entidade.create({
+    data: {
+      nome: 'TAIL - Liga Acadêmica de IA e Lógica',
+      tipo: 'LIGA_ACADEMICA',
+      centroId: ci.id,
+      criadorId: itamar.id,
+    },
+  });
+
+  console.log('Entidades de exemplo criadas.');
+
+  const membrosData = [
+    { usuarioId: thais.id, entidadeId: aria.id, papel: 'ADMIN' as const, nome: 'Thais no ARIA' },
+    { usuarioId: itamar.id, entidadeId: tail.id, papel: 'ADMIN' as const, nome: 'Itamar no TAIL' },
+  ];
+
+  for (const membroData of membrosData) {
+    try {
+      const { nome, ...rest } = membroData;
+      await prisma.membroEntidade.create({ data: rest });
+      console.log(`- Membro '${nome}' criado com sucesso.`);
+    } catch (error) {
+      console.error(`Falha ao criar o membro '${membroData.nome}':`, error);
+      throw error;
+    }
+  }
+
+  console.log('Membros de entidades criados.');
 
   console.log(`
 --- IDs para Teste ---
