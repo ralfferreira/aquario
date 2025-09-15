@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useTheme } from "next-themes"; 
+import { useTheme } from "next-themes";
+import Image from "next/image"; 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,11 +11,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function SearchFilters() {
+interface SearchFiltersProps {
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+  activeButton: string;
+  setActiveButton: (value: string) => void;
+  tagTerm: string;
+  setTagTerm: (value: string) => void;
+  collaborators: string;
+  setCollaborators: (value: string) => void;
+  clearFilters: () => void;
+}
+
+export default function SearchFilters({ 
+  searchTerm,
+  setSearchTerm,
+  activeButton,
+  setActiveButton,
+  tagTerm,
+  setTagTerm,
+  collaborators,
+  setCollaborators,
+  clearFilters
+}: SearchFiltersProps) {
   const { theme } = useTheme(); 
-  const [activeButton, setActiveButton] = useState("Todos");
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedCollaborators, setSelectedCollaborators] = useState("");
 
   const isActive = (button: string) => activeButton === button;
 
@@ -22,8 +43,8 @@ export default function SearchFilters() {
     setShowFilters((prev) => !prev);
   };
 
-  const handleClear = () => {
-    setSelectedCollaborators(""); 
+    const handleClear = () => {
+    clearFilters();
   };
 
   // Determine icons according to the theme (dark or light)
@@ -36,12 +57,14 @@ export default function SearchFilters() {
         <div className="flex items-center gap-3 flex-wrap">
           <div className="relative w-68">
             <span className="absolute inset-y-0 flex items-center pl-3">
-              <img src={searchIcon} alt="icon search" className="h-4 w-4 text-gray-400" />
+              <Image src={`/${searchIcon}`} alt="icon search" width={16} height={16} />
             </span>
             <Input
               className="pl-10 text-xs h-8 bg-gray-50 border-[1.3px] border-gray-400 dark:bg-transparent dark:text-gray-200"
               type="text"
               placeholder="Pesquisar"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
@@ -78,7 +101,7 @@ export default function SearchFilters() {
           variant="outline" 
           className="bg-transparent w-24 h-8 flex gap-2 text-xs rounded-full border-gray-400 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"
           onClick={toggleFilters}>
-          <img src={filterIcon} alt="icon filter" className="h-4 w-4" />
+          <Image src={`/${filterIcon}`} alt="icon filter" width={16} height={16} />
           Filtros
         </Button>
       </div>
@@ -92,12 +115,12 @@ export default function SearchFilters() {
           <div className="flex flex-row gap-3">
             <div className="relative h-8">
               <span className="absolute inset-y-0 left-3 flex items-center">
-                <img src={searchIcon} alt="icon search" className="h-4 w-4 text-gray-400" />
+                <Image src={`/${searchIcon}`} alt="icon search" width={16} height={16} />
               </span>
-              <Input id="tag" type="text" placeholder="Pesquise por Tag" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 w-46 dark:bg-transparent dark:text-gray-200"/>
+              <Input id="tag" type="text" placeholder="Pesquise por Tag" className="pl-10 text-xs h-8 bg-transparent border-[1.3px] border-gray-400 w-46 dark:bg-transparent dark:text-gray-200" value={tagTerm} onChange={(e) => setTagTerm(e.target.value)} />
             </div>
             <div>
-              <Select value={selectedCollaborators} onValueChange={setSelectedCollaborators}>
+              <Select value={collaborators} onValueChange={setCollaborators}>
                 <SelectTrigger className="text-xs text-gray-500 h-8 bg-transparent border-gray-400 w-46 dark:bg-transparent dark:text-gray-200">
                   <SelectValue placeholder="Número de colaboradores" />
                 </SelectTrigger>

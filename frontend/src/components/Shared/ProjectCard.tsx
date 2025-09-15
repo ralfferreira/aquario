@@ -3,12 +3,23 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+export interface Autor {
+  id: string;
+  nome: string;
+  urlFotoPerfil?: string | null;
+}
 
 export interface Projeto {
   id: string;
   titulo: string;
   descricao: string;
   urlFoto?: string | null;
+  autor: Autor;
+  tipo: string;
+  tags: string[];
+  membros?: { id: string }[];
 }
 
 interface ProjectCardProps {
@@ -38,7 +49,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ projeto }) => {
         <CardTitle className="truncate">{projeto.titulo}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground line-clamp-2">{stripHtml(projeto.descricao)}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2 h-10">{stripHtml(projeto.descricao)}</p>
+          {projeto.autor && ( 
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground mt-4 pt-2">
+            <Avatar className="h-6 w-6">
+              <AvatarFallback>{projeto.autor.nome[0]}</AvatarFallback>
+            </Avatar>
+              <span>{projeto.autor.nome}</span>
+            </div>
+        )}
       </CardContent>
     </Card>
   );
