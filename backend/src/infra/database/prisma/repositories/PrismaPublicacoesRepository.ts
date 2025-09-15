@@ -9,7 +9,7 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
         id: publicacao.id,
         titulo: publicacao.props.titulo,
         conteudo: publicacao.props.conteudo,
-        autorId: publicacao.props.autorId,
+        autorId: publicacao.props.autor.id,
         centroId: publicacao.props.centroId,
         criadoEm: publicacao.props.criadoEm,
       },
@@ -18,6 +18,15 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
 
   async findMany(): Promise<Publicacao[]> {
     const publicacoes = await prisma.publicacao.findMany({
+      include: {
+        autor: {
+          select: {
+            id: true,
+            nome: true,
+            urlFotoPerfil: true,
+          },
+        },
+      },
       orderBy: {
         criadoEm: 'desc',
       },
@@ -28,7 +37,7 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
         {
           titulo: publicacao.titulo,
           conteudo: publicacao.conteudo,
-          autorId: publicacao.autorId,
+          autor: publicacao.autor,
           centroId: publicacao.centroId,
           criadoEm: publicacao.criadoEm,
           atualizadoEm: publicacao.atualizadoEm,
@@ -41,6 +50,15 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
   async findById(id: string): Promise<Publicacao | null> {
     const publicacao = await prisma.publicacao.findUnique({
       where: { id },
+      include: {
+        autor: {
+          select: {
+            id: true,
+            nome: true,
+            urlFotoPerfil: true,
+          },
+        },
+      },
     });
 
     if (!publicacao) {
@@ -51,7 +69,7 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
       {
         titulo: publicacao.titulo,
         conteudo: publicacao.conteudo,
-        autorId: publicacao.autorId,
+        autor: publicacao.autor,
         centroId: publicacao.centroId,
         criadoEm: publicacao.criadoEm,
         atualizadoEm: publicacao.atualizadoEm,

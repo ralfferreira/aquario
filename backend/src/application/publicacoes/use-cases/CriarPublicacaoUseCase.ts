@@ -36,10 +36,14 @@ export class CriarPublicacaoUseCase {
     }
 
     const publicacao = Publicacao.create({
-      autorId,
-      centroId,
       titulo,
       conteudo,
+      autor: {
+        id: autor.id,
+        nome: autor.props.nome,
+        urlFotoPerfil: autor.props.urlFotoPerfil,
+      },
+      centroId,
     });
 
     await this.publicacoesRepository.create(publicacao);

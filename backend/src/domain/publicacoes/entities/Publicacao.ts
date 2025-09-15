@@ -1,17 +1,23 @@
 import { Entity } from '@/core/entities/Entity';
 
+export interface PublicacaoAutor {
+  id: string;
+  nome: string;
+  urlFotoPerfil?: string | null;
+}
+
 interface PublicacaoProps {
   titulo: string;
   conteudo: string;
-  autorId: string;
+  autor: PublicacaoAutor;
   centroId: string;
   criadoEm?: Date;
   atualizadoEm?: Date;
 }
 
 export class Publicacao extends Entity<PublicacaoProps> {
-  get autorId() {
-    return this.props.autorId;
+  get autor() {
+    return this.props.autor;
   }
 
   get titulo() {

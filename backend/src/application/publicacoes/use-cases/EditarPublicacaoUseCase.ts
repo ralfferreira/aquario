@@ -25,7 +25,7 @@ export class EditarPublicacaoUseCase {
       throw new Error('Publicação não encontrada.');
     }
 
-    if (publicacao.autorId !== autorId) {
+    if (publicacao.autor.id !== autorId) {
       throw new Error('Ação não autorizada.');
     }
 
