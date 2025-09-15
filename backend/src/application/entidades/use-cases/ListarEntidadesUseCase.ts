@@ -9,7 +9,7 @@ export class ListarEntidadesUseCase {
   constructor(private entidadesRepository: IEntidadesRepository) {}
 
   async execute(): Promise<ListarEntidadesUseCaseResponse> {
-    const { entidades } = await this.entidadesRepository.findMany();
+    const entidades = await this.entidadesRepository.findMany();
     return { entidades };
   }
 }

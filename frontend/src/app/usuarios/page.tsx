@@ -3,30 +3,35 @@ import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import Link from 'next/link';
 import UserCard, { User } from '@/components/Shared/UserCard';
+import EntidadeCard, { Entidade } from '@/components/Shared/EntidadeCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Usuarios() {
   const [activeTab, setActiveTab] = useState<'Laboratórios' | 'Grupos e Ligas' | 'Pessoas'>('Pessoas');
   const [users, setUsers] = useState<User[]>([]);
+  const [entidades, setEntidades] = useState<Entidade[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
-    if (activeTab === 'Pessoas') {
-      const fetchUsers = async () => {
-        setIsLoading(true);
-        try {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        if (activeTab === 'Pessoas') {
           const response = await fetch('http://localhost:3001/usuarios');
           if (!response.ok) throw new Error('Falha ao buscar usuários');
-          const data = await response.json();
-          setUsers(data);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsLoading(false);
+          setUsers(await response.json());
+        } else {
+          const response = await fetch('http://localhost:3001/entidades');
+          if (!response.ok) throw new Error('Falha ao buscar entidades');
+          setEntidades(await response.json());
         }
-      };
-      fetchUsers();
-    }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, [activeTab]);
 
   return (
@@ -67,8 +72,44 @@ export default function Usuarios() {
 
           </div>
         )}
-        {activeTab === 'Laboratórios' && <div className="text-center text-muted-foreground py-12">Em breve...</div>}
-        {activeTab === 'Grupos e Ligas' && <div className="text-center text-muted-foreground py-12">Em breve...</div>}
+        {activeTab === 'Laboratórios' && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <div key={index} className="space-y-2 flex flex-col items-center">
+                    <Skeleton className="h-24 w-24 rounded-full" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </div>
+                ))
+              : entidades
+                  .filter((e) => e.tipo === 'LABORATORIO')
+                  .map((entidade) => (
+                    <Link href={`/entidades/${entidade.id}`} key={entidade.id}>
+                      <EntidadeCard entidade={entidade} />
+                    </Link>
+                  ))}
+          </div>
+        )}
+        {activeTab === 'Grupos e Ligas' && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <div key={index} className="space-y-2 flex flex-col items-center">
+                    <Skeleton className="h-24 w-24 rounded-full" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </div>
+                ))
+              : entidades
+                  .filter((e) => e.tipo === 'GRUPO_PESQUISA' || e.tipo === 'LIGA_ACADEMICA')
+                  .map((entidade) => (
+                    <Link href={`/entidades/${entidade.id}`} key={entidade.id}>
+                      <EntidadeCard entidade={entidade} />
+                    </Link>
+                  ))}
+          </div>
+        )}
       </div>
     </div>
   );
