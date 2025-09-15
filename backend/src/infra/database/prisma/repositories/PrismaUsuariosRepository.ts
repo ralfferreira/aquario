@@ -12,10 +12,10 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
         senhaHash: usuario.props.senhaHash,
         papel: usuario.props.papel,
         permissoes: usuario.props.permissoes,
-        centroId: usuario.props.centroId,
+        centroId: usuario.props.centro.id,
         bio: usuario.props.bio,
         urlFotoPerfil: usuario.props.urlFotoPerfil,
-        cursoId: usuario.props.cursoId,
+        cursoId: usuario.props.curso?.id,
         periodo: usuario.props.periodo,
       },
     });
@@ -24,9 +24,13 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
   async findById(id: string): Promise<Usuario | null> {
     const usuario = await prisma.usuario.findUnique({
       where: { id },
+      include: {
+        centro: true,
+        curso: true,
+      },
     });
 
-    if (!usuario || !usuario.centroId) {
+    if (!usuario || !usuario.centro) {
       return null;
     }
 
@@ -37,10 +41,10 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
         senhaHash: usuario.senhaHash,
         papel: usuario.papel,
         permissoes: usuario.permissoes,
-        centroId: usuario.centroId,
+        centro: usuario.centro,
+        curso: usuario.curso,
         bio: usuario.bio,
         urlFotoPerfil: usuario.urlFotoPerfil,
-        cursoId: usuario.cursoId,
         periodo: usuario.periodo,
       },
       usuario.id,
@@ -50,9 +54,13 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
   async findByEmail(email: string): Promise<Usuario | null> {
     const usuario = await prisma.usuario.findUnique({
       where: { email },
+      include: {
+        centro: true,
+        curso: true,
+      },
     });
 
-    if (!usuario || !usuario.centroId) {
+    if (!usuario || !usuario.centro) {
       return null;
     }
 
@@ -63,10 +71,10 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
         senhaHash: usuario.senhaHash,
         papel: usuario.papel,
         permissoes: usuario.permissoes,
-        centroId: usuario.centroId,
+        centro: usuario.centro,
+        curso: usuario.curso,
         bio: usuario.bio,
         urlFotoPerfil: usuario.urlFotoPerfil,
-        cursoId: usuario.cursoId,
         periodo: usuario.periodo,
       },
       usuario.id,

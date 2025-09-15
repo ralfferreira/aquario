@@ -3,9 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import NavWrapper from "@/components/Shared/NavWrapper";
-
+import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from "@/components/Shared/theme-provider"
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,15 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-          <ThemeProvider
-              attribute="class"
-              defaultTheme="light"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <NavWrapper />
-              {children}
-          </ThemeProvider>
+          <AuthProvider>
+              <ThemeProvider
+                  attribute="class"
+                  defaultTheme="light"
+                  enableSystem
+                  disableTransitionOnChange
+                >
+                  <NavWrapper />
+                  {children}
+              </ThemeProvider>
+          </AuthProvider>
         </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import LinkHover from "@/components/Shared/LinkHover";
+import { ProfileButton } from "./ProfileButton";
 
 export default function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +77,7 @@ export default function HamburgerMenu() {
                   <LinkHover href="/sobre">SOBRE</LinkHover>
                 </li>
                 <li>
-                  <LinkHover href="/login">LOGIN</LinkHover>
+                  <ProfileButton />
                 </li>
                 {/* Pesquisar?? */}
               </ul>

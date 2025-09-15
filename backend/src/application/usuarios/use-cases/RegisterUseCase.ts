@@ -51,8 +51,9 @@ export class RegisterUseCase {
       throw new Error('Centro não encontrado.');
     }
 
-    if (cursoId) {
-      const curso = await this.cursosRepository.findById(cursoId);
+    let curso = null;
+    if (papel === 'DISCENTE' && cursoId) {
+      curso = await this.cursosRepository.findById(cursoId);
       if (!curso) {
         throw new Error('Curso não encontrado.');
       }
@@ -60,19 +61,19 @@ export class RegisterUseCase {
 
     const senhaHash = await hash(senha, 10);
 
-    await this.usuariosRepository.create(
-      Usuario.create({
-        nome,
-        email,
-        senhaHash,
-        papel,
-        permissoes: [],
-        centroId,
-        bio,
-        urlFotoPerfil,
-        cursoId,
-        periodo,
-      }),
-    );
+    const usuario = Usuario.create({
+      nome,
+      email,
+      senhaHash,
+      papel,
+      permissoes: [],
+      centro,
+      curso,
+      bio,
+      urlFotoPerfil,
+      periodo,
+    });
+
+    await this.usuariosRepository.create(usuario);
   }
 }

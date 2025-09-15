@@ -1,6 +1,6 @@
 import { Entity } from '@/core/entities/Entity';
 
-import { PapelUsuario } from '@prisma/client';
+import { PapelUsuario, Centro, Curso } from '@prisma/client';
 
 interface UsuarioProps {
   nome: string;
@@ -8,11 +8,11 @@ interface UsuarioProps {
   senhaHash: string;
   papel: PapelUsuario;
   permissoes: string[];
-  centroId: string;
+  centro: Centro;
+  curso?: Curso | null;
   bio?: string | null;
   urlFotoPerfil?: string | null;
   periodo?: number | null;
-  cursoId?: string | null;
 }
 
 export class Usuario extends Entity<UsuarioProps> {
