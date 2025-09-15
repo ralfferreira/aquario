@@ -32,7 +32,6 @@ export class EditarPublicacaoController {
           issues: error.format(),
         });
       }
-      // Adicionar tratamento para erro de 'não encontrado'
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

@@ -6,12 +6,13 @@ export interface ProjetoProps {
   descricao: string;
   tipo: TipoProjeto;
   criadorId: string;
-  centroId: string;
+  membros?: any[];
   tags: string[];
   urlFoto?: string | null;
   url?: string | null;
   criadoEm?: Date;
   atualizadoEm?: Date;
+  centroId: string;
 }
 
 export class Projeto extends Entity<ProjetoProps> {

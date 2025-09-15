@@ -37,7 +37,7 @@ export class AuthenticateController {
         return response.status(400).json({ message: 'Validation error.', issues: error.format() });
       }
       if (error instanceof Error) {
-        return response.status(401).json({ message: error.message }); // Unauthorized
+        return response.status(401).json({ message: error.message });
       }
       return response.status(500).json({ message: 'Internal server error.' });
     }

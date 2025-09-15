@@ -17,7 +17,6 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
   try {
     const { sub } = verify(token, process.env.JWT_SECRET as string) as IPayload;
 
-    // Anexando o ID do usuário ao objeto de requisição
     request.usuario = {
       id: sub,
     };

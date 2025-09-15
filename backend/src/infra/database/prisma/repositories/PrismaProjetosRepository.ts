@@ -6,6 +6,10 @@ export class PrismaProjetosRepository implements IProjetosRepository {
   async findById(id: string): Promise<Projeto | null> {
     const projeto = await prisma.projeto.findUnique({
       where: { id },
+      include: {
+        membros: true,
+        criador: true,
+      },
     });
 
     if (!projeto) {
@@ -14,45 +18,19 @@ export class PrismaProjetosRepository implements IProjetosRepository {
 
     return Projeto.create(
       {
-        titulo: projeto.titulo,
-        descricao: projeto.descricao,
-        tipo: projeto.tipo,
-        criadorId: projeto.criadorId,
-        centroId: projeto.centroId,
-        tags: projeto.tags,
-        url: projeto.url,
-        urlFoto: projeto.urlFoto,
-        criadoEm: projeto.criadoEm,
-        atualizadoEm: projeto.atualizadoEm,
+        ...projeto,
+        membros: projeto.membros.map((membro) => membro),
       },
       projeto.id,
     );
   }
 
-  async save(projeto: Projeto): Promise<void> {
-    await prisma.projeto.update({
-      where: {
-        id: projeto.id,
-      },
-      data: {
-        titulo: projeto.titulo,
-        descricao: projeto.descricao,
-        tags: projeto.tags,
-        url: projeto.url,
-        urlFoto: projeto.urlFoto,
-        atualizadoEm: projeto.props.atualizadoEm,
-      },
-    });
-  }
-
-  async delete(id: string): Promise<void> {
-    await prisma.projeto.delete({
-      where: { id },
-    });
-  }
-
   async findMany(): Promise<Projeto[]> {
     const projetos = await prisma.projeto.findMany({
+      include: {
+        membros: true,
+        criador: true,
+      },
       orderBy: {
         criadoEm: 'desc',
       },
@@ -61,16 +39,8 @@ export class PrismaProjetosRepository implements IProjetosRepository {
     return projetos.map((projeto) =>
       Projeto.create(
         {
-          titulo: projeto.titulo,
-          descricao: projeto.descricao,
-          tipo: projeto.tipo,
-          criadorId: projeto.criadorId,
-          centroId: projeto.centroId,
-          tags: projeto.tags,
-          url: projeto.url,
-          urlFoto: projeto.urlFoto,
-          criadoEm: projeto.criadoEm,
-          atualizadoEm: projeto.atualizadoEm,
+          ...projeto,
+          membros: projeto.membros,
         },
         projeto.id,
       ),
@@ -81,15 +51,35 @@ export class PrismaProjetosRepository implements IProjetosRepository {
     await prisma.projeto.create({
       data: {
         id: projeto.id,
-        titulo: projeto.titulo,
-        descricao: projeto.descricao,
-        criadorId: projeto.criadorId,
-        centroId: projeto.centroId,
-        tags: projeto.tags,
-        tipo: projeto.tipo,
-        url: projeto.url,
-        urlFoto: projeto.urlFoto,
+        titulo: projeto.props.titulo,
+        descricao: projeto.props.descricao,
+        tipo: projeto.props.tipo,
+        criadorId: projeto.props.criadorId,
+        centroId: projeto.props.centroId,
+        tags: projeto.props.tags,
+        url: projeto.props.url,
+        urlFoto: projeto.props.urlFoto,
+        membros: {
+          connect: projeto.props.membros?.map((id) => ({ id })) || [],
+        },
       },
     });
+  }
+
+  async save(projeto: Projeto): Promise<void> {
+    const { membros, ...data } = projeto.props;
+    await prisma.projeto.update({
+      where: { id: projeto.id },
+      data: {
+        ...data,
+        membros: {
+          set: membros?.map((id) => ({ id })) ?? [],
+        },
+      },
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await prisma.projeto.delete({ where: { id } });
   }
 }

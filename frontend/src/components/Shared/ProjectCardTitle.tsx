@@ -57,7 +57,7 @@ export default function PostCardTitle({ postTitle, numVotes, numMinutes, numComm
       <h3 className="h-4 mb-4 font-medium">{postTitle}</h3>
       <div className="grid grid-cols-12">
         <div className="col-span-3 flex justify-around items-center gap-2">
-          <img className="object-none h-8 w-8 rounded-full" src={postUser.image} width={30} height={30} alt='' />
+          <Image className="object-none h-8 w-8 rounded-full" src={postUser.image} width={30} height={30} alt='' />
           <h4 className="text-md font-medium">{postUser.name}</h4>
           {/* <Badge variant="default" className="h-5 bg-blue-600 hover:bg-blue-700">{postUser.type}</Badge> */}
           <TypeBadge type={postUser.type} size="small"></TypeBadge>

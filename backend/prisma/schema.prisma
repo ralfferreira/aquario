@@ -102,6 +102,7 @@ model Usuario {
   vagasPublicadas Vaga[]
   itensAchadosEPerdidos ItemAchadoEPerdido[]
   projetos        Projeto[]
+  projetosMembro  Projeto[] @relation("MembrosDoProjeto")
   entidadesCriadas Entidade[] @relation("CriadorDeEntidade")
 }
 
@@ -137,6 +138,7 @@ model Projeto {
 
   criador Usuario @relation(fields: [criadorId], references: [id])
   centro  Centro  @relation(fields: [centroId], references: [id])
+  membros Usuario[] @relation("MembrosDoProjeto")
 }
 
 model Vaga {
@@ -178,7 +180,7 @@ model Entidade {
   urlFoto     String?
   contato     String?
   centroId    String
-  criadorId   String // Usuário que criou a entidade
+  criadorId   String
 
   centro      Centro          @relation(fields: [centroId], references: [id])
   criador     Usuario         @relation("CriadorDeEntidade", fields: [criadorId], references: [id])

@@ -15,6 +15,14 @@ interface ProjectCardProps {
   projeto: Projeto;
 }
 
+const stripHtml = (html: string) => {
+  if (typeof window !== 'undefined') {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+  }
+  return html;
+};
+
 const ProjectCard: React.FC<ProjectCardProps> = ({ projeto }) => {
   return (
     <Card className="w-full max-w-sm overflow-hidden hover:shadow-xl transition-shadow">
@@ -30,7 +38,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ projeto }) => {
         <CardTitle className="truncate">{projeto.titulo}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground line-clamp-2">{projeto.descricao}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2">{stripHtml(projeto.descricao)}</p>
       </CardContent>
     </Card>
   );

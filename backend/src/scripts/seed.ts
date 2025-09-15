@@ -6,13 +6,12 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Iniciando o seeding...');
 
-  // Limpar dados existentes para evitar duplicatas
   await prisma.publicacao.deleteMany();
   await prisma.itemAchadoEPerdido.deleteMany();
   await prisma.vaga.deleteMany();
   await prisma.projeto.deleteMany();
-  await prisma.membroEntidade.deleteMany(); // Primeiro, os membros
-  await prisma.entidade.deleteMany();      // Depois, as entidades
+  await prisma.membroEntidade.deleteMany();
+  await prisma.entidade.deleteMany();
   await prisma.itemFAQ.deleteMany();
   await prisma.usuario.deleteMany();
   await prisma.curso.deleteMany();
@@ -104,7 +103,7 @@ async function main() {
       console.log(`- Usuário '${userData.nome}' criado com sucesso.`);
     } catch (error) {
       console.error(`Falha ao criar o usuário '${userData.nome}':`, error);
-      throw error; // Re-lança o erro para parar o script
+      throw error;
     }
   }
 

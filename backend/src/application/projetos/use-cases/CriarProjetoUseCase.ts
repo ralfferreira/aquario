@@ -13,6 +13,7 @@ interface CriarProjetoUseCaseRequest {
   tags: string[];
   urlFoto?: string;
   url?: string;
+  membroIds?: string[];
 }
 
 type CriarProjetoUseCaseResponse = void;
@@ -33,6 +34,7 @@ export class CriarProjetoUseCase {
     tags,
     urlFoto,
     url,
+    membroIds,
   }: CriarProjetoUseCaseRequest): Promise<CriarProjetoUseCaseResponse> {
     const criador = await this.usuariosRepository.findById(criadorId);
     if (!criador) {
@@ -53,6 +55,7 @@ export class CriarProjetoUseCase {
       tags,
       urlFoto,
       url,
+      membros: membroIds ?? [],
     });
 
     await this.projetosRepository.create(projeto);

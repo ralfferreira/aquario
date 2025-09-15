@@ -10,16 +10,17 @@ const criarProjetoBodySchema = z.object({
   titulo: z.string(),
   descricao: z.string(),
   tipo: z.nativeEnum(TipoProjeto),
-  centroId: z.string().cuid(),
+  centroId: z.string().uuid(),
   tags: z.array(z.string()),
   urlFoto: z.string().url().optional(),
   url: z.string().url().optional(),
+  membroIds: z.array(z.string().uuid()).optional(),
 });
 
 export class CriarProjetoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { titulo, descricao, tipo, centroId, tags, urlFoto, url } = criarProjetoBodySchema.parse(request.body);
+      const { titulo, descricao, tipo, centroId, tags, urlFoto, url, membroIds } = criarProjetoBodySchema.parse(request.body);
       const criadorId = request.usuario.id;
 
       const projetosRepository = new PrismaProjetosRepository();
@@ -40,6 +41,7 @@ export class CriarProjetoController {
         tags,
         urlFoto,
         url,
+        membroIds,
       });
 
       return response.status(201).send();
@@ -50,8 +52,10 @@ export class CriarProjetoController {
           issues: error.format(),
         });
       }
+      console.error('Erro ao criar projeto:', error);
+
       if (error instanceof Error) {
-        if (error.message === 'Criador não encontrado.') {
+        if (error.message === 'Criador não encontrado.' || error.message === 'Centro não encontrado.') {
           return response.status(404).json({ message: error.message });
         }
       }

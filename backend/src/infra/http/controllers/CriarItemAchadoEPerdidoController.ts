@@ -34,7 +34,7 @@ export class CriarItemAchadoEPerdidoController {
         });
       }
       if (error instanceof Error) {
-        return response.status(403).json({ message: error.message }); // Para erros de autorização
+        return response.status(403).json({ message: error.message });
       }
       return response.status(500).json({ message: 'Internal server error.' });
     }
