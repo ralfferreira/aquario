@@ -23,8 +23,7 @@ export default function NavBar() {
             <LinkHover href="/usuarios">USUÁRIOS</LinkHover>
             <LinkHover href="/projetos">PROJETOS</LinkHover>
             <LinkHover href="/tadea">TADEA</LinkHover>
-            <LinkHover href="/faq">FAQ</LinkHover>
-            <LinkHover href="/vagas">VAGAS</LinkHover>
+                        <LinkHover href="/vagas">VAGAS</LinkHover>
           </div>
 
           <div className="flex space-x-4 gap-5 justify-center items-center">

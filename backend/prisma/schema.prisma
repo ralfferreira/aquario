@@ -63,7 +63,6 @@ model Centro {
   projetos    Projeto[]
   vagas       Vaga[]
   usuarios    Usuario[]
-  itensFAQ    ItemFAQ[]
   entidades   Entidade[]
 }
 
@@ -204,14 +203,3 @@ model MembroEntidade {
   @@unique([usuarioId, entidadeId])
 }
 
-model ItemFAQ {
-  id           String   @id @default(uuid())
-  pergunta     String
-  resposta     String
-  categoria    String
-  centroId     String
-  criadoEm     DateTime @default(now())
-  atualizadoEm DateTime @updatedAt
-
-  centro Centro @relation(fields: [centroId], references: [id])
-}
