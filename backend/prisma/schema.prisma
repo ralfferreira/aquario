@@ -118,6 +118,10 @@ model Publicacao {
 
   autor  Usuario @relation(fields: [autorId], references: [id])
   centro Centro  @relation(fields: [centroId], references: [id])
+
+  @@index([autorId])
+  @@index([centroId])
+  @@index([entidadeId])
 }
 
 model Projeto {
@@ -138,6 +142,10 @@ model Projeto {
   criador Usuario @relation(fields: [criadorId], references: [id])
   centro  Centro  @relation(fields: [centroId], references: [id])
   membros Usuario[] @relation("MembrosDoProjeto")
+
+  @@index([criadorId])
+  @@index([centroId])
+  @@index([entidadeId])
 }
 
 model Vaga {
@@ -156,6 +164,10 @@ model Vaga {
 
   publicador Usuario @relation(fields: [publicadorId], references: [id])
   centro     Centro  @relation(fields: [centroId], references: [id])
+
+  @@index([publicadorId])
+  @@index([centroId])
+  @@index([entidadeId])
 }
 
 model ItemAchadoEPerdido {

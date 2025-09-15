@@ -12,7 +12,6 @@ async function main() {
   await prisma.projeto.deleteMany();
   await prisma.membroEntidade.deleteMany();
   await prisma.entidade.deleteMany();
-  await prisma.itemFAQ.deleteMany();
   await prisma.usuario.deleteMany();
   await prisma.curso.deleteMany();
   await prisma.centro.deleteMany();
