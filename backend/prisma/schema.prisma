@@ -7,11 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Papel {
+enum PapelUsuario {
   DISCENTE
   DOCENTE
-  ENTIDADE
-  ADMIN
 }
 
 enum TipoVaga {
@@ -19,21 +17,40 @@ enum TipoVaga {
   TRAINEE
   VOLUNTARIO
   PESQUISA
+  CLT
+  PJ
 }
 
-enum StatusAchadosEPerdidos {
+enum StatusItemAchadoEPerdido {
+  DEVOLVIDO
   PERDIDO
-  ENCONTRADO
+}
+
+enum TipoEntidade {
+  LABORATORIO
+  GRUPO_PESQUISA
+  LIGA_ACADEMICA
+  OUTRO
+}
+
+enum PapelMembro {
+  ADMIN
+  MEMBRO
+}
+
+enum TipoProjeto {
+  PESSOAL
+  ENTIDADE
 }
 
 model Campus {
-  id      String   @id @default(cuid())
+  id      String   @id @default(uuid())
   nome    String   @unique
   centros Centro[]
 }
 
 model Centro {
-  id        String @id @default(cuid())
+  id        String @id @default(uuid())
   nome      String @unique
   sigla     String @unique
   descricao String?
@@ -46,11 +63,11 @@ model Centro {
   projetos    Projeto[]
   vagas       Vaga[]
   usuarios    Usuario[]
-  itensFAQ    ItemFAQ[]
+  entidades   Entidade[]
 }
 
 model Curso {
-  id       String @id @default(cuid())
+  id       String @id @default(uuid())
   nome     String @unique
   centroId String
 
@@ -59,11 +76,14 @@ model Curso {
 }
 
 model Usuario {
-  id              String   @id @default(cuid())
+  id              String   @id @default(uuid())
+  membroDeEntidades MembroEntidade[]
   nome            String
   email           String   @unique
+  matricula       String?  @unique
   senhaHash       String
-  papel           Papel    @default(DISCENTE)
+  papel           PapelUsuario
+  permissoes      String[] @default([])
   eVerificado     Boolean  @default(false)
   bio             String?
   urlFotoPerfil   String?
@@ -71,20 +91,24 @@ model Usuario {
   criadoEm        DateTime @default(now())
   atualizadoEm    DateTime @updatedAt
 
-  centroId String?
+  centroId String
   cursoId  String?
 
   centro Centro? @relation(fields: [centroId], references: [id])
   curso  Curso?  @relation(fields: [cursoId], references: [id])
 
   publicacoes     Publicacao[]
-  projetos        Projeto[]
   vagasPublicadas Vaga[]
-  itensReportados AchadosEPerdidos[]
+  itensAchadosEPerdidos ItemAchadoEPerdido[]
+  projetos        Projeto[]
+  projetosMembro  Projeto[] @relation("MembrosDoProjeto")
+  entidadesCriadas Entidade[] @relation("CriadorDeEntidade")
 }
 
 model Publicacao {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
+  entidadeId   String?
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id], onDelete: Cascade)
   titulo       String
   conteudo     String
   autorId      String
@@ -94,57 +118,100 @@ model Publicacao {
 
   autor  Usuario @relation(fields: [autorId], references: [id])
   centro Centro  @relation(fields: [centroId], references: [id])
+
+  @@index([autorId])
+  @@index([centroId])
+  @@index([entidadeId])
 }
 
 model Projeto {
-  id             String   @id @default(cuid())
-  nome           String
-  descricao      String
-  donoId         String
-  centroId       String
-  tecnologias    String[]
-  urlRepositorio String?
-  criadoEm       DateTime @default(now())
-  atualizadoEm   DateTime @updatedAt
+  id           String      @id @default(uuid())
+  entidadeId   String?
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id], onDelete: Cascade)
+  titulo       String
+  descricao    String
+  criadorId    String
+  centroId     String
+  tags         String[]
+  url          String?
+  urlFoto      String?
+  tipo         TipoProjeto
+  criadoEm     DateTime    @default(now())
+  atualizadoEm DateTime    @updatedAt
 
-  dono   Usuario @relation(fields: [donoId], references: [id])
-  centro Centro  @relation(fields: [centroId], references: [id])
+  criador Usuario @relation(fields: [criadorId], references: [id])
+  centro  Centro  @relation(fields: [centroId], references: [id])
+  membros Usuario[] @relation("MembrosDoProjeto")
+
+  @@index([criadorId])
+  @@index([centroId])
+  @@index([entidadeId])
 }
 
 model Vaga {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
+  entidadeId   String?
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id], onDelete: Cascade)
   titulo       String
   descricao    String
   tipoVaga     TipoVaga
-  publicadorId String
-  centroId     String
   eAtiva       Boolean  @default(true)
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 
+  publicadorId String
+  centroId     String
+
   publicador Usuario @relation(fields: [publicadorId], references: [id])
   centro     Centro  @relation(fields: [centroId], references: [id])
+
+  @@index([publicadorId])
+  @@index([centroId])
+  @@index([entidadeId])
 }
 
-model AchadosEPerdidos {
-  id             String                 @id @default(cuid())
-  nomeItem       String
-  descricao      String
-  status         StatusAchadosEPerdidos
-  reportadoPorId String
-  criadoEm       DateTime               @default(now())
+model ItemAchadoEPerdido {
+  id           String                  @id @default(uuid())
+  titulo       String
+  descricao    String
+  urlsFotos    String[]                @default([])
+  status       StatusItemAchadoEPerdido @default(PERDIDO)
+  autorId      String
+  criadoEm     DateTime                @default(now())
+  atualizadoEm DateTime                @updatedAt
 
-  reportadoPor Usuario @relation(fields: [reportadoPorId], references: [id])
+  autor Usuario @relation(fields: [autorId], references: [id])
 }
 
-model ItemFAQ {
-  id           String   @id @default(cuid())
-  pergunta     String
-  resposta     String
-  categoria    String
-  centroId     String
-  criadoEm     DateTime @default(now())
-  atualizadoEm DateTime @updatedAt
+model Entidade {
+  id          String    @id @default(uuid())
+  nome        String
+  descricao   String?
+  tipo        TipoEntidade
+  urlFoto     String?
+  contato     String?
+  centroId    String
+  criadorId   String
 
-  centro Centro @relation(fields: [centroId], references: [id])
+  centro      Centro          @relation(fields: [centroId], references: [id])
+  criador     Usuario         @relation("CriadorDeEntidade", fields: [criadorId], references: [id])
+  membros     MembroEntidade[]
+  projetos    Projeto[]
+  publicacoes Publicacao[]
+  vagas       Vaga[]
+
+  @@unique([nome, tipo])
 }
+
+model MembroEntidade {
+  id         String      @id @default(uuid())
+  usuarioId  String
+  entidadeId String
+  papel      PapelMembro
+
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id])
+  entidade Entidade @relation(fields: [entidadeId], references: [id])
+
+  @@unique([usuarioId, entidadeId])
+}
+

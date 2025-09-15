@@ -1,45 +1,39 @@
 "use client";
 
 import Checkbox from '@/components/Pages/Vagas/checkboxFilter';
-import VacancyCard from '@/components/Pages/Vagas/vacancyCard';
+import VacancyCard, { Vaga } from '@/components/Pages/Vagas/vacancyCard';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 import { SearchBar1 } from "@/components/ui/searchbar1"
 
 import SearchFilters from "@/components/Shared/SearchFilters";
 import Banner from "@/components/Shared/Banner";
 
-export default function Blog() {
-  const vagas = [
-    {
-      profileUser: {
-        name: "TRIL",
-        image: "/ian.jpeg",
-        type: "laboratorio" as "laboratorio",
-        type2: "oficial" as "oficial",
-        url: "https://tril.com.br",
-        funcao: "UX/UI Designer"
-      },
-      type: "voluntario" as "voluntario",
-      url: "https://detalhes-da-vaga-tril.com"
-    },
-    {
-      profileUser: {
-        name: "Google",
-        image: "/ian.jpeg",
-        type: "externo" as "externo",
-        type2: "externo"as "externo",
-        url: "https://google.com",
-        funcao: "Desenvolvedor"
-      },
-      type: "remunerado" as "remunerado",
-      date: "2024-11-01",
-      url: "https://detalhes-da-vaga-google.com"
-    }
-  ];
+export default function VagasPage() {
+  const [vagas, setVagas] = useState<Vaga[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
-  const vagasFiltradas = vagas.filter(vaga => {
-    return vaga.profileUser.name.toLowerCase();
-  });
-  
+  const canPostJob = user?.papel === 'DOCENTE' || user?.permissoes.includes('ADMIN');
+
+  useEffect(() => {
+    const fetchVagas = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/vagas');
+        if (!response.ok) throw new Error('Falha ao buscar vagas');
+        const data = await response.json();
+        setVagas(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchVagas();
+  }, []);
+
   const data = [
     {
       titulo: 'Entidades',
@@ -63,7 +57,8 @@ export default function Blog() {
             title="Explore vagas de emprego, estágio e de projetos voluntários no CI e afora"
             description="Nosso mural de vagas permite que qualquer pessoa ou laboratório busque alunos interessados em vagas em projetos ou estágios."
             buttonText="Divulgar uma vaga"
-            // link do botão
+            buttonHref="/vagas/novo"
+            showButton={canPostJob}
           />
           </div>
         <SearchFilters/>
@@ -76,14 +71,13 @@ export default function Blog() {
           </div>
 
           <div className="space-y-4 w-full">
-            {vagasFiltradas.map((vaga, index) => (
-              <VacancyCard 
-                key={index} 
-                profileUser={vaga.profileUser}
-                type={vaga.type}
-                url={vaga.url}
-              />
-            ))}
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, index) => <Skeleton key={index} className="h-20 w-full" />)
+              : vagas.map((vaga) => (
+                <Link href={`/vagas/${vaga.id}`} key={vaga.id}>
+                  <VacancyCard vaga={vaga} />
+                </Link>
+              ))}
           </div>
         </div>
 
@@ -101,14 +95,13 @@ export default function Blog() {
           </div>
 
           <div className="space-y-4 w-full">
-            {vagasFiltradas.map((vaga, index) => (
-              <VacancyCard 
-                key={index} 
-                profileUser={vaga.profileUser}
-                type={vaga.type}
-                url={vaga.url}
-              />
-            ))}
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, index) => <Skeleton key={index} className="h-20 w-full" />)
+              : vagas.map((vaga) => (
+                <Link href={`/vagas/${vaga.id}`} key={vaga.id}>
+                  <VacancyCard vaga={vaga} />
+                </Link>
+              ))}
           </div>
         </div>
       </div>
