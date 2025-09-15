@@ -93,15 +93,11 @@ const Editor: React.FC<EditorProps> = ({
   return (
     <>
       <RichTextEditor
-        output="json"
+        output="html"
         content={content}
         onChangeContent={handleContentChange}
         extensions={extensions}
       />
-      <div className="mt-10 p-4 border">
-        <h3>Rendered Content:</h3>
-        {renderContent()}
-      </div>
     </>
   );
 };
