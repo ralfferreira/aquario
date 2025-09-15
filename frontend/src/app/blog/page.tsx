@@ -36,7 +36,7 @@ export default function Blog() {
           throw new Error('Falha ao buscar publicações');
         }
         const data = await response.json();
-        setPublicacoes(data.publicacoes); // A API retorna um objeto { publicacoes: [...] }
+        setPublicacoes(data);
       } catch (error) {
         console.error(error);
       } finally {

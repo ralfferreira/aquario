@@ -21,7 +21,12 @@ export class BuscarPublicacaoPorIdController {
         return response.status(404).json({ message: 'Publicação não encontrada.' });
       }
 
-      return response.status(200).json({ publicacao });
+      const responseData = {
+        id: publicacao.id,
+        ...publicacao.props,
+      };
+
+      return response.status(200).json(responseData);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return response.status(400).json({ 
