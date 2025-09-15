@@ -4,15 +4,16 @@ import { CriarItemAchadoEPerdidoUseCase } from '@/application/achados-e-perdidos
 import { PrismaItensAchadosEPerdidosRepository } from '@/infra/database/prisma/repositories/PrismaItensAchadosEPerdidosRepository';
 import { PrismaUsuariosRepository } from '@/infra/database/prisma/repositories/PrismaUsuariosRepository';
 
-const criarItemBodySchema = z.object({
+const criarItemAchadoEPerdidoBodySchema = z.object({
   titulo: z.string(),
   descricao: z.string(),
+  urlsFotos: z.array(z.string().url()).optional(),
 });
 
 export class CriarItemAchadoEPerdidoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { titulo, descricao } = criarItemBodySchema.parse(request.body);
+      const { titulo, descricao, urlsFotos } = criarItemAchadoEPerdidoBodySchema.parse(request.body);
       const autorId = request.usuario.id;
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
@@ -22,7 +23,7 @@ export class CriarItemAchadoEPerdidoController {
         usuariosRepository,
       );
 
-      await criarItemUseCase.execute({ titulo, descricao, autorId });
+      await criarItemUseCase.execute({ titulo, descricao, autorId, urlsFotos });
 
       return response.status(201).send();
     } catch (error) {

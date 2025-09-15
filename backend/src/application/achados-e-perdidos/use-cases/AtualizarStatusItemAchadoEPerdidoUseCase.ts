@@ -5,12 +5,13 @@ import { StatusItemAchadoEPerdido } from '@prisma/client';
 interface AtualizarStatusItemAchadoEPerdidoUseCaseRequest {
   itemId: string;
   usuarioId: string;
-  status: StatusItemAchadoEPerdido;
+  titulo?: string;
+  descricao?: string;
+  status?: StatusItemAchadoEPerdido;
 }
 
 type AtualizarStatusItemAchadoEPerdidoUseCaseResponse = void;
 
-const EMAILS_AUTORIZADOS = ['tadea@ci.ufpb.br', 'rivailda@ci.ufpb.br'];
 
 export class AtualizarStatusItemAchadoEPerdidoUseCase {
   constructor(
@@ -21,10 +22,12 @@ export class AtualizarStatusItemAchadoEPerdidoUseCase {
   async execute({
     itemId,
     usuarioId,
+    titulo,
+    descricao,
     status,
   }: AtualizarStatusItemAchadoEPerdidoUseCaseRequest): Promise<AtualizarStatusItemAchadoEPerdidoUseCaseResponse> {
     const usuario = await this.usuariosRepository.findById(usuarioId);
-    if (!usuario || !EMAILS_AUTORIZADOS.includes(usuario.email)) {
+    if (!usuario || !usuario.props.permissoes.includes('ADMIN')) {
       throw new Error('Usuário não autorizado.');
     }
 
@@ -33,7 +36,10 @@ export class AtualizarStatusItemAchadoEPerdidoUseCase {
       throw new Error('Item não encontrado.');
     }
 
-    item.status = status;
+    
+    if (titulo) item.props.titulo = titulo;
+    if (descricao) item.props.descricao = descricao;
+    if (status) item.status = status;
 
     await this.itensRepository.save(item);
   }

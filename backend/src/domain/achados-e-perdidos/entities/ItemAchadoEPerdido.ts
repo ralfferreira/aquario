@@ -1,16 +1,27 @@
 import { Entity } from '@/core/entities/Entity';
 import { StatusItemAchadoEPerdido as StatusItem } from '@prisma/client';
 
+export interface ItemAutor {
+  id: string;
+  nome: string;
+  urlFotoPerfil?: string | null;
+}
+
 interface ItemAchadoEPerdidoProps {
   titulo: string;
   descricao: string;
   status: StatusItem;
-  autorId: string;
+  autor: ItemAutor;
+  urlsFotos?: string[];
   criadoEm?: Date;
   atualizadoEm?: Date;
 }
 
 export class ItemAchadoEPerdido extends Entity<ItemAchadoEPerdidoProps> {
+  get autor() {
+    return this.props.autor;
+  }
+
   get status() {
     return this.props.status;
   }

@@ -8,7 +8,6 @@ interface DeletarItemAchadoEPerdidoUseCaseRequest {
 
 type DeletarItemAchadoEPerdidoUseCaseResponse = void;
 
-const EMAILS_AUTORIZADOS = ['tadea@ci.ufpb.br', 'rivailda@ci.ufpb.br'];
 
 export class DeletarItemAchadoEPerdidoUseCase {
   constructor(
@@ -21,7 +20,7 @@ export class DeletarItemAchadoEPerdidoUseCase {
     usuarioId,
   }: DeletarItemAchadoEPerdidoUseCaseRequest): Promise<DeletarItemAchadoEPerdidoUseCaseResponse> {
     const usuario = await this.usuariosRepository.findById(usuarioId);
-    if (!usuario || !EMAILS_AUTORIZADOS.includes(usuario.email)) {
+    if (!usuario || !usuario.props.permissoes.includes('ADMIN')) {
       throw new Error('Usuário não autorizado.');
     }
 

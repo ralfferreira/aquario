@@ -10,7 +10,12 @@ export class ListarItensAchadosEPerdidosController {
 
       const { itens } = await listarItensUseCase.execute();
 
-      return response.status(200).json({ itens });
+      const responseData = itens.map((item) => ({
+        id: item.id,
+        ...item.props,
+      }));
+
+      return response.status(200).json(responseData);
     } catch (error) {
       return response.status(500).json({ message: 'Internal server error.' });
     }

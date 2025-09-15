@@ -23,6 +23,7 @@ interface User {
   curso?: Curso | null;
   periodo?: number | null;
   bio?: string | null;
+  permissoes: string[];
 }
 
 interface AuthContextType {

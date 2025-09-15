@@ -21,7 +21,12 @@ export class BuscarItemAchadoEPerdidoPorIdController {
         return response.status(404).json({ message: 'Item não encontrado.' });
       }
 
-      return response.status(200).json({ item });
+      const responseData = {
+        id: item.id,
+        ...item.props,
+      };
+
+      return response.status(200).json(responseData);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return response.status(400).json({ message: 'Validation error.', issues: error.format() });

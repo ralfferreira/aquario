@@ -62,6 +62,7 @@ export default function Blog() {
             title="Explore o que as pessoas, laboratórios e grupos do CI estão falando"
             description="Nosso blog é feito para que todos possam comunicar notícias, dúvidas e tutoriais para todos os alunos e colaboradores do Centro de Informática"
             buttonText="Fazer uma postagem"
+            buttonHref="/blog/novo"
           />
         </div>
         <SearchFilters />

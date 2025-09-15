@@ -12,7 +12,8 @@ export class PrismaItensAchadosEPerdidosRepository
         titulo: item.props.titulo,
         descricao: item.props.descricao,
         status: item.props.status,
-        autorId: item.props.autorId,
+        autorId: item.props.autor.id,
+        urlsFotos: item.props.urlsFotos,
         criadoEm: item.props.criadoEm,
         atualizadoEm: item.props.atualizadoEm,
       },
@@ -21,6 +22,15 @@ export class PrismaItensAchadosEPerdidosRepository
 
   async findMany(): Promise<ItemAchadoEPerdido[]> {
     const itens = await prisma.itemAchadoEPerdido.findMany({
+      include: {
+        autor: {
+          select: {
+            id: true,
+            nome: true,
+            urlFotoPerfil: true,
+          },
+        },
+      },
       orderBy: {
         criadoEm: 'desc',
       },
@@ -32,7 +42,8 @@ export class PrismaItensAchadosEPerdidosRepository
           titulo: item.titulo,
           descricao: item.descricao,
           status: item.status,
-          autorId: item.autorId,
+          autor: item.autor,
+          urlsFotos: item.urlsFotos,
           criadoEm: item.criadoEm,
           atualizadoEm: item.atualizadoEm,
         },
@@ -44,6 +55,15 @@ export class PrismaItensAchadosEPerdidosRepository
   async findById(id: string): Promise<ItemAchadoEPerdido | null> {
     const item = await prisma.itemAchadoEPerdido.findUnique({
       where: { id },
+      include: {
+        autor: {
+          select: {
+            id: true,
+            nome: true,
+            urlFotoPerfil: true,
+          },
+        },
+      },
     });
 
     if (!item) {
@@ -55,7 +75,7 @@ export class PrismaItensAchadosEPerdidosRepository
         titulo: item.titulo,
         descricao: item.descricao,
         status: item.status,
-        autorId: item.autorId,
+        autor: item.autor,
         criadoEm: item.criadoEm,
         atualizadoEm: item.atualizadoEm,
       },

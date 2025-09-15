@@ -7,11 +7,11 @@ interface CriarItemAchadoEPerdidoUseCaseRequest {
   titulo: string;
   descricao: string;
   autorId: string;
+  urlsFotos?: string[];
 }
 
 type CriarItemAchadoEPerdidoUseCaseResponse = void;
 
-const EMAILS_AUTORIZADOS = ['tadea@ci.ufpb.br', 'rivailda@ci.ufpb.br'];
 
 export class CriarItemAchadoEPerdidoUseCase {
   constructor(
@@ -23,6 +23,7 @@ export class CriarItemAchadoEPerdidoUseCase {
     titulo,
     descricao,
     autorId,
+    urlsFotos,
   }: CriarItemAchadoEPerdidoUseCaseRequest): Promise<CriarItemAchadoEPerdidoUseCaseResponse> {
     const autor = await this.usuariosRepository.findById(autorId);
 
@@ -30,15 +31,20 @@ export class CriarItemAchadoEPerdidoUseCase {
       throw new Error('Autor não encontrado.');
     }
 
-    if (!EMAILS_AUTORIZADOS.includes(autor.email)) {
+    if (!autor.props.permissoes.includes('ADMIN')) {
       throw new Error('Usuário não autorizado a criar um item de achados e perdidos.');
     }
 
     const item = ItemAchadoEPerdido.create({
       titulo,
       descricao,
-      autorId,
       status: StatusItemAchadoEPerdido.PERDIDO,
+      autor: {
+        id: autor.id,
+        nome: autor.props.nome,
+        urlFotoPerfil: autor.props.urlFotoPerfil,
+      },
+      urlsFotos,
     });
 
     await this.itensRepository.create(item);

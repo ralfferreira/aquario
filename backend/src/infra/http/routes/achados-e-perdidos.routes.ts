@@ -20,7 +20,7 @@ achadosEPerdidosRouter.get('/:id', buscarItemPorIdController.handle);
 
 // Rotas Protegidas
 achadosEPerdidosRouter.post('/', ensureAuthenticated, criarItemController.handle);
-achadosEPerdidosRouter.patch('/:id/status', ensureAuthenticated, atualizarStatusController.handle);
+achadosEPerdidosRouter.patch('/:id', ensureAuthenticated, atualizarStatusController.handle);
 achadosEPerdidosRouter.delete('/:id', ensureAuthenticated, deletarItemController.handle);
 
 export { achadosEPerdidosRouter };

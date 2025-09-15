@@ -139,6 +139,7 @@ model ItemAchadoEPerdido {
   id           String                  @id @default(cuid())
   titulo       String
   descricao    String
+  urlsFotos    String[]                @default([])
   status       StatusItemAchadoEPerdido @default(PERDIDO)
   autorId      String
   criadoEm     DateTime                @default(now())
