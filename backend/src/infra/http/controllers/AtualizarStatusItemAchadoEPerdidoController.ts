@@ -8,14 +8,14 @@ import { StatusItemAchadoEPerdido } from '@prisma/client';
 const atualizarStatusParamsSchema = z.object({ id: z.string() });
 const atualizarStatusBodySchema = z.object({
   status: z.nativeEnum(StatusItemAchadoEPerdido),
-  usuarioId: z.string(), // Em um sistema real, isso viria do usuário autenticado
 });
 
 export class AtualizarStatusItemAchadoEPerdidoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = atualizarStatusParamsSchema.parse(request.params);
-      const { status, usuarioId } = atualizarStatusBodySchema.parse(request.body);
+      const { status } = atualizarStatusBodySchema.parse(request.body);
+      const usuarioId = request.usuario.id;
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
       const usuariosRepository = new PrismaUsuariosRepository();

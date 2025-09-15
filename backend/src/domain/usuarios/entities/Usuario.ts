@@ -1,9 +1,18 @@
 import { Entity } from '@/core/entities/Entity';
 
+import { PapelUsuario } from '@prisma/client';
+
 interface UsuarioProps {
   nome: string;
   email: string;
-  // Outras propriedades podem ser adicionadas conforme necessário
+  senhaHash: string;
+  papel: PapelUsuario;
+  permissoes: string[];
+  centroId: string;
+  bio?: string | null;
+  urlFotoPerfil?: string | null;
+  periodo?: number | null;
+  cursoId?: string | null;
 }
 
 export class Usuario extends Entity<UsuarioProps> {

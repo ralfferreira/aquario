@@ -11,11 +11,12 @@ export class DeletarPublicacaoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = deletarPublicacaoParamsSchema.parse(request.params);
+      const autorId = request.usuario.id;
 
       const publicacoesRepository = new PrismaPublicacoesRepository();
       const deletarPublicacaoUseCase = new DeletarPublicacaoUseCase(publicacoesRepository);
 
-      await deletarPublicacaoUseCase.execute({ id });
+      await deletarPublicacaoUseCase.execute({ publicacaoId: id, autorId });
 
       return response.status(204).send();
     } catch (error) {

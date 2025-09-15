@@ -2,7 +2,8 @@ import { Publicacao } from '@/domain/publicacoes/entities/Publicacao';
 import { IPublicacoesRepository } from '@/domain/publicacoes/repositories/IPublicacoesRepository';
 
 interface EditarPublicacaoUseCaseRequest {
-  id: string;
+  publicacaoId: string;
+  autorId: string;
   titulo: string;
   conteudo: string;
 }
@@ -13,14 +14,19 @@ export class EditarPublicacaoUseCase {
   constructor(private publicacoesRepository: IPublicacoesRepository) {}
 
   async execute({
-    id,
+    publicacaoId,
+    autorId,
     titulo,
     conteudo,
   }: EditarPublicacaoUseCaseRequest): Promise<EditarPublicacaoUseCaseResponse> {
-    const publicacao = await this.publicacoesRepository.findById(id);
+    const publicacao = await this.publicacoesRepository.findById(publicacaoId);
 
     if (!publicacao) {
       throw new Error('Publicação não encontrada.');
+    }
+
+    if (publicacao.autorId !== autorId) {
+      throw new Error('Ação não autorizada.');
     }
 
     publicacao.titulo = titulo;

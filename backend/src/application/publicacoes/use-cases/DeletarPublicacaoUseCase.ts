@@ -1,7 +1,8 @@
 import { IPublicacoesRepository } from '@/domain/publicacoes/repositories/IPublicacoesRepository';
 
 interface DeletarPublicacaoUseCaseRequest {
-  id: string;
+  publicacaoId: string;
+  autorId: string;
 }
 
 type DeletarPublicacaoUseCaseResponse = void;
@@ -10,14 +11,19 @@ export class DeletarPublicacaoUseCase {
   constructor(private publicacoesRepository: IPublicacoesRepository) {}
 
   async execute({
-    id,
+    publicacaoId,
+    autorId,
   }: DeletarPublicacaoUseCaseRequest): Promise<DeletarPublicacaoUseCaseResponse> {
-    const publicacao = await this.publicacoesRepository.findById(id);
+    const publicacao = await this.publicacoesRepository.findById(publicacaoId);
 
     if (!publicacao) {
       throw new Error('Publicação não encontrada.');
     }
 
-    await this.publicacoesRepository.delete(id);
+    if (publicacao.autorId !== autorId) {
+      throw new Error('Ação não autorizada.');
+    }
+
+    await this.publicacoesRepository.delete(publicacaoId);
   }
 }

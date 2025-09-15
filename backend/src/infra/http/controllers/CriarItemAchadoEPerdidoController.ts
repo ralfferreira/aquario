@@ -7,13 +7,13 @@ import { PrismaUsuariosRepository } from '@/infra/database/prisma/repositories/P
 const criarItemBodySchema = z.object({
   titulo: z.string(),
   descricao: z.string(),
-  autorId: z.string(), // TODO: Isso viria do usuário autenticado
 });
 
 export class CriarItemAchadoEPerdidoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { titulo, descricao, autorId } = criarItemBodySchema.parse(request.body);
+      const { titulo, descricao } = criarItemBodySchema.parse(request.body);
+      const autorId = request.usuario.id;
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
       const usuariosRepository = new PrismaUsuariosRepository();

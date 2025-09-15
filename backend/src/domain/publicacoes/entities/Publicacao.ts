@@ -10,6 +10,10 @@ interface PublicacaoProps {
 }
 
 export class Publicacao extends Entity<PublicacaoProps> {
+  get autorId() {
+    return this.props.autorId;
+  }
+
   get titulo() {
     return this.props.titulo;
   }

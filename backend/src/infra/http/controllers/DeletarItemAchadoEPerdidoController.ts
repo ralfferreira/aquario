@@ -5,15 +5,12 @@ import { PrismaItensAchadosEPerdidosRepository } from '@/infra/database/prisma/r
 import { PrismaUsuariosRepository } from '@/infra/database/prisma/repositories/PrismaUsuariosRepository';
 
 const deletarItemParamsSchema = z.object({ id: z.string() });
-const deletarItemBodySchema = z.object({
-  usuarioId: z.string(), // TODO: Isso viria do usuário autenticado
-});
 
 export class DeletarItemAchadoEPerdidoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = deletarItemParamsSchema.parse(request.params);
-      const { usuarioId } = deletarItemBodySchema.parse(request.body);
+      const usuarioId = request.usuario.id;
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
       const usuariosRepository = new PrismaUsuariosRepository();

@@ -7,11 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Papel {
+enum PapelUsuario {
   DISCENTE
   DOCENTE
-  ENTIDADE
-  ADMIN
 }
 
 enum TipoVaga {
@@ -63,7 +61,8 @@ model Usuario {
   nome            String
   email           String   @unique
   senhaHash       String
-  papel           Papel    @default(DISCENTE)
+  papel           PapelUsuario
+  permissoes      String[] @default([])
   eVerificado     Boolean  @default(false)
   bio             String?
   urlFotoPerfil   String?
@@ -71,7 +70,7 @@ model Usuario {
   criadoEm        DateTime @default(now())
   atualizadoEm    DateTime @updatedAt
 
-  centroId String?
+  centroId String
   cursoId  String?
 
   centro Centro? @relation(fields: [centroId], references: [id])

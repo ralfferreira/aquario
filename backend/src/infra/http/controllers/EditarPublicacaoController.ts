@@ -17,11 +17,12 @@ export class EditarPublicacaoController {
     try {
       const { id } = editarPublicacaoParamsSchema.parse(request.params);
       const { titulo, conteudo } = editarPublicacaoBodySchema.parse(request.body);
+      const autorId = request.usuario.id;
 
       const publicacoesRepository = new PrismaPublicacoesRepository();
       const editarPublicacaoUseCase = new EditarPublicacaoUseCase(publicacoesRepository);
 
-      await editarPublicacaoUseCase.execute({ id, titulo, conteudo });
+      await editarPublicacaoUseCase.execute({ publicacaoId: id, autorId, titulo, conteudo });
 
       return response.status(204).send();
     } catch (error) {

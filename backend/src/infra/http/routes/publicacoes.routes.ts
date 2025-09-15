@@ -4,6 +4,7 @@ import { ListarPublicacoesController } from '../controllers/ListarPublicacoesCon
 import { BuscarPublicacaoPorIdController } from '../controllers/BuscarPublicacaoPorIdController';
 import { EditarPublicacaoController } from '../controllers/EditarPublicacaoController';
 import { DeletarPublicacaoController } from '../controllers/DeletarPublicacaoController';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 
 const publicacoesRouter = Router();
 
@@ -13,10 +14,13 @@ const buscarPublicacaoPorIdController = new BuscarPublicacaoPorIdController();
 const editarPublicacaoController = new EditarPublicacaoController();
 const deletarPublicacaoController = new DeletarPublicacaoController();
 
-publicacoesRouter.post('/', criarPublicacaoController.handle);
+// Rotas Públicas
 publicacoesRouter.get('/', listarPublicacoesController.handle);
 publicacoesRouter.get('/:id', buscarPublicacaoPorIdController.handle);
-publicacoesRouter.put('/:id', editarPublicacaoController.handle);
-publicacoesRouter.delete('/:id', deletarPublicacaoController.handle);
+
+// Rotas Protegidas
+publicacoesRouter.post('/', ensureAuthenticated, criarPublicacaoController.handle);
+publicacoesRouter.put('/:id', ensureAuthenticated, editarPublicacaoController.handle);
+publicacoesRouter.delete('/:id', ensureAuthenticated, deletarPublicacaoController.handle);
 
 export { publicacoesRouter };

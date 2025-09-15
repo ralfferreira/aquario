@@ -48,6 +48,7 @@ async function main() {
       email: 'teste@aquario.com',
       senhaHash: passwordHash,
       papel: 'DISCENTE' as const,
+      permissoes: [],
       eVerificado: true,
       centroId: ci.id,
     },
@@ -55,7 +56,8 @@ async function main() {
       nome: 'Tadea Silva',
       email: 'tadea@ci.ufpb.br',
       senhaHash: passwordHash,
-      papel: 'ADMIN' as const,
+      papel: 'DOCENTE' as const,
+      permissoes: ['ADMIN'],
       eVerificado: true,
       centroId: ci.id,
     },
@@ -63,7 +65,8 @@ async function main() {
       nome: 'Rivailda Rocha',
       email: 'rivailda@ci.ufpb.br',
       senhaHash: passwordHash,
-      papel: 'ADMIN' as const,
+      papel: 'DOCENTE' as const,
+      permissoes: ['ADMIN'],
       eVerificado: true,
       centroId: ci.id,
     },
@@ -76,13 +79,15 @@ async function main() {
   const user = await prisma.usuario.findUnique({ where: { email: 'teste@aquario.com' } });
   const tadea = await prisma.usuario.findUnique({ where: { email: 'tadea@ci.ufpb.br' } });
   const rivailda = await prisma.usuario.findUnique({ where: { email: 'rivailda@ci.ufpb.br' } });
+  const cc = await prisma.curso.findUnique({ where: { nome: 'Ciência da Computação' } });
 
-  if (!user || !tadea || !rivailda) throw new Error('Erro ao buscar usuários no seed.');
+  if (!user || !tadea || !rivailda || !cc) throw new Error('Erro ao buscar entidades no seed.');
 
   console.log(`
 --- IDs para Teste ---
 `);
   console.log(`Centro de Informática (centroId): ${ci.id}`);
+  console.log(`Curso de CC (cursoId):          ${cc.id}`);
   console.log(`Usuário de Teste (NÃO AUTORIZADO): ${user.id}`);
   console.log(`Usuário Tadea (AUTORIZADO):       ${tadea.id}`);
   console.log(`Usuário Rivailda (AUTORIZADO):    ${rivailda.id}`);
