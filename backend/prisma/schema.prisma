@@ -26,6 +26,11 @@ enum StatusItemAchadoEPerdido {
   PERDIDO
 }
 
+enum TipoProjeto {
+  PESSOAL
+  ENTIDADE
+}
+
 model Campus {
   id      String   @id @default(cuid())
   nome    String   @unique
@@ -79,9 +84,9 @@ model Usuario {
   curso  Curso?  @relation(fields: [cursoId], references: [id])
 
   publicacoes     Publicacao[]
-  projetos        Projeto[]
   vagasPublicadas Vaga[]
   itensAchadosEPerdidos ItemAchadoEPerdido[]
+  projetos        Projeto[]
 }
 
 model Publicacao {
@@ -98,18 +103,20 @@ model Publicacao {
 }
 
 model Projeto {
-  id             String   @id @default(cuid())
-  nome           String
-  descricao      String
-  donoId         String
-  centroId       String
-  tecnologias    String[]
-  urlRepositorio String?
-  criadoEm       DateTime @default(now())
-  atualizadoEm   DateTime @updatedAt
+  id           String      @id @default(cuid())
+  titulo       String
+  descricao    String
+  criadorId    String
+  centroId     String
+  tags         String[]
+  url          String?
+  urlFoto      String?
+  tipo         TipoProjeto
+  criadoEm     DateTime    @default(now())
+  atualizadoEm DateTime    @updatedAt
 
-  dono   Usuario @relation(fields: [donoId], references: [id])
-  centro Centro  @relation(fields: [centroId], references: [id])
+  criador Usuario @relation(fields: [criadorId], references: [id])
+  centro  Centro  @relation(fields: [centroId], references: [id])
 }
 
 model Vaga {
@@ -117,11 +124,12 @@ model Vaga {
   titulo       String
   descricao    String
   tipoVaga     TipoVaga
-  publicadorId String
-  centroId     String
   eAtiva       Boolean  @default(true)
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
+
+  publicadorId String
+  centroId     String
 
   publicador Usuario @relation(fields: [publicadorId], references: [id])
   centro     Centro  @relation(fields: [centroId], references: [id])
