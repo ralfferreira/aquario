@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "@/components/ui/card";
 import { Monitor, CalendarDays } from 'lucide-react';
@@ -16,7 +16,10 @@ export default function VagaProfileCard({ vaga }: VagaProfileCardProps) {
 
       <CardHeader className="flex flex-col items-center pb-0">
         <CardTitle className="flex flex-col items-center gap-3">
-          <Image src={publicador.urlFotoPerfil || ''} width={64} height={64} className="object-cover h-16 w-16 rounded-full" alt={`Foto de ${publicador.nome}`}/>
+          <Avatar className="h-16 w-16">
+            <AvatarImage src={vaga.publicador.urlFotoPerfil || ''} alt={vaga.publicador.nome} />
+            <AvatarFallback>{vaga.publicador.nome.charAt(0)}</AvatarFallback>
+          </Avatar>
           <h1>{publicador.nome}</h1>
         </CardTitle>
         <CardDescription className="text-xs pb-4">Publicador</CardDescription>

@@ -8,6 +8,7 @@ import { projetosRouter } from './routes/projetos.routes';
 import { centrosRouter } from './routes/centros.routes';
 import { usuariosRouter } from './routes/usuarios.routes';
 import { entidadesRouter } from './routes/entidades.routes';
+import { feedRouter } from './routes/feed.routes';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
@@ -22,6 +23,7 @@ app.use('/projetos', projetosRouter);
 app.use('/centros', centrosRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/entidades', entidadesRouter);
+app.use('/feed', feedRouter);
 app.use(authRouter);
 
 app.get('/', (req: Request, res: Response) => {

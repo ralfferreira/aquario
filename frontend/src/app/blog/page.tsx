@@ -89,7 +89,7 @@ export default function Blog() {
                       numComments={0} // TODO: Mockado
                       postUser={{
                         name: post.autor.nome,
-                        image: post.autor.urlFotoPerfil || 'https://picsum.photos/50',
+                        image: post.autor.urlFotoPerfil ?? '',
                         type: 'pessoa', // TODO: Mockado
                       }}
                     />

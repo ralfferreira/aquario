@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Monitor } from 'lucide-react';
 
 import { Card } from "@/components/ui/card";
@@ -39,13 +39,10 @@ export default function VacancyCard({ vaga }: VacancyCardProps) {
   return (
     <Card className="flex flex-row items-center p-4 w-full gap-4 border border-gray-200 rounded-lg shadow-sm cursor-pointer transition-all hover:border-gray-400 group dark:border-gray-400 dark:hover:border-gray-200">
       <div className="flex-shrink-0">
-        <Image 
-          src={publicador.urlFotoPerfil || ''} 
-          width={50} 
-          height={50} 
-          className="rounded-full object-cover w-12 h-12"
-          alt={publicador.nome}
-        />
+        <Avatar className="h-12 w-12">
+          <AvatarImage src={publicador.urlFotoPerfil || ''} alt={publicador.nome} />
+          <AvatarFallback>{publicador.nome.charAt(0)}</AvatarFallback>
+        </Avatar>
       </div>
 
       <div className="flex flex-col flex-grow">
