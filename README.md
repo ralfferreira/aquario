@@ -41,6 +41,12 @@ O **Aquário** é um projeto open source focado em centralizar informações rel
 
 O objetivo do projeto Aquário é centralizar as informações do CI e oferecer uma solução eficiente para problemas de comunicação e disseminação de informações, facilitando o acesso e o compartilhamento de informações importantes entre todos os membros da comunidade acadêmica.
 
+## Modelo de Dados
+
+Abaixo está o diagrama de classes UML que representa a estrutura de dados do projeto.
+
+![Diagrama UML](uml.svg)
+
 ## Design
 
 O design, ainda em desenvolvimento, está no link do figma: https://www.figma.com/design/9got8rICitaYaapG3n1COx/Aquario?node-id=9-92&t=J3rS2QW7M6zhEWLI-1

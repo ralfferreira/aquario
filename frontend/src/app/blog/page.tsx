@@ -63,7 +63,7 @@ export default function Blog() {
         <div className="pt-28">
           <Banner
             title="Explore o que as pessoas, laboratórios e grupos do CI estão falando"
-            description="Nosso blog é feito para que todos possamcomunicar notícias, dúvidas e tutoriais para todosos alunos e colaboradores do Centro de Informática"
+            description="Nosso blog é feito para que todos possam comunicar notícias, dúvidas e tutoriais para todosos alunos e colaboradores do Centro de Informática"
             buttonText="Fazer uma postagem"
           />
         </div>

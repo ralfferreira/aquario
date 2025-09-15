@@ -1,0 +1,26 @@
+{
+  "name": "aquario-backend",
+  "version": "1.0.0",
+  "description": "O backend do Aquário é construído seguindo os princípios do **Domain-Driven Design (DDD)**, organizado em uma arquitetura de camadas para garantir separação de responsabilidades, testabilidade e escalabilidade. A estrutura é modular, com cada funcionalidade (módulo) contida dentro de sua própria pasta nas camadas correspondentes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/infra/http/server.ts",
+    "start": "node dist/infra/http/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.16.1",
+    "express": "^5.1.0",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.4.0",
+    "prisma": "^6.16.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

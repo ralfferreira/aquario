@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Papel {
+  DISCENTE
+  DOCENTE
+  ENTIDADE
+  ADMIN
+}
+
+enum TipoVaga {
+  ESTAGIO
+  TRAINEE
+  VOLUNTARIO
+  PESQUISA
+}
+
+enum StatusAchadosEPerdidos {
+  PERDIDO
+  ENCONTRADO
+}
+
+model Campus {
+  id      String   @id @default(cuid())
+  nome    String   @unique
+  centros Centro[]
+}
+
+model Centro {
+  id        String @id @default(cuid())
+  nome      String @unique
+  sigla     String @unique
+  descricao String?
+
+  campusId String
+  campus   Campus @relation(fields: [campusId], references: [id])
+
+  cursos      Curso[]
+  publicacoes Publicacao[]
+  projetos    Projeto[]
+  vagas       Vaga[]
+  usuarios    Usuario[]
+  itensFAQ    ItemFAQ[]
+}
+
+model Curso {
+  id       String @id @default(cuid())
+  nome     String @unique
+  centroId String
+
+  centro   Centro    @relation(fields: [centroId], references: [id])
+  usuarios Usuario[]
+}
+
+model Usuario {
+  id              String   @id @default(cuid())
+  nome            String
+  email           String   @unique
+  senhaHash       String
+  papel           Papel    @default(DISCENTE)
+  eVerificado     Boolean  @default(false)
+  bio             String?
+  urlFotoPerfil   String?
+  periodo         Int?
+  criadoEm        DateTime @default(now())
+  atualizadoEm    DateTime @updatedAt
+
+  centroId String?
+  cursoId  String?
+
+  centro Centro? @relation(fields: [centroId], references: [id])
+  curso  Curso?  @relation(fields: [cursoId], references: [id])
+
+  publicacoes     Publicacao[]
+  projetos        Projeto[]
+  vagasPublicadas Vaga[]
+  itensReportados AchadosEPerdidos[]
+}
+
+model Publicacao {
+  id           String   @id @default(cuid())
+  titulo       String
+  conteudo     String
+  autorId      String
+  centroId     String
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  autor  Usuario @relation(fields: [autorId], references: [id])
+  centro Centro  @relation(fields: [centroId], references: [id])
+}
+
+model Projeto {
+  id             String   @id @default(cuid())
+  nome           String
+  descricao      String
+  donoId         String
+  centroId       String
+  tecnologias    String[]
+  urlRepositorio String?
+  criadoEm       DateTime @default(now())
+  atualizadoEm   DateTime @updatedAt
+
+  dono   Usuario @relation(fields: [donoId], references: [id])
+  centro Centro  @relation(fields: [centroId], references: [id])
+}
+
+model Vaga {
+  id           String   @id @default(cuid())
+  titulo       String
+  descricao    String
+  tipoVaga     TipoVaga
+  publicadorId String
+  centroId     String
+  eAtiva       Boolean  @default(true)
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  publicador Usuario @relation(fields: [publicadorId], references: [id])
+  centro     Centro  @relation(fields: [centroId], references: [id])
+}
+
+model AchadosEPerdidos {
+  id             String                 @id @default(cuid())
+  nomeItem       String
+  descricao      String
+  status         StatusAchadosEPerdidos
+  reportadoPorId String
+  criadoEm       DateTime               @default(now())
+
+  reportadoPor Usuario @relation(fields: [reportadoPorId], references: [id])
+}
+
+model ItemFAQ {
+  id           String   @id @default(cuid())
+  pergunta     String
+  resposta     String
+  categoria    String
+  centroId     String
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  centro Centro @relation(fields: [centroId], references: [id])
+}
