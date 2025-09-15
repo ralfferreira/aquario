@@ -21,9 +21,9 @@ enum TipoVaga {
   PESQUISA
 }
 
-enum StatusAchadosEPerdidos {
+enum StatusItemAchadoEPerdido {
+  DEVOLVIDO
   PERDIDO
-  ENCONTRADO
 }
 
 model Campus {
@@ -80,7 +80,7 @@ model Usuario {
   publicacoes     Publicacao[]
   projetos        Projeto[]
   vagasPublicadas Vaga[]
-  itensReportados AchadosEPerdidos[]
+  itensAchadosEPerdidos ItemAchadoEPerdido[]
 }
 
 model Publicacao {
@@ -126,15 +126,16 @@ model Vaga {
   centro     Centro  @relation(fields: [centroId], references: [id])
 }
 
-model AchadosEPerdidos {
-  id             String                 @id @default(cuid())
-  nomeItem       String
-  descricao      String
-  status         StatusAchadosEPerdidos
-  reportadoPorId String
-  criadoEm       DateTime               @default(now())
+model ItemAchadoEPerdido {
+  id           String                  @id @default(cuid())
+  titulo       String
+  descricao    String
+  status       StatusItemAchadoEPerdido @default(PERDIDO)
+  autorId      String
+  criadoEm     DateTime                @default(now())
+  atualizadoEm DateTime                @updatedAt
 
-  reportadoPor Usuario @relation(fields: [reportadoPorId], references: [id])
+  autor Usuario @relation(fields: [autorId], references: [id])
 }
 
 model ItemFAQ {

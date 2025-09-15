@@ -42,22 +42,50 @@ async function main() {
 
   const passwordHash = await hash('123456', 10);
 
-  const user = await prisma.usuario.create({
-    data: {
+  const usersData = [
+    {
       nome: 'Usuário de Teste',
       email: 'teste@aquario.com',
       senhaHash: passwordHash,
-      papel: 'DISCENTE',
+      papel: 'DISCENTE' as const,
       eVerificado: true,
       centroId: ci.id,
     },
+    {
+      nome: 'Tadea Silva',
+      email: 'tadea@ci.ufpb.br',
+      senhaHash: passwordHash,
+      papel: 'ADMIN' as const,
+      eVerificado: true,
+      centroId: ci.id,
+    },
+    {
+      nome: 'Rivailda Rocha',
+      email: 'rivailda@ci.ufpb.br',
+      senhaHash: passwordHash,
+      papel: 'ADMIN' as const,
+      eVerificado: true,
+      centroId: ci.id,
+    },
+  ];
+
+  await prisma.usuario.createMany({
+    data: usersData,
   });
+
+  const user = await prisma.usuario.findUnique({ where: { email: 'teste@aquario.com' } });
+  const tadea = await prisma.usuario.findUnique({ where: { email: 'tadea@ci.ufpb.br' } });
+  const rivailda = await prisma.usuario.findUnique({ where: { email: 'rivailda@ci.ufpb.br' } });
+
+  if (!user || !tadea || !rivailda) throw new Error('Erro ao buscar usuários no seed.');
 
   console.log(`
 --- IDs para Teste ---
 `);
   console.log(`Centro de Informática (centroId): ${ci.id}`);
-  console.log(`Usuário de Teste (autorId):      ${user.id}`);
+  console.log(`Usuário de Teste (NÃO AUTORIZADO): ${user.id}`);
+  console.log(`Usuário Tadea (AUTORIZADO):       ${tadea.id}`);
+  console.log(`Usuário Rivailda (AUTORIZADO):    ${rivailda.id}`);
   console.log(`
 -----------------------
 `);

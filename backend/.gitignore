@@ -2,8 +2,7 @@ node_modules
 # Keep environment variables out of version control
 .env
 
-/src/generated/prisma
-
+/src/generated/prisma/migrations
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -49,8 +48,3 @@ lerna-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# prisma
-/prisma
-/prisma/migrations
-/prisma/migrations/migration_lock.toml
