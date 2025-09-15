@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Pencil } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 
@@ -54,7 +55,12 @@ const LostAndFoundCard = ({ id, title, message, timePostedInMinutes, images, aut
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={!isAdmin}>
-        <div className="relative p-4 border border-gray-300 rounded-lg shadow-sm transition-all duration-200 group grid grid-cols-3 gap-4 max-w-2xl mx-auto my-4 w-full h-64 hover:border-gray-900 hover:cursor-pointer hover:text-gray-900 dark:text-dark-text dark:border-white">
+                <div className={cn(
+            "relative p-4 border border-gray-300 rounded-lg shadow-sm transition-all duration-200 group grid grid-cols-3 gap-4 max-w-2xl mx-auto my-4 w-full h-64 dark:text-dark-text dark:border-white",
+            status === 'DEVOLVIDO' 
+              ? 'bg-gray-100 opacity-60 cursor-not-allowed dark:bg-gray-800'
+              : 'hover:border-gray-900 hover:cursor-pointer hover:text-gray-900'
+          )}>
           {isAdmin && (
             <Link href={`/tadea/editar/${id}`} className="absolute top-2 right-2 p-2 rounded-full bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity z-10">
               <Pencil className="h-4 w-4" />

@@ -122,11 +122,11 @@ const PostComponent: React.FC<PostComponentProps> = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-center text-sm text-gray-500 border-2 mt-4 p-5 rounded-lg">
+        {/* <div className="flex justify-between items-center text-sm text-gray-500 border-2 mt-4 p-5 rounded-lg">
           <button className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
             Responder
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

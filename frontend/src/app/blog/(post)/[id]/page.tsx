@@ -132,11 +132,11 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        <div className="flex justify-between items-center text-sm text-muted-foreground border-t mt-6 pt-4">
+        {/* <div className="flex justify-between items-center text-sm text-muted-foreground border-t mt-6 pt-4">
           <button className="px-4 py-2 bg-muted rounded-lg hover:bg-muted/80">
             Responder
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -8,6 +8,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import LostAndFoundCard from '@/components/Pages/Tadea/tadea';
 import Banner from '@/components/Shared/Banner';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export type StatusItem = 'PERDIDO' | 'DEVOLVIDO';
 
@@ -31,6 +33,8 @@ export default function TadeaPage() {
   const { user } = useAuth();
   const [itens, setItens] = useState<ItemAchadoEPerdido[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('TODOS');
   const { token } = useAuth();
 
   const isAdmin = !!user?.permissoes.includes('ADMIN');
@@ -90,6 +94,25 @@ export default function TadeaPage() {
         buttonHref="/tadea/novo"
         showButton={isAdmin}
       />
+
+      <div className="mt-8 flex gap-4">
+        <Input
+          placeholder="Buscar por título..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="max-w-sm"
+        />
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filtrar por status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="TODOS">Todos</SelectItem>
+            <SelectItem value="PERDIDO">Perdido</SelectItem>
+            <SelectItem value="DEVOLVIDO">Devolvido</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {isLoading
           ? Array.from({ length: 6 }).map((_, index) => (
@@ -102,7 +125,15 @@ export default function TadeaPage() {
                 </div>
               </div>
             ))
-          : itens.map((item) => (
+          : itens
+              .filter((item) => {
+                const searchTermLower = searchTerm.toLowerCase();
+                const titleLower = item.titulo.toLowerCase();
+                const statusMatch = statusFilter === 'TODOS' || item.status === statusFilter;
+                const searchMatch = titleLower.includes(searchTermLower);
+                return statusMatch && searchMatch;
+              })
+              .map((item) => (
               <LostAndFoundCard
                 key={item.id}
                 id={item.id}
