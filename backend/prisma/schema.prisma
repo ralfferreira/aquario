@@ -17,6 +17,8 @@ enum TipoVaga {
   TRAINEE
   VOLUNTARIO
   PESQUISA
+  CLT
+  PJ
 }
 
 enum StatusItemAchadoEPerdido {

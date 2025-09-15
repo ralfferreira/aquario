@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import { publicacoesRouter } from './routes/publicacoes.routes';
 import { achadosEPerdidosRouter } from './routes/achados-e-perdidos.routes';
 import { authRouter } from './routes/auth.routes';
+import { vagasRouter } from './routes/vagas.routes';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use('/publicacoes', publicacoesRouter);
 app.use('/achados-e-perdidos', achadosEPerdidosRouter);
+app.use('/vagas', vagasRouter);
 app.use(authRouter);
 
 app.get('/', (req: Request, res: Response) => {

@@ -9,7 +9,7 @@ export abstract class Entity<T> {
   }
 
   protected constructor(props: T, id?: string) {
+    this._id = id || randomUUID();
     this.props = props;
-    this._id = id ?? randomUUID();
   }
 }
