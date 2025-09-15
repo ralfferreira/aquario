@@ -7,6 +7,7 @@ export interface MembroComUsuario {
     id: string;
     nome: string;
     urlFotoPerfil?: string | null;
+    papel: 'DOCENTE' | 'DISCENTE';
     curso?: { nome: string } | null;
     periodo?: number | null;
   };

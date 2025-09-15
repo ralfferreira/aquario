@@ -1,11 +1,17 @@
 import { Entity } from '@/core/entities/Entity';
 import { TipoVaga } from '@prisma/client';
 
+export interface Publicador {
+  id: string;
+  nome: string;
+  urlFotoPerfil?: string | null;
+}
+
 export interface VagaProps {
   titulo: string;
   descricao: string;
   tipoVaga: TipoVaga;
-  publicadorId: string;
+  publicador: Publicador;
   centroId: string;
   eAtiva?: boolean;
   criadoEm?: Date;
@@ -25,8 +31,8 @@ export class Vaga extends Entity<VagaProps> {
     return this.props.tipoVaga;
   }
 
-  get publicadorId() {
-    return this.props.publicadorId;
+  get publicador() {
+    return this.props.publicador;
   }
 
   get centroId() {

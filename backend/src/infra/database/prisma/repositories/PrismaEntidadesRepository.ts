@@ -16,8 +16,15 @@ export class PrismaEntidadesRepository implements IEntidadesRepository {
                 urlFotoPerfil: true,
                 curso: true,
                 periodo: true,
+                papel: true,
               },
             },
+          },
+        },
+        projetos: true,
+        publicacoes: {
+          include: {
+            autor: true,
           },
         },
       },

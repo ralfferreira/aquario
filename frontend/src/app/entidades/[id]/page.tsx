@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
 import UserCard from '@/components/Shared/UserCard';
+import LabHeader from '@/components/Pages/Users/labCard';
+import { Projeto } from '@/components/Shared/ProjectCard';
+import ProjectCard from '@/components/Shared/ProjectCard';
+import PostCardTitle from '@/components/Shared/ProjectCardTitle';
 
-// Tipos
 interface Membro {
   id: string;
   papel: 'ADMIN' | 'MEMBRO';
@@ -14,8 +15,19 @@ interface Membro {
     id: string;
     nome: string;
     urlFotoPerfil?: string | null;
+    papel: 'DOCENTE' | 'DISCENTE';
     curso?: { nome: string } | null;
     periodo?: number | null;
+  };
+}
+
+interface Publicacao {
+  id: string;
+  titulo: string;
+  criadoEm: string;
+  autor: {
+    nome: string;
+    urlFotoPerfil?: string | null;
   };
 }
 
@@ -26,12 +38,15 @@ interface Entidade {
   tipo: string;
   urlFoto?: string | null;
   membros: Membro[];
+  projetos: Projeto[];
+  publicacoes: Publicacao[];
 }
 
 export default function EntidadeProfilePage({ params }: { params: { id: string } }) {
   const [entidade, setEntidade] = useState<Entidade | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'Sobre' | 'Membros' | 'Projetos' | 'Publicações'>('Sobre');
 
   useEffect(() => {
     if (params.id) {
@@ -59,40 +74,78 @@ export default function EntidadeProfilePage({ params }: { params: { id: string }
     return <div className="container mx-auto p-4 pt-24 text-center text-red-500">{error || 'Entidade não encontrada.'}</div>;
   }
 
-  const admins = entidade.membros.filter(m => m.papel === 'ADMIN');
-  const membros = entidade.membros.filter(m => m.papel === 'MEMBRO');
+  const admins = entidade.membros.filter((m) => m.papel === 'ADMIN');
+  const membros = entidade.membros.filter((m) => m.papel === 'MEMBRO');
+  const docentes = entidade.membros.filter((m) => m.usuario.papel === 'DOCENTE');
+  const discentes = entidade.membros.filter((m) => m.usuario.papel === 'DISCENTE');
 
   return (
-    <main className="container mx-auto max-w-6xl p-4 pt-24">
-      <div className="flex flex-col items-center text-center gap-4 mb-12">
-        <Avatar className="w-40 h-40 border-4 border-background shadow-lg">
-          <AvatarImage src={entidade.urlFoto || ''} alt={entidade.nome} />
-          <AvatarFallback className="text-6xl">{entidade.nome.substring(0, 2)}</AvatarFallback>
-        </Avatar>
-        <div>
-          <h1 className="text-5xl font-bold">{entidade.nome}</h1>
-          <Badge className="mt-2 text-md">{entidade.tipo.replace('_', ' ')}</Badge>
+    <div className="mt-20">
+      <LabHeader entidade={entidade} />
+
+      <div className="flex">
+        <div className="w-full h-[10vh] pl-12 flex gap-12 justify-start items-center pt-5">
+          <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${activeTab === 'Sobre' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'}`} onClick={() => setActiveTab('Sobre')}>Sobre</div>
+          <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${activeTab === 'Membros' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'}`} onClick={() => setActiveTab('Membros')}>Membros</div>
+          <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${activeTab === 'Projetos' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'}`} onClick={() => setActiveTab('Projetos')}>Projetos</div>
+          <div className={`transition-all duration-200 py-2 px-10 rounded-full flex items-center cursor-pointer ${activeTab === 'Publicações' ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-400 border-[1px]' : 'hover:bg-neutral-200 dark:hover:bg-neutral-800  hover:border-neutral-300 border-transparent border-[1px]'}`} onClick={() => setActiveTab('Publicações')}>Publicações</div>
         </div>
-        {entidade.descricao && <p className="text-lg text-muted-foreground max-w-3xl">{entidade.descricao}</p>}
       </div>
 
-      <div className="space-y-12">
-        <div>
-          <h2 className="text-3xl font-bold mb-6 text-center">Administradores</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {admins.map(m => <UserCard key={m.id} user={m.usuario} />)}
-          </div>
-        </div>
+      <div className="w-full h-[1px] bg-slate-400 opacity-40"></div>
 
-        {membros.length > 0 && (
+      <div className="h-auto p-12">
+        {activeTab === 'Sobre' && (
           <div>
-            <h2 className="text-3xl font-bold mb-6 text-center">Membros</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <h2 className="text-2xl font-semibold mb-4">Descrição</h2>
+            <p className="text-muted-foreground">{entidade.descricao || 'Nenhuma descrição fornecida.'}</p>
+          </div>
+        )}
+        {activeTab === 'Membros' && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Administradores</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+              {admins.map(m => <UserCard key={m.id} user={m.usuario} />)}
+            </div>
+            <h2 className="text-2xl font-semibold mb-4">Membros</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {membros.map(m => <UserCard key={m.id} user={m.usuario} />)}
             </div>
           </div>
         )}
+        {activeTab === 'Projetos' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {entidade.projetos.length > 0 ? (
+              entidade.projetos.map((projeto) => <ProjectCard key={projeto.id} projeto={projeto} />)
+            ) : (
+              <p className="col-span-full text-center text-muted-foreground">Nenhum projeto encontrado.</p>
+            )}
+          </div>
+        )}
+        {activeTab === 'Publicações' && (
+          <div className="space-y-6">
+            {entidade.publicacoes.length > 0 ? (
+              entidade.publicacoes.map((post) => (
+                <div key={post.id} className="border-b pb-4">
+                  <PostCardTitle
+                    postTitle={post.titulo}
+                    numVotes={0} // Mocked
+                    numMinutes={Math.floor((new Date().getTime() - new Date(post.criadoEm).getTime()) / 60000)}
+                    numComments={0} // Mocked
+                    postUser={{
+                      name: post.autor.nome,
+                      image: post.autor.urlFotoPerfil || '',
+                      type: 'pessoa',
+                    }}
+                  />
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-muted-foreground">Nenhuma publicação encontrada.</p>
+            )}
+          </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }

@@ -108,7 +108,7 @@ model Usuario {
 model Publicacao {
   id           String   @id @default(uuid())
   entidadeId   String?
-  entidade     Entidade?   @relation(fields: [entidadeId], references: [id])
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id], onDelete: Cascade)
   titulo       String
   conteudo     String
   autorId      String
@@ -123,7 +123,7 @@ model Publicacao {
 model Projeto {
   id           String      @id @default(uuid())
   entidadeId   String?
-  entidade     Entidade?   @relation(fields: [entidadeId], references: [id])
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id], onDelete: Cascade)
   titulo       String
   descricao    String
   criadorId    String
@@ -142,7 +142,7 @@ model Projeto {
 model Vaga {
   id           String   @id @default(uuid())
   entidadeId   String?
-  entidade     Entidade?   @relation(fields: [entidadeId], references: [id])
+  entidade     Entidade?   @relation(fields: [entidadeId], references: [id], onDelete: Cascade)
   titulo       String
   descricao    String
   tipoVaga     TipoVaga

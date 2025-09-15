@@ -1,52 +1,49 @@
-// Definição das props
+interface Membro {
+  id: string;
+  papel: 'ADMIN' | 'MEMBRO';
+  usuario: any;
+}
+
+interface Entidade {
+  id: string;
+  nome: string;
+  descricao?: string | null;
+  urlFoto?: string | null;
+  contato?: string | null;
+  membros: Membro[];
+}
+
 interface LabHeaderProps {
-    nome: string;
-    subnome: string;
-    imagemPerfil: string;
-    imagemLaboratorio: string;
-    numeroProjetos: number;
-    numeroProjetosAtivos: number;
-    numeroColaboradores: number;
-    numeroColaboradoresAtivos: number;
-    website: string;
-  }
-  
-  export default function LabHeader({
-    nome,
-    subnome,
-    imagemPerfil,
-    imagemLaboratorio,
-    numeroProjetos,
-    numeroProjetosAtivos,
-    numeroColaboradores,
-    numeroColaboradoresAtivos,
-    website,
-  }: LabHeaderProps) {
-    return (
-      <div className="flex w-full justify-between h-[50vh] my-20 pt-5 px-[100px] items-center">
-          <div className="flex flex-col max-w-[300px] gap-5 pt-[50px]">
-              <img className="w-[8rem] h-[8rem] rounded-full object-cover" src={imagemPerfil} alt="Imagem de Perfil do Laboratório" />
-              <p className="text-4xl font-bold">{nome}</p>
-              <p className="text-3xl font-semibold">{subnome}</p>
-              <div>
-                <div className="flex gap-10 pb-2"> 
-                    <p className="text-sm">{numeroProjetos} Projetos</p>
-                    <p className="text-sm">{numeroProjetosAtivos} Projetos Ativos</p>
-                </div>
-                <div className="flex gap-10">
-                    <p className="text-sm">{numeroColaboradores} Colaboradores</p>
-                    <p className="text-sm">{numeroColaboradoresAtivos} Colaboradores Ativos</p>
-                </div>
-              </div>
-              <div className="pt-5">
-                    <div className="bg-black dark:bg-white dark:hover:bg-neutral-300 hover:bg-neutral-800 transition-all duration-200 py-2 w-32 flex justify-center rounded-full cursor-pointer">
-                            <a href={website} className="text-xl text-white dark:text-black">Site</a>
-                    </div> 
-              </div>
+  entidade: Entidade;
+}
+
+export default function LabHeader({ entidade }: LabHeaderProps) {
+  const { nome, descricao, urlFoto, membros, contato } = entidade;
+  const numeroColaboradores = membros?.length || 0;
+
+  return (
+    <div className="flex w-full justify-between h-auto my-20 pt-5 px-[100px] items-center">
+      <div className="flex flex-col max-w-[400px] gap-5 pt-[50px]">
+        <img className="w-32 h-32 rounded-full object-cover shadow-lg" src={urlFoto || ''} alt={`Foto de ${nome}`} />
+        <h1 className="text-4xl font-bold">{nome}</h1>
+        {descricao && <p className="text-lg font-light text-muted-foreground">{descricao}</p>}
+        <div>
+          <div className="flex gap-10 text-sm text-muted-foreground">
+            <p>{numeroColaboradores} Membro(s)</p>
+            {/* Outras estatísticas podem ser adicionadas aqui */}
           </div>
-          <div className="flex items-center justify-center">
-              <img className="w-[500px] rounded-xl" src={imagemLaboratorio} alt="Imagem do Laboratório" />
+        </div>
+        {contato && (
+          <div className="pt-5">
+            <a href={contato} target="_blank" rel="noopener noreferrer" className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 py-2 px-6 flex justify-center rounded-full cursor-pointer">
+              Contato
+            </a>
           </div>
+        )}
       </div>
-    );
-  }
+      <div className="flex items-center justify-center">
+        {/* Imagem de banner pode ser adicionada no futuro */}
+      </div>
+    </div>
+  );
+}
