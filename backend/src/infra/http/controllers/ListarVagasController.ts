@@ -15,7 +15,7 @@ export class ListarVagasController {
         titulo: vaga.titulo,
         descricao: vaga.descricao,
         tipoVaga: vaga.tipoVaga,
-        publicadorId: vaga.publicadorId,
+        publicador: vaga.publicador,
         centroId: vaga.centroId,
         eAtiva: vaga.eAtiva,
         criadoEm: vaga.criadoEm,

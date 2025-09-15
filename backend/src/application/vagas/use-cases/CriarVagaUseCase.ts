@@ -32,7 +32,6 @@ export class CriarVagaUseCase {
     if (!publicador) {
       throw new Error('Publicador não encontrado.');
     }
-
     const centro = await this.centrosRepository.findById(centroId);
     if (!centro) {
       throw new Error('Centro não encontrado.');
@@ -42,7 +41,11 @@ export class CriarVagaUseCase {
       titulo,
       descricao,
       tipoVaga,
-      publicadorId,
+      publicador: {
+        id: publicador.id,
+        nome: publicador.props.nome,
+        urlFotoPerfil: publicador.props.urlFotoPerfil,
+      },
       centroId,
     });
 

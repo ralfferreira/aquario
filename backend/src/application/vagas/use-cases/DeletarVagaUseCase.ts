@@ -20,7 +20,7 @@ export class DeletarVagaUseCase {
       throw new Error('Vaga não encontrada.');
     }
 
-    if (vaga.publicadorId !== publicadorId) {
+    if (vaga.publicador.id !== publicadorId) {
       throw new Error('Ação não autorizada.');
     }
 

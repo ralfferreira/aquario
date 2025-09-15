@@ -6,6 +6,7 @@ export class PrismaVagasRepository implements IVagasRepository {
   async findById(id: string): Promise<Vaga | null> {
     const vaga = await prisma.vaga.findUnique({
       where: { id },
+      include: { publicador: { select: { id: true, nome: true, email: true } } },
     });
 
     if (!vaga) {
@@ -17,7 +18,7 @@ export class PrismaVagasRepository implements IVagasRepository {
         titulo: vaga.titulo,
         descricao: vaga.descricao,
         tipoVaga: vaga.tipoVaga,
-        publicadorId: vaga.publicadorId,
+        publicador: vaga.publicador as any,
         centroId: vaga.centroId,
         eAtiva: vaga.eAtiva,
         criadoEm: vaga.criadoEm,
@@ -38,6 +39,7 @@ export class PrismaVagasRepository implements IVagasRepository {
         tipoVaga: vaga.tipoVaga,
         eAtiva: vaga.eAtiva,
         atualizadoEm: vaga.atualizadoEm,
+        publicador: { connect: { id: vaga.publicador.id } },
       },
     });
   }
@@ -55,7 +57,7 @@ export class PrismaVagasRepository implements IVagasRepository {
         titulo: vaga.titulo,
         descricao: vaga.descricao,
         tipoVaga: vaga.tipoVaga,
-        publicadorId: vaga.publicadorId,
+        publicadorId: vaga.publicador.id,
         centroId: vaga.centroId,
         eAtiva: vaga.eAtiva,
       },
@@ -64,12 +66,9 @@ export class PrismaVagasRepository implements IVagasRepository {
 
   async findMany(): Promise<Vaga[]> {
     const vagas = await prisma.vaga.findMany({
-      where: {
-        eAtiva: true,
-      },
-      orderBy: {
-        criadoEm: 'desc',
-      },
+      where: { eAtiva: true },
+      include: { publicador: true },
+      orderBy: { criadoEm: 'desc' },
     });
 
     return vagas.map((vaga) =>
@@ -78,7 +77,7 @@ export class PrismaVagasRepository implements IVagasRepository {
           titulo: vaga.titulo,
           descricao: vaga.descricao,
           tipoVaga: vaga.tipoVaga,
-          publicadorId: vaga.publicadorId,
+          publicador: vaga.publicador as any, // Cast to any to match domain entity
           centroId: vaga.centroId,
           eAtiva: vaga.eAtiva,
           criadoEm: vaga.criadoEm,

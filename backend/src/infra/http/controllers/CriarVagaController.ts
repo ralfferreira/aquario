@@ -10,7 +10,7 @@ const criarVagaBodySchema = z.object({
   titulo: z.string(),
   descricao: z.string(),
   tipoVaga: z.nativeEnum(TipoVaga),
-  centroId: z.string().cuid(),
+  centroId: z.string().uuid(),
 });
 
 export class CriarVagaController {
