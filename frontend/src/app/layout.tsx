@@ -5,6 +5,7 @@ import "./globals.css";
 import NavWrapper from "@/components/Shared/NavWrapper";
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from "@/components/Shared/theme-provider"
+import { SearchProvider } from '@/contexts/SearchContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body className={inter.className}>
           <AuthProvider>
               <ThemeProvider
@@ -28,8 +29,10 @@ export default function RootLayout({
                   enableSystem
                   disableTransitionOnChange
                 >
-                  <NavWrapper />
-                  {children}
+                  <SearchProvider>
+                    <NavWrapper />
+                    {children}
+                  </SearchProvider>
               </ThemeProvider>
           </AuthProvider>
         </body>

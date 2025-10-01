@@ -1,4 +1,6 @@
 import * as React from "react"
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { cn } from "@/lib/utils"
 import { Search } from 'lucide-react';
 
@@ -7,6 +9,14 @@ export interface InputProps
 
 const SearchBar1 = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
+    const [query, setQuery] = useState('');
+    const router = useRouter();
+
+    const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && query.trim() !== '') {
+        router.push(`/pesquisar?q=${query}`);
+      }
+    };
     return (
       <div className="relative w-full">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 dark:text-zinc-300" />
@@ -18,6 +28,9 @@ const SearchBar1 = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
           ref={ref}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleSearch}
           {...props}
         />
       </div>

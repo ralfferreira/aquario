@@ -21,6 +21,7 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "tsyringe": "^4.10.0",
     "zod": "^4.1.8"
   },
   "devDependencies": {

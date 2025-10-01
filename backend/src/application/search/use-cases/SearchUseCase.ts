@@ -1,0 +1,63 @@
+import { prisma } from '@/infra/database/prisma';
+
+class SearchUseCase {
+  async execute(query: string): Promise<any[]> {
+    if (!query) {
+      return [];
+    }
+
+    const lowercasedQuery = query.toLowerCase();
+
+    const [projetos, publicacoes, vagas, usuarios, entidades] = await Promise.all([
+      prisma.projeto.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.publicacao.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { conteudo: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.vaga.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.usuario.findMany({
+        where: {
+          nome: { contains: lowercasedQuery, mode: 'insensitive' },
+        },
+      }),
+      prisma.entidade.findMany({
+        where: {
+          OR: [
+            { nome: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+    ]);
+
+    const results = [
+      ...projetos.map((item) => ({ ...item, type: 'projeto' })),
+      ...publicacoes.map((item) => ({ ...item, type: 'publicacao' })),
+      ...vagas.map((item) => ({ ...item, type: 'vaga' })),
+      ...usuarios.map((item) => ({ ...item, type: 'usuario' })),
+      ...entidades.map((item) => ({ ...item, type: 'entidade' })),
+    ];
+
+    return results;
+  }
+}
+
+export { SearchUseCase };
