@@ -100,7 +100,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
       <div className="flex flex-col p-6 bg-card rounded-lg shadow-md max-w-6xl relative w-full">
         <div className="flex">
           {/* Coluna de Votos */}
-          <div className="flex flex-col items-center pr-4 text-muted-foreground">
+          {/* <div className="flex flex-col items-center pr-4 text-muted-foreground">
             <button className="hover:text-primary" onClick={handleUpvote}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" /></svg>
             </button>
@@ -108,10 +108,10 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
             <button className="hover:text-destructive" onClick={handleDownvote}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </button>
-          </div>
+          </div> */}
 
           {/* Linha Vertical (Opcional) */}
-          <div className="absolute top-[10rem] bottom-[7.5rem] w-px ml-3 bg-border"></div>
+          {/* <div className="absolute top-[10rem] bottom-[7.5rem] w-px ml-3 bg-border"></div> */}
 
           {/* Conteúdo Principal */}
           <div className="pl-4 w-full">

@@ -81,20 +81,20 @@ export default function Home() {
       {/* Últimas do Blog */}
       <section className="py-12">
         <h2 className="text-3xl font-bold mb-8">Últimas do Blog</h2>
-        <div className="space-y-8">
+        <div className="space-y-8 flex flex-col">
           {isLoading
             ? Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} className="h-20 w-full" />)
             : publicacoes.map((item) => (
                 <Link href={`/blog/${item.data.id}`} key={`publicacao-${item.data.id}`}>
                   <PostCardTitle
                     postTitle={item.data.titulo}
-                    numVotes={0} // Mockado
-                    numMinutes={0} // Mockado
-                    numComments={0} // Mockado
+                    numVotes={0}
+                    numMinutes={0}
+                    numComments={0}
                     postUser={{
                       name: item.data.autor.nome,
                       image: item.data.autor.urlFotoPerfil ?? '',
-                      type: 'pessoa', // Mockado
+                      type: 'pessoa',
                     }}
                   />
                 </Link>

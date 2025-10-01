@@ -66,8 +66,8 @@ export default function PostCardTitle({ postTitle, numVotes, numMinutes, numComm
           <TypeBadge type={postUser.type} size="small"></TypeBadge>
         </div>
         <div className="col-start-5 col-span-8 flex justify-between items-center">
-          <p className="text-gray-600 text-xs dark:text-zinc-400">• {numVotes} votos</p>
-          <p className="text-gray-600 text-xs dark:text-zinc-400">• {numComments} comentários</p>
+          {/* <p className="text-gray-600 text-xs dark:text-zinc-400">• {numVotes} votos</p>
+          <p className="text-gray-600 text-xs dark:text-zinc-400">• {numComments} comentários</p> */}
           <p className="text-gray-600 text-xs dark:text-zinc-400">• {dateText}</p>
         </div>
       </div>

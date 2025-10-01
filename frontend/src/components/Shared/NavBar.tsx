@@ -28,7 +28,7 @@ export default function NavBar() {
 
           <div className="flex space-x-4 gap-5 justify-center items-center">
             <Link href="/">
-              <Image className="w-20 ml-24" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"/>
+              <Image className="w-20 ml-20" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"/>
             </Link>
           </div>
 

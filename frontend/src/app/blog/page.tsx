@@ -7,7 +7,6 @@ import SearchFilters from "@/components/Shared/SearchFilters";
 import Banner from "@/components/Shared/Banner";
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Tipos que correspondem à API do backend
 interface Autor {
   id: string;
   nome: string;
@@ -19,24 +18,47 @@ interface Publicacao {
   titulo: string;
   conteudo: string;
   autor: Autor;
+  entidadeId?: string | null;
   centroId: string;
-  criadoEm: string; // A data virá como string ISO
+  criadoEm: string;
   atualizadoEm: string;
 }
 
 export default function Blog() {
   const [publicacoes, setPublicacoes] = useState<Publicacao[]>([]);
+  const [entidades, setEntidades] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeButton, setActiveButton] = useState('Todos');
+  const [tagTerm, setTagTerm] = useState('');
+  const [collaborators, setCollaborators] = useState('');
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setActiveButton('Todos');
+    setTagTerm('');
+    setCollaborators('');
+  };
 
   useEffect(() => {
-    const fetchPublicacoes = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const response = await fetch('http://localhost:3001/publicacoes');
-        if (!response.ok) {
-          throw new Error('Falha ao buscar publicações');
+        const [publicacoesRes, entidadesRes] = await Promise.all([
+          fetch('http://localhost:3001/publicacoes'),
+          fetch('http://localhost:3001/entidades'),
+        ]);
+
+        if (!publicacoesRes.ok || !entidadesRes.ok) {
+          throw new Error('Falha ao buscar dados');
         }
-        const data = await response.json();
-        setPublicacoes(data);
+
+        const publicacoesData = await publicacoesRes.json();
+        const entidadesData = await entidadesRes.json();
+
+        setPublicacoes(publicacoesData);
+        setEntidades(entidadesData);
+
       } catch (error) {
         console.error(error);
       } finally {
@@ -44,8 +66,34 @@ export default function Blog() {
       }
     };
 
-    fetchPublicacoes();
+    fetchData();
   }, []);
+
+  const filteredPublicacoes = publicacoes
+    .filter(post => {
+      const searchTermLower = searchTerm.toLowerCase();
+      return (
+        post.titulo.toLowerCase().includes(searchTermLower) ||
+        post.conteudo.toLowerCase().includes(searchTermLower)
+      );
+    })
+    .filter((post: Publicacao) => {
+      if (activeButton === 'Todos') {
+        return true;
+      }
+      if (activeButton === 'Pessoais') {
+        return !post.entidadeId;
+      }
+      if (activeButton === 'Laboratórios') {
+        const entidade = entidades.find(e => e.id === post.entidadeId);
+        return entidade && entidade.tipo === 'LABORATORIO';
+      }
+      if (activeButton === 'Grupos e Ligas') {
+        const entidade = entidades.find(e => e.id === post.entidadeId);
+        return entidade && (entidade.tipo === 'GRUPO_PESQUISA' || entidade.tipo === 'LIGA_ACADEMICA');
+      }
+      return true;
+    });
 
   const calculateMinutesAgo = (dateString: string) => {
     const date = new Date(dateString);
@@ -65,7 +113,17 @@ export default function Blog() {
             buttonHref="/blog/novo"
           />
         </div>
-        <SearchFilters />
+        <SearchFilters 
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          activeButton={activeButton}
+          setActiveButton={setActiveButton}
+          tagTerm={tagTerm}
+          setTagTerm={setTagTerm}
+          collaborators={collaborators}
+          setCollaborators={setCollaborators}
+          clearFilters={clearFilters}
+        />
         <div className="space-y-6">
           {isLoading
             ? Array.from({ length: 3 }).map((_, index) => (
@@ -77,7 +135,7 @@ export default function Blog() {
                   </div>
                 </div>
               ))
-            : publicacoes
+            : filteredPublicacoes
               .filter((post) => post.autor)
               .map((post) => (
                 <Link href={`/blog/${post.id}`} key={post.id} className="block hover:bg-muted/50 rounded-lg transition-colors">

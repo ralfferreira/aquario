@@ -11,10 +11,10 @@ const registerBodySchema = z.object({
   email: z.string().email(),
   senha: z.string().min(6),
   papel: z.nativeEnum(PapelUsuario),
-  centroId: z.string().cuid(),
+  centroId: z.string().uuid(),
   bio: z.string().optional(),
   urlFotoPerfil: z.string().url().optional(),
-  cursoId: z.string().cuid().optional(),
+  cursoId: z.string().uuid().optional(),
   periodo: z.number().optional(),
 });
 

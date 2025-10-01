@@ -97,13 +97,13 @@ export default function SearchFilters({
           </Button>
         </div>
 
-        <Button
+        {/* <Button
           variant="outline" 
           className="bg-transparent w-24 h-8 flex gap-2 text-xs rounded-full border-gray-400 dark:bg-transparent dark:text-gray-200 dark:hover:bg-neutral-800"
           onClick={toggleFilters}>
           <Image src={`/${filterIcon}`} alt="icon filter" width={16} height={16} />
           Filtros
-        </Button>
+        </Button> */}
       </div>
 
       <div
