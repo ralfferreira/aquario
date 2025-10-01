@@ -134,18 +134,19 @@ export default function TadeaPage() {
                 return statusMatch && searchMatch;
               })
               .map((item) => (
-              <LostAndFoundCard
-                key={item.id}
-                id={item.id}
-                title={item.titulo}
-                message={item.descricao}
-                timePostedInMinutes={calculateMinutesAgo(item.criadoEm)}
-                images={item.urlsFotos}
-                autor={item.autor}
-                status={item.status}
-                isAdmin={isAdmin}
-                onStatusChange={handleStatusChange}
-              />
+              <Link href={`/tadea/${item.id}`} key={item.id}>
+                <LostAndFoundCard
+                  id={item.id}
+                  title={item.titulo}
+                  message={item.descricao}
+                  timePostedInMinutes={calculateMinutesAgo(item.criadoEm)}
+                  images={item.urlsFotos}
+                  autor={item.autor}
+                  status={item.status}
+                  isAdmin={isAdmin}
+                  onStatusChange={handleStatusChange}
+                />
+              </Link>
             ))}
       </div>
     </main>
