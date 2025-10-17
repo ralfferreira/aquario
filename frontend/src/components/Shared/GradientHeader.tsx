@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 
-// Interface defining the props for the ProfileComponent
+// Interface defining the props for the ProfileComponent!
 interface HeaderProps {
     academicCenter: string;
     courses: string[];
