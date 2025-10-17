@@ -1,10 +1,16 @@
-name: Code Quality Check
+name: Frontend - Code Quality Check
 
 on:
   push:
     branches: [main, develop]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-code-quality.yml"
   pull_request:
     branches: [main, develop]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-code-quality.yml"
 
 jobs:
   code-quality:
