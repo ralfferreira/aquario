@@ -2,18 +2,18 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-interface Centro {
+type Centro = {
   id: string;
   nome: string;
   sigla: string;
-}
+};
 
-interface Curso {
+type Curso = {
   id: string;
   nome: string;
-}
+};
 
-interface User {
+type User = {
   id: string;
   nome: string;
   email: string;
@@ -24,16 +24,16 @@ interface User {
   periodo?: number | null;
   bio?: string | null;
   permissoes: string[];
-}
+};
 
-interface AuthContextType {
+type AuthContextType = {
   isAuthenticated: boolean;
   user: User | null;
   token: string | null;
   login: (token: string) => void;
   logout: () => void;
   isLoading: boolean;
-}
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

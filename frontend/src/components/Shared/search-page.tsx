@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearch, SearchResult } from "@/contexts/SearchContext";
+import { useSearch, SearchResult } from "@/contexts/search-context";
 import SearchResultCard from "@/components/shared/search-card-result";
 
 type SearchPageProps = {

@@ -3,7 +3,7 @@
 import Checkbox from "@/components/pages/vagas/checkbox-filter";
 import VacancyCard, { Vaga } from "@/components/pages/vagas/vacancy-card";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/auth-context";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SearchBar1 } from "@/components/ui/searchbar1";
