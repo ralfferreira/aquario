@@ -1,3 +1,100 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "ignorePatterns": [
+    "dist",
+    ".eslintrc.json",
+    "node_modules",
+    ".next",
+    "out",
+    "build",
+    "src/Tests & Examples - Dev/**/*"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "prettier",
+    "@typescript-eslint",
+    "unicorn"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-console": "warn",
+    "eqeqeq": ["error", "always"],
+    "curly": ["error", "all"],
+    "no-duplicate-imports": "error",
+    "no-unused-expressions": "error",
+    "no-unreachable": "error",
+    "no-return-assign": "error",
+    "no-self-compare": "error",
+    "no-sequences": "error",
+    "no-throw-literal": "error",
+    "no-unmodified-loop-condition": "error",
+    "no-unused-labels": "error",
+    "no-useless-call": "error",
+    "no-useless-concat": "error",
+    "no-useless-return": "error",
+    "prefer-promise-reject-errors": "error",
+    "require-await": "error",
+    "yoda": "error",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase",
+        "ignore": [
+          "README.md",
+          "LICENSE",
+          "CHANGELOG.md",
+          "package.json",
+          "tsconfig.json",
+          "next.config.mjs",
+          "tailwind.config.ts",
+          "postcss.config.mjs",
+          "components.json",
+          ".eslintrc.json",
+          ".prettierrc",
+          ".lintstagedrc.json"
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-non-null-assertion": "warn"
+      }
+    }
+  ]
 }
