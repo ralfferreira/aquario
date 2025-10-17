@@ -3,9 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import NavWrapper from "@/components/shared/nav-wrapper";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/auth-context";
 import { ThemeProvider } from "@/components/shared/theme-provider";
-import { SearchProvider } from "@/contexts/SearchContext";
+import { SearchProvider } from "@/contexts/search-context";
 
 const inter = Inter({ subsets: ["latin"] });
 

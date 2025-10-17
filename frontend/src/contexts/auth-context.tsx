@@ -1,39 +1,39 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-interface Centro {
+type Centro = {
   id: string;
   nome: string;
   sigla: string;
-}
+};
 
-interface Curso {
+type Curso = {
   id: string;
   nome: string;
-}
+};
 
-interface User {
+type User = {
   id: string;
   nome: string;
   email: string;
-  papel: 'DISCENTE' | 'DOCENTE';
+  papel: "DISCENTE" | "DOCENTE";
   urlFotoPerfil?: string | null;
   centro: Centro;
   curso?: Curso | null;
   periodo?: number | null;
   bio?: string | null;
   permissoes: string[];
-}
+};
 
-interface AuthContextType {
+type AuthContextType = {
   isAuthenticated: boolean;
   user: User | null;
   token: string | null;
   login: (token: string) => void;
   logout: () => void;
   isLoading: boolean;
-}
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     } else {
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (token) {
       const fetchUser = async () => {
         try {
-          const response = await fetch('http://localhost:3001/me', {
+          const response = await fetch("http://localhost:3001/me", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             logout();
           }
         } catch (error) {
-          console.error('Falha ao buscar usuário:', error);
+          console.error("Falha ao buscar usuário:", error);
           logout();
         } finally {
           setIsLoading(false);
@@ -80,19 +80,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [token]);
 
   const login = (newToken: string) => {
-    localStorage.setItem('token', newToken);
+    localStorage.setItem("token", newToken);
     setToken(newToken);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setToken(null);
     setUser(null);
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated: !!user, user, token, login, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated: !!user, user, token, login, logout, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -101,7 +103,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

@@ -4,7 +4,7 @@ import SearchFilters from "@/components/shared/search-filters";
 import Banner from "@/components/shared/banner";
 import ProjectCard, { Projeto, Autor } from "@/components/shared/project-card";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/auth-context";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 

@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -22,12 +22,13 @@ export default function Home() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold mb-6">Projeto em Desenvolvimento</h2>
           <p className="text-lg text-muted-foreground mb-8">
-            O Aquário é um projeto em constante evolução. Em breve, teremos mais páginas e funcionalidades disponíveis.
+            O Aquário é um projeto em constante evolução. Em breve, teremos mais páginas e
+            funcionalidades disponíveis.
           </p>
           <div className="bg-muted/50 rounded-lg p-8">
             <h3 className="text-2xl font-semibold mb-4">Para Estudantes que Precisam de Ajuda</h3>
             <p className="text-muted-foreground mb-6">
-              Nossos guias são o melhor lugar para começar! Encontre orientações, dicas e recursos 
+              Nossos guias são o melhor lugar para começar! Encontre orientações, dicas e recursos
               que vão te ajudar em sua jornada acadêmica no Centro de Informática.
             </p>
             <Button asChild size="lg" variant="outline">

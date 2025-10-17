@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/auth-context";
 import LostAndFoundCard from "@/components/pages/tadea/tadea";
 import Banner from "@/components/shared/banner";
 import { Skeleton } from "@/components/ui/skeleton";
