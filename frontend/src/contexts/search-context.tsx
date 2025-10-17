@@ -2,19 +2,19 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export interface SearchResult {
+export type SearchResult = {
   id: string;
   type: string;
   titulo?: string;
   nome?: string;
   conteudo?: string;
   descricao?: string;
-}
+};
 
-interface SearchContextType {
+type SearchContextType = {
   results: SearchResult[];
   search: (query: string) => Promise<void>;
-}
+};
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
