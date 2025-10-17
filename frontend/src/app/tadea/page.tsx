@@ -1,25 +1,31 @@
-'use client';
+"use client";
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import LostAndFoundCard from '@/components/Pages/Tadea/tadea';
-import Banner from '@/components/Shared/Banner';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
+import LostAndFoundCard from "@/components/pages/tadea/tadea";
+import Banner from "@/components/shared/banner";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export type StatusItem = 'PERDIDO' | 'DEVOLVIDO';
+export type StatusItem = "PERDIDO" | "DEVOLVIDO";
 
-interface Autor {
+type Autor = {
   id: string;
   nome: string;
   urlFotoPerfil?: string | null;
-}
+};
 
-interface ItemAchadoEPerdido {
+type ItemAchadoEPerdido = {
   id: string;
   titulo: string;
   descricao: string;
@@ -27,35 +33,35 @@ interface ItemAchadoEPerdido {
   autor: Autor;
   urlsFotos: string[];
   criadoEm: string;
-}
+};
 
 export default function TadeaPage() {
   const { user } = useAuth();
   const [itens, setItens] = useState<ItemAchadoEPerdido[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('TODOS');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("TODOS");
   const { token } = useAuth();
 
-  const isAdmin = !!user?.permissoes.includes('ADMIN');
+  const isAdmin = !!user?.permissoes.includes("ADMIN");
 
   const handleStatusChange = async (id: string, status: StatusItem) => {
     try {
       const response = await fetch(`http://localhost:3001/achados-e-perdidos/${id}`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status }),
       });
 
-      if (!response.ok) throw new Error('Falha ao atualizar o status');
+      if (!response.ok) {
+        throw new Error("Falha ao atualizar o status");
+      }
 
       // Atualiza o estado local para refletir a mudança
-      setItens((prevItens) =>
-        prevItens.map((item) => (item.id === id ? { ...item, status } : item))
-      );
+      setItens(prevItens => prevItens.map(item => (item.id === id ? { ...item, status } : item)));
     } catch (error) {
       console.error(error);
       // TODO: Adicionar um toast de erro para o usuário
@@ -65,8 +71,10 @@ export default function TadeaPage() {
   useEffect(() => {
     const fetchItens = async () => {
       try {
-        const response = await fetch('http://localhost:3001/achados-e-perdidos');
-        if (!response.ok) throw new Error('Falha ao buscar itens');
+        const response = await fetch("http://localhost:3001/achados-e-perdidos");
+        if (!response.ok) {
+          throw new Error("Falha ao buscar itens");
+        }
         const data = await response.json();
         setItens(data);
       } catch (error) {
@@ -99,7 +107,7 @@ export default function TadeaPage() {
         <Input
           placeholder="Buscar por título..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className="max-w-sm"
         />
         <Select value={statusFilter} onValueChange={setStatusFilter}>
@@ -126,28 +134,28 @@ export default function TadeaPage() {
               </div>
             ))
           : itens
-              .filter((item) => {
+              .filter(item => {
                 const searchTermLower = searchTerm.toLowerCase();
                 const titleLower = item.titulo.toLowerCase();
-                const statusMatch = statusFilter === 'TODOS' || item.status === statusFilter;
+                const statusMatch = statusFilter === "TODOS" || item.status === statusFilter;
                 const searchMatch = titleLower.includes(searchTermLower);
                 return statusMatch && searchMatch;
               })
-              .map((item) => (
-              <Link href={`/tadea/${item.id}`} key={item.id}>
-                <LostAndFoundCard
-                  id={item.id}
-                  title={item.titulo}
-                  message={item.descricao}
-                  timePostedInMinutes={calculateMinutesAgo(item.criadoEm)}
-                  images={item.urlsFotos}
-                  autor={item.autor}
-                  status={item.status}
-                  isAdmin={isAdmin}
-                  onStatusChange={handleStatusChange}
-                />
-              </Link>
-            ))}
+              .map(item => (
+                <Link href={`/tadea/${item.id}`} key={item.id}>
+                  <LostAndFoundCard
+                    id={item.id}
+                    title={item.titulo}
+                    message={item.descricao}
+                    timePostedInMinutes={calculateMinutesAgo(item.criadoEm)}
+                    images={item.urlsFotos}
+                    autor={item.autor}
+                    status={item.status}
+                    isAdmin={isAdmin}
+                    onStatusChange={handleStatusChange}
+                  />
+                </Link>
+              ))}
       </div>
     </main>
   );

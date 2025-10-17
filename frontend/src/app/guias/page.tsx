@@ -1,27 +1,20 @@
 "use client";
 
-import React from 'react';
-import MarkdownRenderer from '@/components/Shared/MarkdownRender';
-import { GuideIndex } from '@/components/Shared/GuideIndex';
-import GradientHeaderComponent from '@/components/Shared/GradientHeader';
-import { usePathname } from 'next/navigation';
+import React from "react";
+import MarkdownRenderer from "@/components/shared/markdown-renderer";
+import { GuideIndex } from "@/components/shared/guide-index";
+import GradientHeaderComponent from "@/components/shared/gradient-header";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { AlignJustify } from 'lucide-react';
-
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { AlignJustify } from "lucide-react";
 
 export default function Home() {
   const formatTitleFromPath = (path: string) => {
     return path
-      .replace(/\//g, ' ')         
-      .replace(/-/g, ' ')          
-      .replace(/\b\w/g, (char) => char.toUpperCase()); 
+      .replace(/\//g, " ")
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, char => char.toUpperCase());
   };
 
   const pathname = usePathname();
@@ -31,47 +24,45 @@ export default function Home() {
   const data = [
     {
       "Guias Iniciais": [
-        { "nomedapagina": "Introdução Aquário", "id": 6010 },
-        { "nomedapagina": "Introdução ao curso", "id": 6011 },
-        { "nomedapagina": "Centro de Informática", "id": 6012 },
-        { "nomedapagina": "Grade curricular", "id": 6013 },
-        { "nomedapagina": "Como entrar em um projeto", "id": 6014 },
-        { "nomedapagina": "Contribuir", "id": 6015 }
+        { nomedapagina: "Introdução Aquário", id: 6010 },
+        { nomedapagina: "Introdução ao curso", id: 6011 },
+        { nomedapagina: "Centro de Informática", id: 6012 },
+        { nomedapagina: "Grade curricular", id: 6013 },
+        { nomedapagina: "Como entrar em um projeto", id: 6014 },
+        { nomedapagina: "Contribuir", id: 6015 },
       ],
       "Matrícula e Cadeiras": [
-        { "nomedapagina": "Matrícula", "id": 6020 },
-        { "nomedapagina": "Matrícula Extraordinária", "id": 6021 },
-        { "nomedapagina": "Equivalentes", "id": 6022 },
-        { "nomedapagina": "Dispensa de horas", "id": 6023 }
+        { nomedapagina: "Matrícula", id: 6020 },
+        { nomedapagina: "Matrícula Extraordinária", id: 6021 },
+        { nomedapagina: "Equivalentes", id: 6022 },
+        { nomedapagina: "Dispensa de horas", id: 6023 },
       ],
-      "Estágio": [
-        { "nomedapagina": "Como conseguir", "id": 6030 },
-        { "nomedapagina": "Como cadastrar", "id": 6031 },
-        { "nomedapagina": "Estágio Não Supervisionado", "id": 6032 },
-        { "nomedapagina": "Estágio Supervisionado", "id": 6033 },
-        { "nomedapagina": "Como dispensar", "id": 6034 }
+      Estágio: [
+        { nomedapagina: "Como conseguir", id: 6030 },
+        { nomedapagina: "Como cadastrar", id: 6031 },
+        { nomedapagina: "Estágio Não Supervisionado", id: 6032 },
+        { nomedapagina: "Estágio Supervisionado", id: 6033 },
+        { nomedapagina: "Como dispensar", id: 6034 },
       ],
-      "Extensão": [
-        { "nomedapagina": "Como conseguir", "id": 6040 },
-        { "nomedapagina": "Como cadastrar", "id": 6041 },
-        { "nomedapagina": "Como dispensar", "id": 6042 }
+      Extensão: [
+        { nomedapagina: "Como conseguir", id: 6040 },
+        { nomedapagina: "Como cadastrar", id: 6041 },
+        { nomedapagina: "Como dispensar", id: 6042 },
       ],
       "Monitoria e Tutoria": [
-        { "nomedapagina": "Como conseguir", "id": 6050 },
-        { "nomedapagina": "Como cadastrar", "id": 6051 },
-        { "nomedapagina": "Como dispensar", "id": 6052 }
+        { nomedapagina: "Como conseguir", id: 6050 },
+        { nomedapagina: "Como cadastrar", id: 6051 },
+        { nomedapagina: "Como dispensar", id: 6052 },
       ],
-      "Documentos Úteis": [
-        { "nomedapagina": "Documentos Úteis", "id": 6060 }
+      "Documentos Úteis": [{ nomedapagina: "Documentos Úteis", id: 6060 }],
+      Estágiozao: [
+        { nomedapagina: "Como conseguir", id: 6030 },
+        { nomedapagina: "Como cadastrar", id: 6031 },
+        { nomedapagina: "Estágio Não Supervisionado", id: 6032 },
+        { nomedapagina: "Estágio Supervisionado", id: 6033 },
+        { nomedapagina: "Como dispensar", id: 6034 },
       ],
-      "Estágiozao": [
-        { "nomedapagina": "Como conseguir", "id": 6030 },
-        { "nomedapagina": "Como cadastrar", "id": 6031 },
-        { "nomedapagina": "Estágio Não Supervisionado", "id": 6032 },
-        { "nomedapagina": "Estágio Supervisionado", "id": 6033 },
-        { "nomedapagina": "Como dispensar", "id": 6034 }
-      ]
-    }
+    },
   ];
 
   const markdownContent = `
@@ -116,31 +107,39 @@ Morbi commodo magna in ex iaculis ultrices eu quis nisi. Donec at tincidunt ante
   `;
 
   return (
-    <div className='flex flex-1 flex-col'>
-      <GradientHeaderComponent 
-          academicCenter="Centro de Informática" 
-          courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 
-          currentCourse="Ciência da Computação"
-      />  
+    <div className="flex flex-1 flex-col">
+      <GradientHeaderComponent
+        academicCenter="Centro de Informática"
+        courses={[
+          "Ciência da Computação",
+          "Engenharia da Computação",
+          "Ciências de Dados e Inteligência Artificial",
+        ]}
+        currentCourse="Ciência da Computação"
+      />
       <div className="flex md:flex-row w-full flex-col">
-        <div className='relative w-[300px] hidden md:block'>
+        <div className="relative w-[300px] hidden md:block">
           <GuideIndex data={data} />
         </div>
-        <div className='md:hidden pl-4 pt-4 pb-4'>
-          <Sheet key={'left'}>
+        <div className="md:hidden pl-4 pt-4 pb-4">
+          <Sheet key={"left"}>
             <SheetTrigger asChild>
-              <Button variant="outline"><AlignJustify size={12}/></Button>
+              <Button variant="outline">
+                <AlignJustify size={12} />
+              </Button>
             </SheetTrigger>
             <SheetContent side={"left"}>
               <SheetHeader>
-                <SheetTitle className='pb-4'>O que procura?</SheetTitle>
+                <SheetTitle className="pb-4">O que procura?</SheetTitle>
               </SheetHeader>
-                <GuideIndex data={data} />
+              <GuideIndex data={data} />
             </SheetContent>
           </Sheet>
         </div>
         <div className="w-[1.5px] min-h-full bg-gray-500 opacity-30"></div>
-        <div className='px-8 w-full overscroll-contain '><MarkdownRenderer content={markdownContent} title={title} /></div>
+        <div className="px-8 w-full overscroll-contain ">
+          <MarkdownRenderer content={markdownContent} title={title} />
+        </div>
       </div>
     </div>
   );
