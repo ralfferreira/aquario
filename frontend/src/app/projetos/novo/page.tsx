@@ -1,24 +1,30 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Tiptap from '@/components/Shared/Tiptap';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Tiptap from "@/components/shared/tiptap";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function NovoProjetoPage() {
   const { token, user, isLoading: isAuthLoading } = useAuth();
   const router = useRouter();
-  const [titulo, setTitulo] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [tags, setTags] = useState('');
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [tags, setTags] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usuarios, setUsuarios] = useState<{ id: string; nome: string }[]>([]);
@@ -27,13 +33,15 @@ export default function NovoProjetoPage() {
 
   useEffect(() => {
     if (!isAuthLoading && !user) {
-      router.push('/projetos');
+      router.push("/projetos");
     }
 
     const fetchUsuarios = async () => {
       try {
-        const response = await fetch('http://localhost:3001/usuarios');
-        if (!response.ok) throw new Error('Falha ao buscar usuários');
+        const response = await fetch("http://localhost:3001/usuarios");
+        if (!response.ok) {
+          throw new Error("Falha ao buscar usuários");
+        }
         const data = await response.json();
         setUsuarios(data);
       } catch (error) {
@@ -47,7 +55,7 @@ export default function NovoProjetoPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!titulo.trim() || !descricao.trim()) {
-      setError('Todos os campos são obrigatórios.');
+      setError("Todos os campos são obrigatórios.");
       return;
     }
 
@@ -55,24 +63,36 @@ export default function NovoProjetoPage() {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3001/projetos', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/projetos", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ titulo, descricao, tipo: 'PESSOAL', tags: tags.split(',').map(tag => tag.trim()), coordenadorId: user?.id, centroId: user?.centro.id, membroIds: selectedMembros }),
+        body: JSON.stringify({
+          titulo,
+          descricao,
+          tipo: "PESSOAL",
+          tags: tags.split(",").map(tag => tag.trim()),
+          coordenadorId: user?.id,
+          centroId: user?.centro.id,
+          membroIds: selectedMembros,
+        }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Falha ao criar o projeto');
+        throw new Error(errorData.message || "Falha ao criar o projeto");
       }
 
-      router.push('/projetos');
+      router.push("/projetos");
       router.refresh();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ocorreu um erro desconhecido");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -87,26 +107,32 @@ export default function NovoProjetoPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <h1 className="text-4xl font-bold">Divulgar Novo Projeto</h1>
         <div className="space-y-2">
-          <Label htmlFor="titulo" className="text-lg">Título do Projeto</Label>
+          <Label htmlFor="titulo" className="text-lg">
+            Título do Projeto
+          </Label>
           <Input
             id="titulo"
             value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
+            onChange={e => setTitulo(e.target.value)}
             placeholder="Ex: Aquário - O Hub de Oportunidades do CI"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="tags" className="text-lg">Tags (separadas por vírgula)</Label>
+          <Label htmlFor="tags" className="text-lg">
+            Tags (separadas por vírgula)
+          </Label>
           <Input
             id="tags"
             value={tags}
-            onChange={(e) => setTags(e.target.value)}
+            onChange={e => setTags(e.target.value)}
             placeholder="Ex: React, Node.js, IA"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="descricao" className="text-lg">Descrição</Label>
+          <Label htmlFor="descricao" className="text-lg">
+            Descrição
+          </Label>
           <Tiptap value={descricao} onChange={setDescricao} />
         </div>
 
@@ -122,7 +148,7 @@ export default function NovoProjetoPage() {
               >
                 {selectedMembros.length > 0
                   ? `${selectedMembros.length} membro(s) selecionado(s)`
-                  : 'Selecione os membros...'}
+                  : "Selecione os membros..."}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -131,13 +157,13 @@ export default function NovoProjetoPage() {
                 <CommandInput placeholder="Buscar membro..." />
                 <CommandEmpty>Nenhum membro encontrado.</CommandEmpty>
                 <CommandGroup>
-                  {usuarios.map((usuario) => (
+                  {usuarios.map(usuario => (
                     <CommandItem
                       key={usuario.id}
                       onSelect={() => {
                         const isSelected = selectedMembros.includes(usuario.id);
                         if (isSelected) {
-                          setSelectedMembros(selectedMembros.filter((id) => id !== usuario.id));
+                          setSelectedMembros(selectedMembros.filter(id => id !== usuario.id));
                         } else {
                           setSelectedMembros([...selectedMembros, usuario.id]);
                         }
@@ -145,8 +171,8 @@ export default function NovoProjetoPage() {
                     >
                       <Check
                         className={cn(
-                          'mr-2 h-4 w-4',
-                          selectedMembros.includes(usuario.id) ? 'opacity-100' : 'opacity-0'
+                          "mr-2 h-4 w-4",
+                          selectedMembros.includes(usuario.id) ? "opacity-100" : "opacity-0"
                         )}
                       />
                       {usuario.nome}
@@ -159,7 +185,7 @@ export default function NovoProjetoPage() {
         </div>
         {error && <p className="text-red-500">{error}</p>}
         <Button type="submit" size="lg" disabled={isSubmitting}>
-          {isSubmitting ? 'Publicando...' : 'Publicar Projeto'}
+          {isSubmitting ? "Publicando..." : "Publicar Projeto"}
         </Button>
       </form>
     </main>

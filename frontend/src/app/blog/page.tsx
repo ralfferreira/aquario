@@ -1,19 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import PostCardTitle from "@/components/Shared/ProjectCardTitle";
-import SearchFilters from "@/components/Shared/SearchFilters";
-import Banner from "@/components/Shared/Banner";
-import { Skeleton } from '@/components/ui/skeleton';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import PostCardTitle from "@/components/shared/project-card-title";
+import SearchFilters from "@/components/shared/search-filters";
+import Banner from "@/components/shared/banner";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Entidade } from "@/components/shared/entidade-card";
 
-interface Autor {
+type Autor = {
   id: string;
   nome: string;
   urlFotoPerfil?: string | null;
-}
+};
 
-interface Publicacao {
+type Publicacao = {
   id: string;
   titulo: string;
   conteudo: string;
@@ -22,22 +23,22 @@ interface Publicacao {
   centroId: string;
   criadoEm: string;
   atualizadoEm: string;
-}
+};
 
 export default function Blog() {
   const [publicacoes, setPublicacoes] = useState<Publicacao[]>([]);
-  const [entidades, setEntidades] = useState<any[]>([]);
+  const [entidades, setEntidades] = useState<Entidade[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeButton, setActiveButton] = useState('Todos');
-  const [tagTerm, setTagTerm] = useState('');
-  const [collaborators, setCollaborators] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeButton, setActiveButton] = useState("Todos");
+  const [tagTerm, setTagTerm] = useState("");
+  const [collaborators, setCollaborators] = useState("");
 
   const clearFilters = () => {
-    setSearchTerm('');
-    setActiveButton('Todos');
-    setTagTerm('');
-    setCollaborators('');
+    setSearchTerm("");
+    setActiveButton("Todos");
+    setTagTerm("");
+    setCollaborators("");
   };
 
   useEffect(() => {
@@ -45,12 +46,12 @@ export default function Blog() {
       setIsLoading(true);
       try {
         const [publicacoesRes, entidadesRes] = await Promise.all([
-          fetch('http://localhost:3001/publicacoes'),
-          fetch('http://localhost:3001/entidades'),
+          fetch("http://localhost:3001/publicacoes"),
+          fetch("http://localhost:3001/entidades"),
         ]);
 
         if (!publicacoesRes.ok || !entidadesRes.ok) {
-          throw new Error('Falha ao buscar dados');
+          throw new Error("Falha ao buscar dados");
         }
 
         const publicacoesData = await publicacoesRes.json();
@@ -58,9 +59,12 @@ export default function Blog() {
 
         setPublicacoes(publicacoesData);
         setEntidades(entidadesData);
-
-      } catch (error) {
-        console.error(error);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error("Ocorreu um erro desconhecido");
+        }
       } finally {
         setIsLoading(false);
       }
@@ -78,19 +82,21 @@ export default function Blog() {
       );
     })
     .filter((post: Publicacao) => {
-      if (activeButton === 'Todos') {
+      if (activeButton === "Todos") {
         return true;
       }
-      if (activeButton === 'Pessoais') {
+      if (activeButton === "Pessoais") {
         return !post.entidadeId;
       }
-      if (activeButton === 'Laboratórios') {
+      if (activeButton === "Laboratórios") {
         const entidade = entidades.find(e => e.id === post.entidadeId);
-        return entidade && entidade.tipo === 'LABORATORIO';
+        return entidade && entidade.tipo === "LABORATORIO";
       }
-      if (activeButton === 'Grupos e Ligas') {
+      if (activeButton === "Grupos e Ligas") {
         const entidade = entidades.find(e => e.id === post.entidadeId);
-        return entidade && (entidade.tipo === 'GRUPO_PESQUISA' || entidade.tipo === 'LIGA_ACADEMICA');
+        return (
+          entidade && (entidade.tipo === "GRUPO_PESQUISA" || entidade.tipo === "LIGA_ACADEMICA")
+        );
       }
       return true;
     });
@@ -113,7 +119,7 @@ export default function Blog() {
             buttonHref="/blog/novo"
           />
         </div>
-        <SearchFilters 
+        <SearchFilters
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           activeButton={activeButton}
@@ -136,24 +142,28 @@ export default function Blog() {
                 </div>
               ))
             : filteredPublicacoes
-              .filter((post) => post.autor)
-              .map((post) => (
-                <Link href={`/blog/${post.id}`} key={post.id} className="block hover:bg-muted/50 rounded-lg transition-colors">
-                  <div className="p-4">
-                    <PostCardTitle
-                      postTitle={post.titulo}
-                      numVotes={0} // TODO: Mockado
-                      numMinutes={calculateMinutesAgo(post.criadoEm)}
-                      numComments={0} // TODO: Mockado
-                      postUser={{
-                        name: post.autor.nome,
-                        image: post.autor.urlFotoPerfil ?? '',
-                        type: 'pessoa', // TODO: Mockado
-                      }}
-                    />
-                  </div>
-                </Link>
-              ))}
+                .filter(post => post.autor)
+                .map(post => (
+                  <Link
+                    href={`/blog/${post.id}`}
+                    key={post.id}
+                    className="block hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    <div className="p-4">
+                      <PostCardTitle
+                        postTitle={post.titulo}
+                        numVotes={0} // TODO: Mockado
+                        numMinutes={calculateMinutesAgo(post.criadoEm)}
+                        numComments={0} // TODO: Mockado
+                        postUser={{
+                          name: post.autor.nome,
+                          image: post.autor.urlFotoPerfil ?? "",
+                          type: "pessoa", // TODO: Mockado
+                        }}
+                      />
+                    </div>
+                  </Link>
+                ))}
         </div>
       </div>
     </main>

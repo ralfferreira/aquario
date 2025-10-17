@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 // Tipos
-export type StatusItem = 'PERDIDO' | 'DEVOLVIDO';
+export type StatusItem = "PERDIDO" | "DEVOLVIDO";
 
-interface Autor {
+type Autor = {
   id: string;
   nome: string;
   urlFotoPerfil?: string | null;
-}
+};
 
-interface ItemAchadoEPerdido {
+type ItemAchadoEPerdido = {
   id: string;
   titulo: string;
   descricao: string;
@@ -25,7 +25,7 @@ interface ItemAchadoEPerdido {
   autor: Autor;
   urlsFotos: string[];
   criadoEm: string;
-}
+};
 
 export default function ItemDetailPage({ params }: { params: { id: string } }) {
   const { user, token, isAuthenticated } = useAuth();
@@ -38,11 +38,17 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
       const fetchItem = async () => {
         try {
           const response = await fetch(`http://localhost:3001/achados-e-perdidos/${params.id}`);
-          if (!response.ok) throw new Error('Falha ao buscar o item');
+          if (!response.ok) {
+            throw new Error("Falha ao buscar o item");
+          }
           const data = await response.json();
           setItem(data);
-        } catch (err: any) {
-          setError(err.message);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("Ocorreu um erro desconhecido");
+          }
         } finally {
           setIsLoading(false);
         }
@@ -52,25 +58,31 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   const handleUpdateStatus = async () => {
-    if (!item) return;
+    if (!item) {
+      return;
+    }
 
     try {
       const response = await fetch(`http://localhost:3001/achados-e-perdidos/${item.id}/status`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status: 'DEVOLVIDO' }),
+        body: JSON.stringify({ status: "DEVOLVIDO" }),
       });
 
       if (!response.ok) {
-        throw new Error('Falha ao atualizar status');
+        throw new Error("Falha ao atualizar status");
       }
 
-      setItem({ ...item, status: 'DEVOLVIDO' }); // Atualiza o estado localmente
-    } catch (err: any) {
-      setError(err.message);
+      setItem({ ...item, status: "DEVOLVIDO" }); // Atualiza o estado localmente
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ocorreu um erro desconhecido");
+      }
     }
   };
 
@@ -93,17 +105,24 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
       <div className="space-y-6">
         <div className="flex justify-between items-start">
           <h1 className="text-4xl font-bold">{item.titulo}</h1>
-          <Badge variant={item.status === 'PERDIDO' ? 'destructive' : 'default'} className="text-lg">{item.status}</Badge>
+          <Badge
+            variant={item.status === "PERDIDO" ? "destructive" : "default"}
+            className="text-lg"
+          >
+            {item.status}
+          </Badge>
         </div>
 
         <div className="flex items-center space-x-4 text-muted-foreground">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={item.autor.urlFotoPerfil || ''} />
+            <AvatarImage src={item.autor.urlFotoPerfil || ""} />
             <AvatarFallback>{item.autor.nome[0]}</AvatarFallback>
           </Avatar>
           <div>
-            <p>Reportado por <span className="font-semibold text-foreground">{item.autor.nome}</span></p>
-            <p className="text-sm">em {new Date(item.criadoEm).toLocaleDateString('pt-BR')}</p>
+            <p>
+              Reportado por <span className="font-semibold text-foreground">{item.autor.nome}</span>
+            </p>
+            <p className="text-sm">em {new Date(item.criadoEm).toLocaleDateString("pt-BR")}</p>
           </div>
         </div>
 
@@ -115,14 +134,19 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {item.urlsFotos.map((url, index) => (
                 <div key={index} className="relative aspect-square">
-                  <Image src={url} alt={`Foto do item ${index + 1}`} layout="fill" className="rounded-lg object-cover" />
+                  <Image
+                    src={url}
+                    alt={`Foto do item ${index + 1}`}
+                    layout="fill"
+                    className="rounded-lg object-cover"
+                  />
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {isOwner && item.status === 'PERDIDO' && (
+        {isOwner && item.status === "PERDIDO" && (
           <div className="pt-6 border-t">
             <h2 className="text-xl font-semibold">Ações</h2>
             <p className="text-muted-foreground mb-4">Você reportou este item. Já o encontrou?</p>

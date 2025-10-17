@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 
 // Tipos
-interface Curso {
+type Curso = {
   nome: string;
-}
+};
 
-interface Centro {
+type Centro = {
   nome: string;
   sigla: string;
-}
+};
 
-interface User {
+type User = {
   id: string;
   nome: string;
   email: string;
-  papel: 'DISCENTE' | 'DOCENTE';
+  papel: "DISCENTE" | "DOCENTE";
   urlFotoPerfil?: string | null;
   bio?: string | null;
   periodo?: number | null;
   centro: Centro;
   curso?: Curso | null;
-}
+};
 
 export default function UserProfilePage({ params }: { params: { id: string } }) {
   const [user, setUser] = useState<User | null>(null);
@@ -38,12 +38,16 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
         try {
           const response = await fetch(`http://localhost:3001/usuarios/${params.id}`);
           if (!response.ok) {
-            throw new Error('Usuário não encontrado');
+            throw new Error("Usuário não encontrado");
           }
           const data = await response.json();
           setUser(data);
-        } catch (err: any) {
-          setError(err.message);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("Ocorreu um erro desconhecido");
+          }
         } finally {
           setIsLoading(false);
         }
@@ -79,14 +83,16 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
     <main className="container mx-auto max-w-4xl p-4 pt-24">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
         <Avatar className="w-36 h-36 border-4 border-background shadow-lg">
-          <AvatarImage src={user.urlFotoPerfil || ''} alt={user.nome} />
+          <AvatarImage src={user.urlFotoPerfil || ""} alt={user.nome} />
           <AvatarFallback className="text-5xl">{user.nome.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="text-center md:text-left">
           <h1 className="text-4xl font-bold">{user.nome}</h1>
           <p className="text-lg text-muted-foreground">{user.curso?.nome || user.centro.nome}</p>
           {user.periodo && (
-            <Badge variant="secondary" className="mt-2">{user.periodo}º Período</Badge>
+            <Badge variant="secondary" className="mt-2">
+              {user.periodo}º Período
+            </Badge>
           )}
         </div>
       </div>

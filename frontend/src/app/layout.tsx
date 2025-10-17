@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import NavWrapper from "@/components/Shared/NavWrapper";
-import { AuthProvider } from '@/contexts/AuthContext';
-import { ThemeProvider } from "@/components/Shared/theme-provider"
-import { SearchProvider } from '@/contexts/SearchContext';
+import NavWrapper from "@/components/shared/nav-wrapper";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ThemeProvider } from "@/components/shared/theme-provider";
+import { SearchProvider } from "@/contexts/SearchContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,20 +22,22 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-          <AuthProvider>
-              <ThemeProvider
-                  attribute="class"
-                  defaultTheme="light"
-                  enableSystem
-                  disableTransitionOnChange
-                >
-                  <SearchProvider>
-                    <NavWrapper />
-                    {children}
-                  </SearchProvider>
-              </ThemeProvider>
-          </AuthProvider>
-        </body>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SearchProvider>
+              <div className="flex flex-1 flex-col">
+                <NavWrapper />
+                {children}
+              </div>
+            </SearchProvider>
+          </ThemeProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

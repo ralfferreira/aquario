@@ -1,37 +1,38 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Skeleton } from '@/components/ui/skeleton';
-import DOMPurify from 'dompurify';
-import TypeBadge from '@/components/Shared/Badges'; // Assumindo que este componente existe
+import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import DOMPurify from "dompurify";
+import TypeBadge from "@/components/shared/badges"; // Assumindo que este componente existe
 
 // Tipos
-interface Autor {
+type Autor = {
   id: string;
   nome: string;
   urlFotoPerfil?: string | null;
-}
+};
 
-interface Publicacao {
+type Publicacao = {
   id: string;
   titulo: string;
   conteudo: string;
   autor: Autor;
   criadoEm: string;
-}
+};
 
 export default function BlogPostPage({ params }: { params: { id: string } }) {
   const [post, setPost] = useState<Publicacao | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [votes, setVotes] = useState(0);
 
   useEffect(() => {
     if (params.id) {
       const fetchPost = async () => {
         try {
           const response = await fetch(`http://localhost:3001/publicacoes/${params.id}`);
-          if (!response.ok) throw new Error('Falha ao buscar a publicação');
+          if (!response.ok) {
+            throw new Error("Falha ao buscar a publicação");
+          }
           const data = await response.json();
           setPost(data);
         } catch (error) {
@@ -44,21 +45,26 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
     }
   }, [params.id]);
 
-  const handleUpvote = () => setVotes((prev) => prev + 1);
-  const handleDownvote = () => setVotes((prev) => prev - 1);
-
   const getInitials = (name: string) => {
-    const names = name.split(' ');
-    return names.map((n) => n[0]).join('').toUpperCase().slice(0, 2);
+    const names = name.split(" ");
+    return names
+      .map(n => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   const timePosted = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    if (diffInMinutes < 60) return `${diffInMinutes} minutos atrás`;
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} minutos atrás`;
+    }
     const diffInHours = Math.floor(diffInMinutes / 60);
-    if (diffInHours < 24) return `${diffInHours} horas atrás`;
+    if (diffInHours < 24) {
+      return `${diffInHours} horas atrás`;
+    }
     const diffInDays = Math.floor(diffInHours / 24);
     return `${diffInDays} dias atrás`;
   };
@@ -117,11 +123,11 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
           <div className="pl-4 w-full">
             <div className="flex items-center gap-3 mb-6 text-sm text-muted-foreground">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={post.autor.urlFotoPerfil || ''} alt={post.autor.nome} />
+                <AvatarImage src={post.autor.urlFotoPerfil || ""} alt={post.autor.nome} />
                 <AvatarFallback>{getInitials(post.autor.nome)}</AvatarFallback>
               </Avatar>
               <span className="font-semibold text-foreground">{post.autor.nome}</span>
-              <TypeBadge type={'pessoa'} size="small" /> {/* Mockado */}
+              <TypeBadge type={"pessoa"} size="small" /> {/* Mockado */}
               <span>• {timePosted(post.criadoEm)}</span>
             </div>
 

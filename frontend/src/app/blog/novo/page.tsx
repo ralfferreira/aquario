@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Editor from '@/components/Shared/Editor/Editor';
-import { Skeleton } from '@/components/ui/skeleton';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Editor from "@/components/shared/Editor/Editor";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function NovaPublicacaoPage() {
   const { token, user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const [titulo, setTitulo] = useState('');
-  const [conteudo, setConteudo] = useState('');
+  const [titulo, setTitulo] = useState("");
+  const [conteudo, setConteudo] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [isLoading, isAuthenticated, router]);
 
@@ -27,20 +27,20 @@ export default function NovaPublicacaoPage() {
     setError(null);
 
     if (!titulo.trim() || !conteudo.trim()) {
-      setError('Título e conteúdo são obrigatórios.');
+      setError("Título e conteúdo são obrigatórios.");
       return;
     }
 
     if (!user) {
-      setError('Usuário não encontrado. Por favor, faça login novamente.');
+      setError("Usuário não encontrado. Por favor, faça login novamente.");
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:3001/publicacoes', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/publicacoes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ titulo, conteudo, centroId: user.centro.id }),
@@ -48,13 +48,17 @@ export default function NovaPublicacaoPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Falha ao criar publicação');
+        throw new Error(errorData.message || "Falha ao criar publicação");
       }
 
-      router.push('/blog');
+      router.push("/blog");
       router.refresh();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ocorreu um erro desconhecido");
+      }
     }
   };
 
@@ -82,11 +86,13 @@ export default function NovaPublicacaoPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <h1 className="text-4xl font-bold">Criar nova publicação</h1>
         <div className="space-y-2">
-          <Label htmlFor="titulo" className="text-lg">Título</Label>
+          <Label htmlFor="titulo" className="text-lg">
+            Título
+          </Label>
           <Input
             id="titulo"
             value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
+            onChange={e => setTitulo(e.target.value)}
             placeholder="Um título impactante para sua publicação"
             className="text-lg p-4"
           />
@@ -96,7 +102,9 @@ export default function NovaPublicacaoPage() {
           <Editor onContentChange={setConteudo} />
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        <Button type="submit" size="lg">Publicar</Button>
+        <Button type="submit" size="lg">
+          Publicar
+        </Button>
       </form>
     </main>
   );
