@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import RichTextEditor, {
   BaseKit,
   Bold,
@@ -17,47 +17,32 @@ import RichTextEditor, {
   SlashCommand,
   Blockquote,
   CodeBlock,
-} from 'reactjs-tiptap-editor';
-import 'reactjs-tiptap-editor/style.css';
+} from "reactjs-tiptap-editor";
+import "reactjs-tiptap-editor/style.css";
 
-import { locale } from 'reactjs-tiptap-editor';
+// eslint-disable-next-line no-duplicate-imports
+import { locale } from "reactjs-tiptap-editor";
 
-interface EditorProps {
+type EditorProps = {
   defaultContent?: string;
-  onContentChange?: (value: any) => void;
+  onContentChange?: (value: string) => void;
   characterLimit?: number;
-}
+};
 
 const Editor: React.FC<EditorProps> = ({
-  defaultContent = '',
+  defaultContent = "",
   onContentChange,
   characterLimit = 50_000,
 }) => {
-  locale.setLang('pt_BR');
-  
+  locale.setLang("pt_BR");
+
   const [content, setContent] = useState(defaultContent);
 
-  const handleContentChange = (value: any) => {
-    setContent(value); 
+  const handleContentChange = (value: string) => {
+    setContent(value);
     if (onContentChange) {
-      onContentChange(value); 
+      onContentChange(value);
     }
-  };
-
-  const renderContent = () => {
-    if (typeof content === 'string') {
-      return <div>{content}</div>;
-    }
-
-    if (typeof content === 'object') {
-      return (
-        <div>
-          <strong>Raw JSON:</strong> {JSON.stringify(content)}
-        </div>
-      );
-    }
-
-    return null; 
   };
 
   const extensions = [
@@ -75,11 +60,11 @@ const Editor: React.FC<EditorProps> = ({
     Code,
     Blockquote.configure({ spacer: true }),
     Code.configure({ toolbar: false }),
-    CodeBlock.configure({ defaultTheme: 'dracula' }),
+    CodeBlock.configure({ defaultTheme: "dracula" }),
     HorizontalRule,
     Image.configure({
       upload: (files: File) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           setTimeout(() => {
             resolve(URL.createObjectURL(files));
           }, 500);

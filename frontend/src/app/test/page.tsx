@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import dynamic from "next/dynamic";
 
-const Editor = dynamic(() => import("../../components/shared/Editor/Editor"), { ssr: false });
+const Editor = dynamic(() => import("../../components/shared/editor/edit"), { ssr: false });
 
 export default function Test() {
   const [_content, setContent] = useState("");
