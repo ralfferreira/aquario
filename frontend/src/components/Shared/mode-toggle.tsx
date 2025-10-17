@@ -6,12 +6,31 @@ import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
 
-export function ModeToggle() {
+export function ModeToggle({ mobile = false }: { mobile?: boolean }) {
   const { setTheme, theme } = useTheme()
 
 
   if (!theme) {
     setTheme('light')
+  }
+
+  // If mobile, return button without icon, just text
+  if (mobile) {
+    if (theme === 'dark') {
+      return (
+        <div onClick={() => setTheme("light")} className="p-0 m-0 gap-1 h-[2.1rem] min-h-[2.1rem] flex flex-row justify-center items-center group transition duration-300 cursor-pointer">
+          <Moon className="text-white group-hover:text-blue-500 transition duration-300 h-[1.2rem] w-[1.2rem] min-w-[1.2rem] min-h-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="text-sm dark:text-dark-text group-hover:text-blue-500 transition duration-300">TEMA</span>
+        </div>
+      )
+    } else {
+      return (
+        <div onClick={() => setTheme("dark")} className="p-0 m-0 gap-1 h-[2.1rem] min-h-[2.1rem] flex flex-row justify-center items-center group transition duration-300 cursor-pointer">
+          <Sun className="text-black group-hover:text-blue-500 transition duration-300 h-[1.2rem] w-[1.2rem] min-w-[1.2rem] min-h-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <span className="text-sm dark:text-dark-text group-hover:text-blue-500 transition duration-300">TEMA</span>
+        </div>
+      )
+    }
   }
 
   if (theme === 'dark') {

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import LinkHover from "@/components/Shared/LinkHover";
-import { ProfileButton } from "./ProfileButton";
+import { ModeToggle } from "./mode-toggle";
+import Link from "next/link";
 
 export default function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,33 +54,21 @@ export default function HamburgerMenu() {
 
             {/* Menu */}
             <div
-              className={`absolute top-12 right-0 bg-white dark:bg-neutral-800 shadow-md dark:shadow-neutral-400 rounded-md w-48 transition-all duration-300 ease-in-out ${
+              className={`absolute top-12 right-0 bg-white dark:bg-neutral-800 shadow-md dark:shadow-neutral-400 rounded-md transition-all duration-300 ease-in-out ${
                 isOpen ? "opacity-100 visible z-50" : "opacity-0 invisible"
               }`}
             >
-              <ul className="flex flex-col p-6 space-y-4 text-3xl">
+              <ul className="flex flex-col justify-center items-left p-4 space-y-4 text-xl">
                 <li>
-                  <LinkHover href="/blog">BLOG</LinkHover>
+                  <Link href="/sobre" className="text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300">SOBRE</Link>
+                
                 </li>
                 <li>
-                  <LinkHover href="/usuarios">USUÁRIOS</LinkHover>
+                  <Link href="/guias" className="text-sm dark:text-dark-text hover:text-blue-500 group transition duration-300">GUIAS</Link>
                 </li>
                 <li>
-                  <LinkHover href="/projetos">PROJETOS</LinkHover>
+                  <ModeToggle mobile={true}/>
                 </li>
-                <li>
-                  <LinkHover href="/tadea">TADEA</LinkHover>
-                </li>
-                <li>
-                  <LinkHover href="/faq">FAQ</LinkHover>
-                </li>
-                <li>
-                  <LinkHover href="/sobre">SOBRE</LinkHover>
-                </li>
-                <li>
-                  <ProfileButton />
-                </li>
-                {/* Pesquisar?? */}
               </ul>
             </div>
           </div>

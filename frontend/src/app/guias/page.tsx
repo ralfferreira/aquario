@@ -128,7 +128,9 @@ Morbi commodo magna in ex iaculis ultrices eu quis nisi. Donec at tincidunt ante
         </div>
         <div className='md:hidden pl-4 pt-4 pb-4'>
           <Sheet key={'left'}>
-            <SheetTrigger> <Button variant="outline"><AlignJustify size={12}/></Button></SheetTrigger>
+            <SheetTrigger asChild>
+              <Button variant="outline"><AlignJustify size={12}/></Button>
+            </SheetTrigger>
             <SheetContent side={"left"}>
               <SheetHeader>
                 <SheetTitle className='pb-4'>O que procura?</SheetTitle>
