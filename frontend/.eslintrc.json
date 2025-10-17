@@ -13,7 +13,8 @@
     ".next",
     "out",
     "build",
-    "src/Tests & Examples - Dev/**/*"
+    "src/Tests & Examples - Dev/**/*",
+    "**/Tests & Examples - Dev/**/*"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

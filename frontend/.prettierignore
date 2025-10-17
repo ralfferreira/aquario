@@ -98,3 +98,7 @@ pnpm-lock.yaml
 
 # Generated files
 *.d.ts.map
+
+# Test and example files
+src/Tests & Examples - Dev/
+**/Tests & Examples - Dev/
