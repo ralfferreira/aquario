@@ -36,4 +36,4 @@ As principais camadas são:
 
 O diagrama abaixo representa a estrutura do banco de dados e os relacionamentos entre as entidades do sistema.
 
-![Diagrama UML de Classes](../uml.svg)
+![Diagrama UML de Classes](../assets/uml.svg)
