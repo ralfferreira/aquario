@@ -1,19 +1,18 @@
-import * as React from "react"
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { cn } from "@/lib/utils"
-import { Search } from 'lucide-react';
+import * as React from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const SearchBar1 = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState("");
     const router = useRouter();
 
     const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && query.trim() !== '') {
+      if (e.key === "Enter" && query.trim() !== "") {
         router.push(`/pesquisar?q=${query}`);
       }
     };
@@ -29,14 +28,14 @@ const SearchBar1 = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           ref={ref}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
           onKeyDown={handleSearch}
           {...props}
         />
       </div>
-    )
+    );
   }
-)
-SearchBar1.displayName = "SearchBar1"
+);
+SearchBar1.displayName = "SearchBar1";
 
-export { SearchBar1 }
+export { SearchBar1 };

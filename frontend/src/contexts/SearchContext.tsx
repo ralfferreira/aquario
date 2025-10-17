@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
 export interface SearchResult {
   id: string;
@@ -30,7 +30,7 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     try {
       const response = await fetch(`http://localhost:3001/search?q=${encodeURIComponent(query)}`);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const data = await response.json();
       setResults(data);
@@ -40,17 +40,13 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  return (
-    <SearchContext.Provider value={{ results, search }}>
-      {children}
-    </SearchContext.Provider>
-  );
+  return <SearchContext.Provider value={{ results, search }}>{children}</SearchContext.Provider>;
 }
 
 export function useSearch() {
   const context = useContext(SearchContext);
   if (context === undefined) {
-    throw new Error('useSearch must be used within a SearchProvider');
+    throw new Error("useSearch must be used within a SearchProvider");
   }
   return context;
 }

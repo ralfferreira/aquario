@@ -5,41 +5,46 @@ This document explains the linting and formatting configuration for the Aquário
 ## 🛠️ Tools Used
 
 ### Prettier
+
 - **Purpose**: Code formatting
 - **Config**: `.prettierrc`
 - **Ignore**: `.prettierignore`
 
 ### ESLint
+
 - **Purpose**: Code linting and quality checks
 - **Config**: `.eslintrc.json`
 - **Extends**: Next.js core web vitals + Prettier
 
 ### Husky + lint-staged
+
 - **Purpose**: Pre-commit hooks for automatic formatting and linting
 - **Config**: `.husky/pre-commit` + `.lintstagedrc.json`
 
 ## 📋 Configuration Details
 
 ### Prettier Configuration (`.prettierrc`)
+
 ```json
 {
-  "semi": true,                    // Use semicolons
-  "trailingComma": "es5",         // Trailing commas where valid in ES5
-  "singleQuote": true,            // Use single quotes
-  "printWidth": 100,              // Line length limit
-  "tabWidth": 2,                  // Indentation size
-  "useTabs": false,               // Use spaces instead of tabs
-  "bracketSpacing": true,         // Spaces in object literals
-  "bracketSameLine": false,       // JSX brackets on new line
-  "arrowParens": "avoid",         // Avoid parentheses around arrow functions
-  "endOfLine": "lf",              // Unix line endings
-  "quoteProps": "as-needed",      // Quote object properties only when needed
-  "jsxSingleQuote": true,         // Single quotes in JSX
-  "proseWrap": "preserve"         // Don't wrap prose
+  "semi": true, // Use semicolons
+  "trailingComma": "es5", // Trailing commas where valid in ES5
+  "singleQuote": true, // Use single quotes
+  "printWidth": 100, // Line length limit
+  "tabWidth": 2, // Indentation size
+  "useTabs": false, // Use spaces instead of tabs
+  "bracketSpacing": true, // Spaces in object literals
+  "bracketSameLine": false, // JSX brackets on new line
+  "arrowParens": "avoid", // Avoid parentheses around arrow functions
+  "endOfLine": "lf", // Unix line endings
+  "quoteProps": "as-needed", // Quote object properties only when needed
+  "jsxSingleQuote": true, // Single quotes in JSX
+  "proseWrap": "preserve" // Don't wrap prose
 }
 ```
 
 ### ESLint Rules
+
 - **Prettier integration**: Enforces Prettier formatting
 - **React rules**: Optimized for Next.js
 - **TypeScript rules**: Type safety and best practices
@@ -50,12 +55,14 @@ This document explains the linting and formatting configuration for the Aquário
 **All files must follow kebab-case naming convention (automatically enforced by ESLint):**
 
 ### Universal Rule: kebab-case
+
 - **Pattern**: `kebab-case.tsx`
 - **Example**: `user-profile.tsx`, `about-us.tsx`, `my-component.tsx`, `use-auth.tsx`
 - **Applies to**: ALL files in the project
 - **Enforcement**: ESLint will show an error if files don't follow kebab-case
 
 ### Examples by File Type:
+
 - **Pages**: `user-profile.tsx`, `about-us.tsx`
 - **Components**: `my-component.tsx`, `user-card.tsx`
 - **Hooks**: `use-auth.tsx`, `use-local-storage.tsx`
@@ -64,13 +71,16 @@ This document explains the linting and formatting configuration for the Aquário
 - **Constants**: `api-endpoints.ts`, `default-config.ts`
 
 ### Current Files That Need Renaming:
+
 Many existing files don't follow kebab-case and should be renamed:
+
 - `MyComponent.tsx` → `my-component.tsx`
 - `UserProfile.tsx` → `user-profile.tsx`
 - `useAuth.tsx` → `use-auth.tsx`
 - `formatDate.ts` → `format-date.ts`
 
 ### How to Check for Filename Issues:
+
 ```bash
 # Check specific file for naming issues
 npx eslint src/components/MyComponent.tsx
@@ -80,12 +90,14 @@ npm run lint
 ```
 
 ### How to Rename Files:
+
 1. **Rename the file** using your IDE or file system
 2. **Update imports** in all files that reference the renamed file
 3. **Update exports** if the file exports components/functions
 4. **Test** to ensure everything still works
 
 ### Example Renaming Process:
+
 ```bash
 # 1. Rename the file
 mv src/components/MyComponent.tsx src/components/my-component.tsx
@@ -100,7 +112,9 @@ export default function MyComponent() { ... }
 ```
 
 ### Ignored Files
+
 The following files are exempt from naming rules:
+
 - `README.md`, `LICENSE`, `CHANGELOG.md`
 - `package.json`, `tsconfig.json`
 - `next.config.mjs`, `tailwind.config.ts`, `postcss.config.mjs`
@@ -109,6 +123,7 @@ The following files are exempt from naming rules:
 ## 🚀 Available Scripts
 
 ### Formatting
+
 ```bash
 # Format all files
 npm run format
@@ -121,6 +136,7 @@ npm run format:staged
 ```
 
 ### Linting
+
 ```bash
 # Run ESLint
 npm run lint
@@ -130,12 +146,14 @@ npm run lint:fix
 ```
 
 ### Type Checking
+
 ```bash
 # Check TypeScript types
 npm run type-check
 ```
 
 ### All Checks
+
 ```bash
 # Run all checks (lint + format + type-check)
 npm run check-all
@@ -151,6 +169,7 @@ When you commit code, the following happens automatically:
 4. If any issues remain, the commit is blocked
 
 ### Manual Setup (if needed)
+
 ```bash
 # Install husky
 npm run prepare
@@ -161,6 +180,7 @@ npm run prepare
 ## 📝 Usage Examples
 
 ### Before Committing
+
 ```bash
 # Format and lint all files
 npm run format
@@ -173,11 +193,14 @@ npm run check-all
 ### IDE Integration
 
 #### VS Code
+
 Install these extensions:
+
 - **Prettier - Code formatter**
 - **ESLint**
 
 Add to your VS Code settings:
+
 ```json
 {
   "editor.formatOnSave": true,
@@ -189,6 +212,7 @@ Add to your VS Code settings:
 ```
 
 #### Other IDEs
+
 - Configure your IDE to use Prettier for formatting
 - Enable ESLint integration
 - Set up format-on-save
@@ -213,6 +237,7 @@ Add to your VS Code settings:
    - Rename files to follow the patterns
 
 ### Override Rules (if needed)
+
 You can disable specific rules for a file by adding comments:
 
 ```javascript

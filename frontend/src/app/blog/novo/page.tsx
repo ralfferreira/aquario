@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Editor from "@/components/shared/editor/edit";
+import Editor from "@/components/shared/editor/editor";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function NovaPublicacaoPage() {
