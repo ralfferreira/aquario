@@ -116,7 +116,7 @@ Morbi commodo magna in ex iaculis ultrices eu quis nisi. Donec at tincidunt ante
   `;
 
   return (
-    <div>
+    <div className='flex flex-1 flex-col'>
       <GradientHeaderComponent 
           academicCenter="Centro de Informática" 
           courses={["Ciência da Computação", "Engenharia da Computação", "Ciências de Dados e Inteligência Artificial"]} 

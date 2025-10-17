@@ -30,8 +30,10 @@ export default function RootLayout({
                   disableTransitionOnChange
                 >
                   <SearchProvider>
-                    <NavWrapper />
-                    {children}
+                    <div className='flex flex-1 flex-col'>
+                      <NavWrapper />
+                      {children}
+                    </div>
                   </SearchProvider>
               </ThemeProvider>
           </AuthProvider>

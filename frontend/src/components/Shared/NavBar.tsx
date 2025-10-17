@@ -15,26 +15,19 @@ export default function NavBar() {
   return (
     <>
       <nav
-        className="fixed left-0 w-full text-light-text flex justify-between flex-col h-[60px] bg-white dark:bg-black z-50"
+        className="w-full text-light-text flex justify-between flex-col h-[60px] bg-white dark:bg-black z-50"
       >
-        <div className="container mx-auto flex items-center justify-between h-full">
-          <div className="flex space-x-4 gap-5 justify-center items-center">
-            <LinkHover href="/blog">BLOG</LinkHover>
-            <LinkHover href="/usuarios">USUÁRIOS</LinkHover>
-            <LinkHover href="/projetos">PROJETOS</LinkHover>
-            <LinkHover href="/tadea">TADEA</LinkHover>
-            <LinkHover href="/vagas">VAGAS</LinkHover>
-          </div>
-
+        <div className="flex items-center justify-between h-full px-8">
           <div className="flex space-x-4 gap-5 justify-center items-center">
             <Link href="/">
-              <Image className="w-20 ml-20" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"/>
+              <Image className="w-16" src="/Image Card.png" width={75} height={75} alt="Aquario's logo"/>
             </Link>
           </div>
 
           <div className="flex space-x-4 gap-5 justify-center items-center">
             <SearchBar1 type="search" placeholder="Pesquisar"/>
             <LinkHover href="/sobre">SOBRE</LinkHover>
+            <LinkHover href="/guias">GUIAS</LinkHover>
             <ProfileButton />
             <ModeToggle/>
           </div>
