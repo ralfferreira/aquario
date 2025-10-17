@@ -13,7 +13,6 @@
     "format:staged": "prettier --write",
     "type-check": "tsc --noEmit",
     "check-all": "npm run lint && npm run format:check && npm run type-check",
-    "prepare": "husky install",
     "lint-staged": "lint-staged"
   },
   "dependencies": {
@@ -69,7 +68,6 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-unicorn": "^50.0.0",
-    "husky": "^9.1.7",
     "lint-staged": "^16.2.4",
     "postcss": "^8",
     "prettier": "^3.6.2",
