@@ -111,14 +111,24 @@ jobs:
       - name: Debug Git Commands
         run: |
           echo "=== Debugging Git Commands ==="
+          echo "Current directory: $(pwd)"
+          echo "Git status:"
+          git status
+          echo ""
+          echo "Git log count:"
+          git log --oneline | wc -l
+          echo ""
           echo "Git shortlog output:"
           git shortlog -s -n
           echo ""
           echo "Git log --pretty=format output:"
           git log --pretty=format:"%an" | head -10
           echo ""
-          echo "Git log --oneline count:"
-          git log --oneline | wc -l
+          echo "Git log --pretty=format with email:"
+          git log --pretty=format:"%an <%ae>" | head -10
+          echo ""
+          echo "Git branch:"
+          git branch -a
 
       - name: Generate SVG Contributor Widget
         run: |
@@ -130,30 +140,48 @@ jobs:
           from datetime import datetime
 
           def get_contributors():
-              # Get contributor data from git
-              result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
               contributors = []
               
-              print(f"Git output: {result.stdout}")
+              # Method 1: Try git shortlog
+              result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
+              print(f"Git shortlog output: '{result.stdout}'")
               
-              for line in result.stdout.strip().split('\n'):
-                  if line.strip():
-                      # Handle different formats of git shortlog output
-                      line = line.strip()
-                      print(f"Processing line: '{line}'")
+              if result.stdout.strip():
+                  for line in result.stdout.strip().split('\n'):
+                      if line.strip():
+                          line = line.strip()
+                          print(f"Processing line: '{line}'")
+                          
+                          # Try to split by whitespace (commits number + name)
+                          parts = line.split(None, 1)  # Split on whitespace, max 1 split
+                          if len(parts) >= 2:
+                              try:
+                                  commits = int(parts[0])
+                                  name = parts[1]
+                                  contributors.append({'name': name, 'commits': commits})
+                                  print(f"Added contributor: {name} with {commits} commits")
+                              except ValueError:
+                                  print(f"Could not parse line: {line}")
+                          else:
+                              print(f"Line doesn't have enough parts: {line}")
+              
+              # Method 2: If shortlog fails, use git log
+              if not contributors:
+                  print("Shortlog failed, trying git log method...")
+                  result = subprocess.run(['git', 'log', '--pretty=format:%an'], capture_output=True, text=True)
+                  print(f"Git log output: '{result.stdout[:200]}...'")
+                  
+                  if result.stdout.strip():
+                      # Count commits per author
+                      authors = {}
+                      for author in result.stdout.strip().split('\n'):
+                          if author.strip():
+                              authors[author] = authors.get(author, 0) + 1
                       
-                      # Try to split by whitespace (commits number + name)
-                      parts = line.split(None, 1)  # Split on whitespace, max 1 split
-                      if len(parts) >= 2:
-                          try:
-                              commits = int(parts[0])
-                              name = parts[1]
-                              contributors.append({'name': name, 'commits': commits})
-                              print(f"Added contributor: {name} with {commits} commits")
-                          except ValueError:
-                              print(f"Could not parse line: {line}")
-                      else:
-                          print(f"Line doesn't have enough parts: {line}")
+                      # Convert to list
+                      for name, commits in authors.items():
+                          contributors.append({'name': name, 'commits': commits})
+                          print(f"Added contributor from log: {name} with {commits} commits")
               
               print(f"Total contributors found: {len(contributors)}")
               return sorted(contributors, key=lambda x: x['commits'], reverse=True)[:10]
@@ -222,28 +250,48 @@ jobs:
           import json
 
           def get_top_contributors():
-              result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
               contributors = []
               
-              print(f"Badge generation - Git output: {result.stdout}")
+              # Method 1: Try git shortlog
+              result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
+              print(f"Badge generation - Git shortlog output: '{result.stdout}'")
               
-              for line in result.stdout.strip().split('\n'):
-                  if line.strip():
-                      line = line.strip()
-                      print(f"Badge processing line: '{line}'")
+              if result.stdout.strip():
+                  for line in result.stdout.strip().split('\n'):
+                      if line.strip():
+                          line = line.strip()
+                          print(f"Badge processing line: '{line}'")
+                          
+                          # Try to split by whitespace (commits number + name)
+                          parts = line.split(None, 1)  # Split on whitespace, max 1 split
+                          if len(parts) >= 2:
+                              try:
+                                  commits = int(parts[0])
+                                  name = parts[1]
+                                  contributors.append({'name': name, 'commits': commits})
+                                  print(f"Badge added contributor: {name} with {commits} commits")
+                              except ValueError:
+                                  print(f"Badge could not parse line: {line}")
+                          else:
+                              print(f"Badge line doesn't have enough parts: {line}")
+              
+              # Method 2: If shortlog fails, use git log
+              if not contributors:
+                  print("Badge shortlog failed, trying git log method...")
+                  result = subprocess.run(['git', 'log', '--pretty=format:%an'], capture_output=True, text=True)
+                  print(f"Badge git log output: '{result.stdout[:200]}...'")
+                  
+                  if result.stdout.strip():
+                      # Count commits per author
+                      authors = {}
+                      for author in result.stdout.strip().split('\n'):
+                          if author.strip():
+                              authors[author] = authors.get(author, 0) + 1
                       
-                      # Try to split by whitespace (commits number + name)
-                      parts = line.split(None, 1)  # Split on whitespace, max 1 split
-                      if len(parts) >= 2:
-                          try:
-                              commits = int(parts[0])
-                              name = parts[1]
-                              contributors.append({'name': name, 'commits': commits})
-                              print(f"Badge added contributor: {name} with {commits} commits")
-                          except ValueError:
-                              print(f"Badge could not parse line: {line}")
-                      else:
-                          print(f"Badge line doesn't have enough parts: {line}")
+                      # Convert to list
+                      for name, commits in authors.items():
+                          contributors.append({'name': name, 'commits': commits})
+                          print(f"Badge added contributor from log: {name} with {commits} commits")
               
               print(f"Badge total contributors found: {len(contributors)}")
               return sorted(contributors, key=lambda x: x['commits'], reverse=True)
