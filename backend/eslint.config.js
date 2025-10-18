@@ -23,6 +23,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
+      'no-duplicate-imports': 'error',
     },
   },
   {
