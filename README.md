@@ -66,13 +66,9 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
 
-### Contribuidores com Contadores de Commit
+### Contribuidores com Avatares, Usernames e Commits
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true)
-
-### Gráfico de Contribuidores (GitHub Nativo)
-
-![GitHub Contributors](https://github.com/ralfferreira/aquario/graphs/contributors)
+![Contributors](https://github-readme-stats.vercel.app/api/contributors?username=ralfferreira&repo=aquario&show_icons=true&theme=default&hide_border=true&count_private=true&include_all_commits=true)
 
 ### Estatísticas do Repositório
 
