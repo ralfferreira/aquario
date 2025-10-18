@@ -62,23 +62,7 @@ O design, ainda em desenvolvimento, está no link do figma: https://www.figma.co
 
 Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possível!
 
-### Contribuidores com Avatares
-
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
-
-### 🎨 Widget Visual de Contribuidores
-
-![Contributors Widget](contributors-widget.svg)
-
-### 🏆 Badges de Contribuidores
-
-![Top Contributor #1](badge-top-1.svg)
-![Top Contributor #2](badge-top-2.svg)
-![Top Contributor #3](badge-top-3.svg)
-
-### 📊 Estatísticas Detalhadas de Contribuidores
-
-[Ver estatísticas completas com commits, linhas de código e arquivos alterados](CONTRIBUTORS.md)
 
 ---
 
