@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+    <defs>
+        <style>
+            .contributor-card { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+            .contributor-name { font-size: 12px; font-weight: 600; fill: #24292f; text-anchor: middle; }
+            .contributor-commits { font-size: 10px; fill: #656d76; text-anchor: middle; }
+            .contributor-avatar { border-radius: 50%; }
+        </style>
+    </defs>
+    <rect width="800" height="200" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1" rx="8"/>
+    <text x="400" y="20" text-anchor="middle" font-size="16" font-weight="600" fill="#24292f">Top Contributors</text>
+    
+    <text x="400" y="190" text-anchor="middle" font-size="10" fill="#656d76">Generated on 2025-10-18 17:06</text>
+    </svg>
