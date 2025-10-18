@@ -110,98 +110,81 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=8&anon=1&show_stats=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9)
 
-### Opção 17: Contribuidores com Estatísticas Detalhadas (Commits + Linhas)
+---
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true&stats=true&show_rank=true)
+## 📊 **Estatísticas Reais de Contribuidores**
 
-### Opção 18: Contribuidores com Ranking e Percentuais
+### Opção 17: GitHub Nativo - Gráfico de Contribuidores com Commits
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=8&anon=1&show_stats=true&stats=true&show_rank=true&rank_icon=github)
+![GitHub Contributors](https://github.com/ralfferreira/aquario/graphs/contributors)
 
-### Opção 19: Contribuidores com Estatísticas Completas
+### Opção 18: Estatísticas do Repositório (Commits, Stars, Forks)
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=5&anon=1&show_stats=true&stats=true&show_rank=true&rank_icon=github&max=15)
+![Repository Stats](https://github-readme-stats.vercel.app/api/pin/?username=ralfferreira&repo=aquario&theme=default&hide_border=true)
 
-### Opção 20: Contribuidores com Layout Vertical
+### Opção 19: Linguagens Mais Usadas no Projeto
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=1&anon=1&show_stats=true&stats=true&show_rank=true&rank_icon=github)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=ralfferreira&layout=compact&theme=default&hide_border=true&langs_count=8)
 
-### Opção 21: Contribuidores com Estatísticas de Adições/Deleções
+### Opção 20: Estatísticas Gerais do Usuário Principal
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true&stats=true&show_rank=true&rank_icon=github&stats_period=total)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=ralfferreira&show_icons=true&theme=default&hide_border=true)
 
-### Opção 22: Contribuidores com Estatísticas do Último Ano
+### Opção 21: Streak de Contribuições
 
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true&stats=true&show_rank=true&rank_icon=github&stats_period=year)
-
-### Opção 23: Contribuidores com Estatísticas do Último Mês
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true&stats=true&show_rank=true&rank_icon=github&stats_period=month)
+![GitHub Streak](https://streak-stats.demolab.com/?user=ralfferreira&theme=default&hide_border=true)
 
 ---
 
-## 📊 **Análise por Área (Frontend vs Backend)**
+## 🔧 **Soluções para Estatísticas Detalhadas por Contribuidor**
 
-### Opção 13: Badges de Contagem de Arquivos por Diretório
+### GitHub Action para Análise de Contribuidores
 
-![Frontend Files](https://img.shields.io/github/directory-file-count/ralfferreira/aquario/frontend?label=Frontend%20Files&style=flat-square)
-![Backend Files](https://img.shields.io/github/directory-file-count/ralfferreira/aquario/backend?label=Backend%20Files&style=flat-square)
-
-### Opção 14: Linguagens por Diretório
-
-![Frontend Languages](https://img.shields.io/github/languages/top/ralfferreira/aquario?path=frontend&label=Frontend%20Languages&style=flat-square)
-![Backend Languages](https://img.shields.io/github/languages/top/ralfferreira/aquario?path=backend&label=Backend%20Languages&style=flat-square)
-
-### Opção 15: Tamanho do Código por Diretório
-
-![Frontend Size](https://img.shields.io/github/languages/code-size/ralfferreira/aquario?path=frontend&label=Frontend%20Size&style=flat-square)
-![Backend Size](https://img.shields.io/github/languages/code-size/ralfferreira/aquario?path=backend&label=Backend%20Size&style=flat-square)
-
-### Opção 16: Commits Recentes por Diretório
-
-![Recent Frontend Commits](https://img.shields.io/github/commits-since/ralfferreira/aquario/latest?path=frontend&label=Frontend%20Commits&style=flat-square)
-![Recent Backend Commits](https://img.shields.io/github/commits-since/ralfferreira/aquario/latest?path=backend&label=Backend%20Commits&style=flat-square)
-
----
-
-## 🔧 **Soluções Avançadas para Análise por Diretório**
-
-### GitHub Actions Personalizada
-
-Você pode criar uma GitHub Action que analise commits por diretório:
-
-```yaml
-# .github/workflows/contributor-analysis.yml
-name: Contributor Analysis
+````yaml
+# .github/workflows/contributor-stats.yml
+name: Contributor Statistics
 on:
   schedule:
     - cron: "0 0 * * 0" # Weekly
 jobs:
-  analyze:
+  generate-stats:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Analyze Frontend Contributors
+        with:
+          fetch-depth: 0
+      - name: Generate Contributor Stats
         run: |
-          git log --pretty=format:"%an" -- frontend/ | sort | uniq -c | sort -nr > frontend-contributors.txt
-      - name: Analyze Backend Contributors
-        run: |
-          git log --pretty=format:"%an" -- backend/ | sort | uniq -c | sort -nr > backend-contributors.txt
-```
+          echo "# 📊 Estatísticas de Contribuidores" > CONTRIBUTOR_STATS.md
+          echo "" >> CONTRIBUTOR_STATS.md
+          echo "## Commits por Contribuidor" >> CONTRIBUTOR_STATS.md
+          echo "" >> CONTRIBUTOR_STATS.md
+          echo '```' >> CONTRIBUTOR_STATS.md
+          git shortlog -s -n >> CONTRIBUTOR_STATS.md
+          echo '```' >> CONTRIBUTOR_STATS.md
+          echo "" >> CONTRIBUTOR_STATS.md
+          echo "## Linhas de Código por Contribuidor" >> CONTRIBUTOR_STATS.md
+          echo "" >> CONTRIBUTOR_STATS.md
+          echo '```' >> CONTRIBUTOR_STATS.md
+          git log --pretty=format:%aE | sort | uniq | while read email; do
+            echo "Author: $email"
+            git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1; del+=$2} END {printf "Added: %d, Deleted: %d\n\n", add, del}'
+          done >> CONTRIBUTOR_STATS.md
+          echo '```' >> CONTRIBUTOR_STATS.md
+````
 
-### Script Personalizado com GitHub API
+### Script Manual para Estatísticas
 
 ```bash
-# Script para analisar contribuidores por diretório
-curl -H "Authorization: token $GITHUB_TOKEN" \
-  "https://api.github.com/repos/ralfferreira/aquario/commits?path=frontend" \
-  | jq '.[].author.login' | sort | uniq -c
+# Contar commits por contribuidor
+git shortlog -s -n
+
+# Contar linhas adicionadas/deletadas por contribuidor
+git log --pretty=format:%aE | sort | uniq | while read email; do
+  echo "Author: $email"
+  git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1; del+=$2} END {printf "Added: %d, Deleted: %d\n\n", add, del}'
+done
 ```
-
-### Ferramentas de Terceiros
-
-- **GitHub Insights**: Use o GitHub's built-in insights para ver atividade por diretório
-- **GitHub CLI**: `gh api repos/ralfferreira/aquario/commits --jq '.[] | select(.files[].filename | startswith("frontend/"))'`
 
 ## Como Contribuir
 
