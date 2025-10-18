@@ -64,9 +64,10 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
 
-<img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/top3-contributors.png?raw=true" alt="Top 3 Contribuidores" width="45%">
-
-<img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/complete-ranking.png?raw=true" alt="Ranking Completo" width="45%">
+<div align="left">
+  <img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/top3-contributors.png?raw=true" alt="Top 3 Contribuidores" width="50%" style="margin-right: 2%; vertical-align: top;">
+  <img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/complete-ranking.png?raw=true" alt="Ranking Completo" width="50%" style="margin-left: 2%; vertical-align: top;">
+</div>
 
 ---
 
