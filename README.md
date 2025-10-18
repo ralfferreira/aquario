@@ -58,6 +58,19 @@ Abaixo está o diagrama de classes UML que representa a estrutura de dados do pr
 
 O design, ainda em desenvolvimento, está no link do figma: https://www.figma.com/design/9got8rICitaYaapG3n1COx/Aquario?node-id=9-92&t=J3rS2QW7M6zhEWLI-1
 
+## Contribuidores
+
+Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possível!
+
+![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
+
+<div align="top">
+  <img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/top3-contributors.png?raw=true" alt="Top 3 Contribuidores" width="49%" style="height:full; vertical-align: top;">
+  <img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/complete-ranking.png?raw=true" alt="Ranking Completo" width="49%" style="height:full; vertical-align: top;">
+</div>
+
+Update it here: https://github.com/trindadetiago/aquario-stats
+
 ## Como Contribuir
 
 O **Aquário** é um projeto open source e as contribuições são muito bem-vindas! Veja como você pode contribuir:
