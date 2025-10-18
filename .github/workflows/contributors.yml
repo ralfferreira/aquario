@@ -142,49 +142,78 @@ jobs:
           def get_contributors():
               contributors = []
               
-              # Method 1: Try git shortlog
-              result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
-              print(f"Git shortlog output: '{result.stdout}'")
+              # Get contributors with email information
+              print("Getting contributors with email information...")
+              result = subprocess.run(['git', 'log', '--pretty=format:%an|%ae'], capture_output=True, text=True)
+              print(f"Git log with emails output: '{result.stdout[:500]}...'")
               
               if result.stdout.strip():
+                  # Count commits per author (name + email)
+                  authors = {}
                   for line in result.stdout.strip().split('\n'):
-                      if line.strip():
-                          line = line.strip()
-                          print(f"Processing line: '{line}'")
-                          
-                          # Try to split by whitespace (commits number + name)
-                          parts = line.split(None, 1)  # Split on whitespace, max 1 split
-                          if len(parts) >= 2:
-                              try:
-                                  commits = int(parts[0])
-                                  name = parts[1]
-                                  contributors.append({'name': name, 'commits': commits})
-                                  print(f"Added contributor: {name} with {commits} commits")
-                              except ValueError:
-                                  print(f"Could not parse line: {line}")
-                          else:
-                              print(f"Line doesn't have enough parts: {line}")
-              
-              # Method 2: If shortlog fails, use git log
-              if not contributors:
-                  print("Shortlog failed, trying git log method...")
-                  result = subprocess.run(['git', 'log', '--pretty=format:%an'], capture_output=True, text=True)
-                  print(f"Git log output: '{result.stdout[:200]}...'")
+                      if line.strip() and '|' in line:
+                          name, email = line.split('|', 1)
+                          if name.strip() and email.strip():
+                              key = f"{name.strip()}|{email.strip()}"
+                              authors[key] = authors.get(key, 0) + 1
                   
-                  if result.stdout.strip():
-                      # Count commits per author
-                      authors = {}
-                      for author in result.stdout.strip().split('\n'):
-                          if author.strip():
-                              authors[author] = authors.get(author, 0) + 1
-                      
-                      # Convert to list
-                      for name, commits in authors.items():
-                          contributors.append({'name': name, 'commits': commits})
-                          print(f"Added contributor from log: {name} with {commits} commits")
+                  # Convert to list with email info
+                  for key, commits in authors.items():
+                      name, email = key.split('|', 1)
+                      contributors.append({
+                          'name': name, 
+                          'email': email, 
+                          'commits': commits
+                      })
+                      print(f"Added contributor: {name} <{email}> with {commits} commits")
               
-              print(f"Total contributors found: {len(contributors)}")
+              # Deduplicate by email
+              contributors = deduplicate_by_email(contributors)
+              
+              print(f"Total contributors found after deduplication: {len(contributors)}")
               return sorted(contributors, key=lambda x: x['commits'], reverse=True)[:10]
+
+          def deduplicate_by_email(contributors):
+              """Merge contributors with the same email address"""
+              if not contributors:
+                  return contributors
+              
+              # Group by email
+              email_groups = {}
+              for contributor in contributors:
+                  email = contributor.get('email', '').lower().strip()
+                  if email:
+                      if email not in email_groups:
+                          email_groups[email] = []
+                      email_groups[email].append(contributor)
+              
+              # Merge contributors with same email
+              merged = []
+              for email, group in email_groups.items():
+                  if len(group) > 1:
+                      # Merge multiple contributors with same email
+                      merged_contributor = merge_contributors(group)
+                      print(f"Merged {len(group)} contributors with email {email}: {merged_contributor['name']} ({merged_contributor['commits']} total commits)")
+                      merged.append(merged_contributor)
+                  else:
+                      merged.append(group[0])
+              
+              return merged
+
+          def merge_contributors(group):
+              """Merge a group of contributors with the same email"""
+              # Use the most common name (or longest name)
+              names = [c['name'] for c in group]
+              most_common_name = max(set(names), key=names.count)
+              
+              # Sum up all commits
+              total_commits = sum(c['commits'] for c in group)
+              
+              return {
+                  'name': most_common_name,
+                  'email': group[0]['email'],
+                  'commits': total_commits
+              }
 
           def generate_svg(contributors):
               svg_width = 800
@@ -252,49 +281,78 @@ jobs:
           def get_top_contributors():
               contributors = []
               
-              # Method 1: Try git shortlog
-              result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
-              print(f"Badge generation - Git shortlog output: '{result.stdout}'")
+              # Get contributors with email information
+              print("Badge generation - Getting contributors with email information...")
+              result = subprocess.run(['git', 'log', '--pretty=format:%an|%ae'], capture_output=True, text=True)
+              print(f"Badge git log with emails output: '{result.stdout[:500]}...'")
               
               if result.stdout.strip():
+                  # Count commits per author (name + email)
+                  authors = {}
                   for line in result.stdout.strip().split('\n'):
-                      if line.strip():
-                          line = line.strip()
-                          print(f"Badge processing line: '{line}'")
-                          
-                          # Try to split by whitespace (commits number + name)
-                          parts = line.split(None, 1)  # Split on whitespace, max 1 split
-                          if len(parts) >= 2:
-                              try:
-                                  commits = int(parts[0])
-                                  name = parts[1]
-                                  contributors.append({'name': name, 'commits': commits})
-                                  print(f"Badge added contributor: {name} with {commits} commits")
-                              except ValueError:
-                                  print(f"Badge could not parse line: {line}")
-                          else:
-                              print(f"Badge line doesn't have enough parts: {line}")
-              
-              # Method 2: If shortlog fails, use git log
-              if not contributors:
-                  print("Badge shortlog failed, trying git log method...")
-                  result = subprocess.run(['git', 'log', '--pretty=format:%an'], capture_output=True, text=True)
-                  print(f"Badge git log output: '{result.stdout[:200]}...'")
+                      if line.strip() and '|' in line:
+                          name, email = line.split('|', 1)
+                          if name.strip() and email.strip():
+                              key = f"{name.strip()}|{email.strip()}"
+                              authors[key] = authors.get(key, 0) + 1
                   
-                  if result.stdout.strip():
-                      # Count commits per author
-                      authors = {}
-                      for author in result.stdout.strip().split('\n'):
-                          if author.strip():
-                              authors[author] = authors.get(author, 0) + 1
-                      
-                      # Convert to list
-                      for name, commits in authors.items():
-                          contributors.append({'name': name, 'commits': commits})
-                          print(f"Badge added contributor from log: {name} with {commits} commits")
+                  # Convert to list with email info
+                  for key, commits in authors.items():
+                      name, email = key.split('|', 1)
+                      contributors.append({
+                          'name': name, 
+                          'email': email, 
+                          'commits': commits
+                      })
+                      print(f"Badge added contributor: {name} <{email}> with {commits} commits")
               
-              print(f"Badge total contributors found: {len(contributors)}")
+              # Deduplicate by email
+              contributors = deduplicate_by_email(contributors)
+              
+              print(f"Badge total contributors found after deduplication: {len(contributors)}")
               return sorted(contributors, key=lambda x: x['commits'], reverse=True)
+
+          def deduplicate_by_email(contributors):
+              """Merge contributors with the same email address"""
+              if not contributors:
+                  return contributors
+              
+              # Group by email
+              email_groups = {}
+              for contributor in contributors:
+                  email = contributor.get('email', '').lower().strip()
+                  if email:
+                      if email not in email_groups:
+                          email_groups[email] = []
+                      email_groups[email].append(contributor)
+              
+              # Merge contributors with same email
+              merged = []
+              for email, group in email_groups.items():
+                  if len(group) > 1:
+                      # Merge multiple contributors with same email
+                      merged_contributor = merge_contributors(group)
+                      print(f"Badge merged {len(group)} contributors with email {email}: {merged_contributor['name']} ({merged_contributor['commits']} total commits)")
+                      merged.append(merged_contributor)
+                  else:
+                      merged.append(group[0])
+              
+              return merged
+
+          def merge_contributors(group):
+              """Merge a group of contributors with the same email"""
+              # Use the most common name (or longest name)
+              names = [c['name'] for c in group]
+              most_common_name = max(set(names), key=names.count)
+              
+              # Sum up all commits
+              total_commits = sum(c['commits'] for c in group)
+              
+              return {
+                  'name': most_common_name,
+                  'email': group[0]['email'],
+                  'commits': total_commits
+              }
 
           def create_badge_svg(text, color, width=120, height=20):
               return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
