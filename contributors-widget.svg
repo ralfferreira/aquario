@@ -12,16 +12,16 @@
     
         <g class="contributor-card">
             <circle cx="50" cy="80" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="50" y="80" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">TI</text>
-            <text class="contributor-name" x="50" y="125">Tiago Trinda</text>
-            <text class="contributor-commits" x="50" y="138">58 commits</text>
+            <text x="50" y="80" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">TR</text>
+            <text class="contributor-name" x="50" y="125">trindadetiag</text>
+            <text class="contributor-commits" x="50" y="138">73 commits</text>
         </g>
         
         <g class="contributor-card">
             <circle cx="150" cy="80" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="150" y="80" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">TR</text>
-            <text class="contributor-name" x="150" y="125">trindadetiag</text>
-            <text class="contributor-commits" x="150" y="138">53 commits</text>
+            <text x="150" y="80" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">TI</text>
+            <text class="contributor-name" x="150" y="125">Tiago Trinda</text>
+            <text class="contributor-commits" x="150" y="138">39 commits</text>
         </g>
         
         <g class="contributor-card">
@@ -35,7 +35,7 @@
             <circle cx="350" cy="80" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
             <text x="350" y="80" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">RA</text>
             <text class="contributor-name" x="350" y="125">ralfferreira</text>
-            <text class="contributor-commits" x="350" y="138">26 commits</text>
+            <text class="contributor-commits" x="350" y="138">24 commits</text>
         </g>
         
         <g class="contributor-card">
@@ -47,38 +47,38 @@
         
         <g class="contributor-card">
             <circle cx="50" cy="180" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="50" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">EM</text>
-            <text class="contributor-name" x="50" y="225">Emysntts</text>
-            <text class="contributor-commits" x="50" y="238">10 commits</text>
+            <text x="50" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">MA</text>
+            <text class="contributor-name" x="50" y="225">Matheus Ferr</text>
+            <text class="contributor-commits" x="50" y="238">12 commits</text>
         </g>
         
         <g class="contributor-card">
             <circle cx="150" cy="180" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="150" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">RA</text>
-            <text class="contributor-name" x="150" y="225">Ralf Ferreir</text>
-            <text class="contributor-commits" x="150" y="238">9 commits</text>
+            <text x="150" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">EM</text>
+            <text class="contributor-name" x="150" y="225">Emysntts</text>
+            <text class="contributor-commits" x="150" y="238">10 commits</text>
         </g>
         
         <g class="contributor-card">
             <circle cx="250" cy="180" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="250" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">MA</text>
-            <text class="contributor-name" x="250" y="225">Matheus Ferr</text>
-            <text class="contributor-commits" x="250" y="238">7 commits</text>
+            <text x="250" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">RA</text>
+            <text class="contributor-name" x="250" y="225">Ralf Ferreir</text>
+            <text class="contributor-commits" x="250" y="238">9 commits</text>
         </g>
         
         <g class="contributor-card">
             <circle cx="350" cy="180" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="350" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">MA</text>
-            <text class="contributor-name" x="350" y="225">matheusfer09</text>
-            <text class="contributor-commits" x="350" y="238">5 commits</text>
+            <text x="350" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">GI</text>
+            <text class="contributor-name" x="350" y="225">GitHub Actio</text>
+            <text class="contributor-commits" x="350" y="238">4 commits</text>
         </g>
         
         <g class="contributor-card">
             <circle cx="450" cy="180" r="30" fill="#d0d7de" stroke="#24292f" stroke-width="2"/>
-            <text x="450" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">GI</text>
-            <text class="contributor-name" x="450" y="225">GitHub Actio</text>
-            <text class="contributor-commits" x="450" y="238">3 commits</text>
+            <text x="450" y="180" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="#24292f">RA</text>
+            <text class="contributor-name" x="450" y="225">ralfferreira</text>
+            <text class="contributor-commits" x="450" y="238">2 commits</text>
         </g>
         
-    <text x="400" y="190" text-anchor="middle" font-size="10" fill="#656d76">Generated on 2025-10-18 17:11</text>
+    <text x="400" y="190" text-anchor="middle" font-size="10" fill="#656d76">Generated on 2025-10-18 17:17</text>
     </svg>
