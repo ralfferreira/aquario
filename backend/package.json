@@ -6,7 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/infra/http/server.ts",
-    "start": "node dist/infra/http/server.js"
+    "start": "node dist/infra/http/server.js",
+    "build": "tsc",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx src/scripts/seed.ts",
+    "db:reset": "prisma migrate reset",
+    "db:status": "prisma migrate status",
+    "migrate": "./scripts/migrate.sh",
+    "setup": "./scripts/start-backend.sh",
+    "dev:auto": "./scripts/quick-start.sh"
   },
   "keywords": [],
   "author": "",
