@@ -69,7 +69,7 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
   <img src="https://github.com/trindadetiago/aquario-stats/blob/main/images/complete-ranking.png?raw=true" alt="Ranking Completo" width="49%" style="height:full; vertical-align: top;">
 </div>
 
----
+Update it here: https://github.com/trindadetiago/aquario-stats
 
 ## Como Contribuir
 
