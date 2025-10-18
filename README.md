@@ -66,18 +66,6 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
 
-### Contribuidores com Avatares, Usernames e Commits
-
-![Contributors](https://github-readme-stats.vercel.app/api/contributors?username=ralfferreira&repo=aquario&show_icons=true&theme=default&hide_border=true&count_private=true&include_all_commits=true)
-
-### Estatísticas do Repositório
-
-![Repository Stats](https://github-readme-stats.vercel.app/api/pin/?username=ralfferreira&repo=aquario&theme=default&hide_border=true)
-
-### Linguagens Mais Usadas
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=ralfferreira&layout=compact&theme=default&hide_border=true)
-
 ---
 
 ## Como Contribuir

@@ -1,0 +1,126 @@
+name: Generate Contributor Statistics
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  contributor-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Get full git history
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Contributor Statistics
+        run: |
+          echo "📊 CONTRIBUTOR STATISTICS" >> $GITHUB_STEP_SUMMARY
+          echo "=========================" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "## 📈 Commits per Contributor" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          git shortlog -s -n >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "## 📝 Detailed Contributor Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Contributor | Commits | Lines Added | Lines Deleted | Files Changed |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------------|---------|-------------|---------------|---------------|" >> $GITHUB_STEP_SUMMARY
+
+          # Get unique contributors
+          git log --pretty=format:"%aE" | sort | uniq | while read email; do
+            if [ ! -z "$email" ]; then
+              # Get contributor name
+              name=$(git log --author="$email" --pretty=format:"%an" | head -1)
+              
+              # Count commits
+              commits=$(git log --author="$email" --oneline | wc -l)
+              
+              # Count lines added/deleted
+              lines_added=$(git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1} END {printf "%d", add}')
+              lines_deleted=$(git log --author="$email" --pretty=tformat: --numstat | awk '{del+=$2} END {printf "%d", del}')
+              
+              # Count files changed
+              files_changed=$(git log --author="$email" --name-only --pretty=format: | grep -v "^$" | sort | uniq | wc -l)
+              
+              # Clean up the name (remove special characters)
+              clean_name=$(echo "$name" | sed 's/[^a-zA-Z0-9 ]//g')
+              
+              echo "| $clean_name | $commits | $lines_added | $lines_deleted | $files_changed |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎯 Repository Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Total commits
+          total_commits=$(git rev-list --count HEAD)
+          echo "**Total Commits:** $total_commits" >> $GITHUB_STEP_SUMMARY
+
+          # Total contributors
+          total_contributors=$(git log --pretty=format:"%aE" | sort | uniq | wc -l)
+          echo "**Total Contributors:** $total_contributors" >> $GITHUB_STEP_SUMMARY
+
+          # Repository age
+          first_commit=$(git log --reverse --pretty=format:"%ad" --date=short | head -1)
+          echo "**First Commit:** $first_commit" >> $GITHUB_STEP_SUMMARY
+
+          # Last commit
+          last_commit=$(git log -1 --pretty=format:"%ad" --date=short)
+          echo "**Last Commit:** $last_commit" >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "*Generated on: $(date)*" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create Contributors File
+        run: |
+          echo "# 📊 Contributor Statistics" > CONTRIBUTORS.md
+          echo "" >> CONTRIBUTORS.md
+          echo "## 📈 Commits per Contributor" >> CONTRIBUTORS.md
+          echo "" >> CONTRIBUTORS.md
+          echo '```' >> CONTRIBUTORS.md
+          git shortlog -s -n >> CONTRIBUTORS.md
+          echo '```' >> CONTRIBUTORS.md
+          echo "" >> CONTRIBUTORS.md
+
+          echo "## 📝 Detailed Analysis" >> CONTRIBUTORS.md
+          echo "" >> CONTRIBUTORS.md
+          echo "| Contributor | Commits | Lines Added | Lines Deleted | Files Changed |" >> CONTRIBUTORS.md
+          echo "|-------------|---------|-------------|---------------|---------------|" >> CONTRIBUTORS.md
+
+          git log --pretty=format:"%aE" | sort | uniq | while read email; do
+            if [ ! -z "$email" ]; then
+              name=$(git log --author="$email" --pretty=format:"%an" | head -1)
+              commits=$(git log --author="$email" --oneline | wc -l)
+              lines_added=$(git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1} END {printf "%d", add}')
+              lines_deleted=$(git log --author="$email" --pretty=tformat: --numstat | awk '{del+=$2} END {printf "%d", del}')
+              files_changed=$(git log --author="$email" --name-only --pretty=format: | grep -v "^$" | sort | uniq | wc -l)
+              clean_name=$(echo "$name" | sed 's/[^a-zA-Z0-9 ]//g')
+              echo "| $clean_name | $commits | $lines_added | $lines_deleted | $files_changed |" >> CONTRIBUTORS.md
+            fi
+          done
+
+          echo "" >> CONTRIBUTORS.md
+          echo "## 🎯 Repository Summary" >> CONTRIBUTORS.md
+          echo "" >> CONTRIBUTORS.md
+          echo "- **Total Commits:** $(git rev-list --count HEAD)" >> CONTRIBUTORS.md
+          echo "- **Total Contributors:** $(git log --pretty=format:"%aE" | sort | uniq | wc -l)" >> CONTRIBUTORS.md
+          echo "- **First Commit:** $(git log --reverse --pretty=format:"%ad" --date=short | head -1)" >> CONTRIBUTORS.md
+          echo "- **Last Commit:** $(git log -1 --pretty=format:"%ad" --date=short)" >> CONTRIBUTORS.md
+          echo "" >> CONTRIBUTORS.md
+          echo "*Generated on: $(date)*" >> CONTRIBUTORS.md
+
+      - name: Commit Contributors File
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CONTRIBUTORS.md
+          git diff --staged --quiet || git commit -m "📊 Update contributor statistics [skip ci]"
+          git push
