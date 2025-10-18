@@ -225,6 +225,151 @@ npm run db:studio
 npm run dev:auto  # Gerencia tudo automaticamente
 ```
 
+## 📝 Guia Completo de Migrações
+
+### Quando Fazer Migrações
+
+Você precisa executar migrações quando:
+
+- ✅ **Adicionar nova tabela** (model)
+- ✅ **Adicionar nova coluna** (campo)
+- ✅ **Modificar tipo de coluna**
+- ✅ **Adicionar/modificar relacionamentos**
+- ✅ **Adicionar índices**
+- ✅ **Modificar constraints**
+
+### Processo Passo a Passo
+
+#### 1. Modificar o Schema
+
+Edite o arquivo `prisma/schema.prisma`:
+
+```prisma
+// Exemplo: Adicionar nova tabela
+model NovaTabela {
+  id        String   @id @default(uuid())
+  nome      String
+  criadoEm  DateTime @default(now())
+
+  @@map("nova_tabela")
+}
+```
+
+#### 2. Executar Migração
+
+```bash
+npm run migrate
+```
+
+Este comando faz automaticamente:
+
+1. ✅ **Valida** sintaxe do schema
+2. ✅ **Formata** arquivo do schema
+3. ✅ **Cria** arquivo de migração
+4. ✅ **Aplica** migração ao banco
+5. ✅ **Gera** tipos TypeScript
+
+#### 3. Verificar Resultado
+
+```bash
+# Verificar se migração foi aplicada
+npm run db:status
+
+# Ver dados no banco
+npm run db:studio
+```
+
+### Exemplos Práticos
+
+#### Adicionar Nova Coluna
+
+```prisma
+model Usuario {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String   @unique
+  telefone  String?  // ← Nova coluna adicionada
+  criadoEm  DateTime @default(now())
+}
+```
+
+#### Adicionar Nova Tabela com Relacionamento
+
+```prisma
+model Categoria {
+  id        String   @id @default(uuid())
+  nome      String
+  produtos  Produto[] // ← Relacionamento
+
+  @@map("categorias")
+}
+
+model Produto {
+  id          String     @id @default(uuid())
+  nome        String
+  categoriaId String
+  categoria   Categoria  @relation(fields: [categoriaId], references: [id])
+
+  @@map("produtos")
+}
+```
+
+#### Adicionar Índice
+
+```prisma
+model Usuario {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String   @unique
+
+  @@index([nome])  // ← Índice adicionado
+  @@map("usuarios")
+}
+```
+
+### Comandos de Migração Disponíveis
+
+| Comando               | O que faz                                                   | Quando usar                             |
+| --------------------- | ----------------------------------------------------------- | --------------------------------------- |
+| `npm run migrate`     | **Processo completo** (validar → formatar → migrar → gerar) | **Mudanças no schema**                  |
+| `npm run db:migrate`  | Apenas criar e aplicar migrações                            | Se você quer pular validação/formatação |
+| `npm run db:generate` | Apenas gerar tipos TypeScript                               | Se tipos estão desatualizados           |
+| `npm run db:status`   | Verificar status das migrações                              | Para debug                              |
+| `npm run db:reset`    | **DESTRUTIVO!** Resetar banco completo                      | Problemas graves (apenas dev)           |
+
+### Solução de Problemas com Migrações
+
+#### "Migration drift detected"
+
+```bash
+# Schema fora de sincronia
+npm run db:reset  # Resetar tudo (DESTRUTIVO!)
+```
+
+#### "Prisma client not generated"
+
+```bash
+# Tipos desatualizados
+npm run migrate  # Processo completo
+```
+
+#### "Schema validation failed"
+
+```bash
+# Erro de sintaxe no schema
+# Verificar arquivo prisma/schema.prisma
+# Corrigir sintaxe e executar novamente
+npm run migrate
+```
+
+### Boas Práticas
+
+1. **✅ Sempre use `npm run migrate`** - Processo completo e seguro
+2. **✅ Teste em desenvolvimento** antes de aplicar em produção
+3. **✅ Backup do banco** antes de migrações importantes
+4. **✅ Commits pequenos** - Uma mudança por migração
+5. **✅ Documente mudanças** importantes no commit
+
 ## 🐳 Gerenciamento do Docker
 
 ### Comandos Manuais do Docker
