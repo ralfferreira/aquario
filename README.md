@@ -66,6 +66,10 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
 
+### Contribuidores com Contadores de Commit
+
+![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true)
+
 ### Gráfico de Contribuidores (GitHub Nativo)
 
 ![GitHub Contributors](https://github.com/ralfferreira/aquario/graphs/contributors)
@@ -78,88 +82,7 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=ralfferreira&layout=compact&theme=default&hide_border=true)
 
-## Como Contribuir
-
-O **Aquário** é um projeto open source e as contribuições são muito bem-vindas! Veja como você pode contribuir:
-
-1. **Fork este repositório** e clone o fork para o seu ambiente local.
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=ralfferreira&layout=compact&theme=default&hide_border=true&langs_count=8)
-
-### Opção 20: Estatísticas Gerais do Usuário Principal
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=ralfferreira&show_icons=true&theme=default&hide_border=true)
-
-### Opção 21: Streak de Contribuições
-
-![GitHub Streak](https://streak-stats.demolab.com/?user=ralfferreira&theme=default&hide_border=true)
-
 ---
-
-## 🔧 **Soluções para Estatísticas Detalhadas por Contribuidor**
-
-### GitHub Action para Análise de Contribuidores
-
-````yaml
-# .github/workflows/contributor-stats.yml
-name: Contributor Statistics
-on:
-  push:
-    branches: [main, master]
-  schedule:
-    - cron: "0 0 * * 0" # Weekly backup
-jobs:
-  generate-stats:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Generate Contributor Stats
-        run: |
-          echo "# 📊 Estatísticas de Contribuidores" > CONTRIBUTOR_STATS.md
-          echo "" >> CONTRIBUTOR_STATS.md
-          echo "## Commits por Contribuidor" >> CONTRIBUTOR_STATS.md
-          echo "" >> CONTRIBUTOR_STATS.md
-          echo '```' >> CONTRIBUTOR_STATS.md
-          git shortlog -s -n >> CONTRIBUTOR_STATS.md
-          echo '```' >> CONTRIBUTOR_STATS.md
-          echo "" >> CONTRIBUTOR_STATS.md
-          echo "## Linhas de Código por Contribuidor" >> CONTRIBUTOR_STATS.md
-          echo "" >> CONTRIBUTOR_STATS.md
-          echo '```' >> CONTRIBUTOR_STATS.md
-          git log --pretty=format:%aE | sort | uniq | while read email; do
-            echo "Author: $email"
-            git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1; del+=$2} END {printf "Added: %d, Deleted: %d\n\n", add, del}'
-          done >> CONTRIBUTOR_STATS.md
-          echo '```' >> CONTRIBUTOR_STATS.md
-          echo "" >> CONTRIBUTOR_STATS.md
-          echo "*Última atualização: $(date)*" >> CONTRIBUTOR_STATS.md
-
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add CONTRIBUTOR_STATS.md
-          git diff --staged --quiet || git commit -m "📊 Update contributor statistics [skip ci]"
-          git push
-````
-
-### Script Manual para Estatísticas
-
-```bash
-# Contar commits por contribuidor
-git shortlog -s -n
-
-# Contar linhas adicionadas/deletadas por contribuidor
-git log --pretty=format:%aE | sort | uniq | while read email; do
-  echo "Author: $email"
-  git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1; del+=$2} END {printf "Added: %d, Deleted: %d\n\n", add, del}'
-done
-```
 
 ## Como Contribuir
 
