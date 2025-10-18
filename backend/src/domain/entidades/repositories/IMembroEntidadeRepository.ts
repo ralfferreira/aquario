@@ -1,5 +1,3 @@
-import { MembroEntidade } from '../entities/MembroEntidade';
-
 export interface MembroComUsuario {
   id: string;
   papel: string;

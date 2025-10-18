@@ -1,6 +1,5 @@
-import { SubSecaoGuia } from "@/domain/guias/entities/SubSecaoGuia";
-import { ISubSecoesGuiaRepository } from "@/domain/guias/repositories/ISubSecoesGuiaRepository";
-import { StatusGuia } from "@prisma/client";
+import { ISubSecoesGuiaRepository } from '@/domain/guias/repositories/ISubSecoesGuiaRepository';
+import { StatusGuia } from '@prisma/client';
 
 interface EditarSubSecaoGuiaUseCaseRequest {
   id: string;
@@ -27,7 +26,7 @@ export class EditarSubSecaoGuiaUseCase {
     const subSecaoGuia = await this.subSecoesGuiaRepository.findById(id);
 
     if (!subSecaoGuia) {
-      throw new Error("Subseção não encontrada.");
+      throw new Error('Subseção não encontrada.');
     }
 
     if (titulo !== undefined) subSecaoGuia.titulo = titulo;

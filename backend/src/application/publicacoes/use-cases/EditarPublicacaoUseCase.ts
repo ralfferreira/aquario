@@ -1,4 +1,3 @@
-import { Publicacao } from '@/domain/publicacoes/entities/Publicacao';
 import { IPublicacoesRepository } from '@/domain/publicacoes/repositories/IPublicacoesRepository';
 
 interface EditarPublicacaoUseCaseRequest {

@@ -1,7 +1,6 @@
-import { Guia } from "@/domain/guias/entities/Guia";
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
-import { ICursosRepository } from "@/domain/cursos/repositories/ICursosRepository";
-import { StatusGuia } from "@prisma/client";
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
+import { ICursosRepository } from '@/domain/cursos/repositories/ICursosRepository';
+import { StatusGuia } from '@prisma/client';
 
 interface EditarGuiaUseCaseRequest {
   id: string;
@@ -33,13 +32,13 @@ export class EditarGuiaUseCase {
     const guia = await this.guiasRepository.findById(id);
 
     if (!guia) {
-      throw new Error("Guia não encontrada.");
+      throw new Error('Guia não encontrada.');
     }
 
     if (cursoId) {
       const curso = await this.cursosRepository.findById(cursoId);
       if (!curso) {
-        throw new Error("Curso não encontrado.");
+        throw new Error('Curso não encontrado.');
       }
     }
 

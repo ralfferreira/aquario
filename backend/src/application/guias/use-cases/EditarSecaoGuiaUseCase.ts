@@ -1,6 +1,5 @@
-import { SecaoGuia } from "@/domain/guias/entities/SecaoGuia";
-import { ISecoesGuiaRepository } from "@/domain/guias/repositories/ISecoesGuiaRepository";
-import { StatusGuia } from "@prisma/client";
+import { ISecoesGuiaRepository } from '@/domain/guias/repositories/ISecoesGuiaRepository';
+import { StatusGuia } from '@prisma/client';
 
 interface EditarSecaoGuiaUseCaseRequest {
   id: string;
@@ -27,7 +26,7 @@ export class EditarSecaoGuiaUseCase {
     const secaoGuia = await this.secoesGuiaRepository.findById(id);
 
     if (!secaoGuia) {
-      throw new Error("Seção não encontrada.");
+      throw new Error('Seção não encontrada.');
     }
 
     if (titulo !== undefined) secaoGuia.titulo = titulo;
