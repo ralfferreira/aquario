@@ -20,19 +20,19 @@ jobs:
           echo "📊 CONTRIBUTOR STATISTICS" >> $GITHUB_STEP_SUMMARY
           echo "=========================" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           echo "## 📈 Commits per Contributor" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           git shortlog -s -n >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           echo "## 📝 Detailed Contributor Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Contributor | Commits | Lines Added | Lines Deleted | Files Changed |" >> $GITHUB_STEP_SUMMARY
           echo "|-------------|---------|-------------|---------------|---------------|" >> $GITHUB_STEP_SUMMARY
-          
+
           # Get unique contributors
           git log --pretty=format:"%aE" | sort | uniq | while read email; do
             if [ ! -z "$email" ]; then
@@ -55,27 +55,27 @@ jobs:
               echo "| $clean_name | $commits | $lines_added | $lines_deleted | $files_changed |" >> $GITHUB_STEP_SUMMARY
             fi
           done
-          
+
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## 🎯 Repository Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Total commits
           total_commits=$(git rev-list --count HEAD)
           echo "**Total Commits:** $total_commits" >> $GITHUB_STEP_SUMMARY
-          
+
           # Total contributors
           total_contributors=$(git log --pretty=format:"%aE" | sort | uniq | wc -l)
           echo "**Total Contributors:** $total_contributors" >> $GITHUB_STEP_SUMMARY
-          
+
           # Repository age
           first_commit=$(git log --reverse --pretty=format:"%ad" --date=short | head -1)
           echo "**First Commit:** $first_commit" >> $GITHUB_STEP_SUMMARY
-          
+
           # Last commit
           last_commit=$(git log -1 --pretty=format:"%ad" --date=short)
           echo "**Last Commit:** $last_commit" >> $GITHUB_STEP_SUMMARY
-          
+
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "*Generated on: $(date)*" >> $GITHUB_STEP_SUMMARY
 
@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "## 📊 Enhanced Statistics" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Commits by month (last 12 months)
           echo "### 📅 Commits by Month (Last 12 Months)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -91,7 +91,7 @@ jobs:
           git log --since="12 months ago" --pretty=format:"%ad" --date=format:"%Y-%m" | sort | uniq -c | sort -nr >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Most active contributors (last 30 days)
           echo "### 🔥 Most Active Contributors (Last 30 Days)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -99,7 +99,7 @@ jobs:
           git log --since="30 days ago" --pretty=format:"%an" | sort | uniq -c | sort -nr | head -5 >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # File type analysis
           echo "### 📁 File Type Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -116,7 +116,7 @@ jobs:
           import subprocess
           import re
           from datetime import datetime
-          
+
           def get_contributors():
               # Get contributor data from git
               result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
@@ -131,7 +131,7 @@ jobs:
                           contributors.append({'name': name, 'commits': commits})
               
               return sorted(contributors, key=lambda x: x['commits'], reverse=True)[:10]
-          
+
           def generate_svg(contributors):
               svg_width = 800
               svg_height = 200
@@ -176,16 +176,16 @@ jobs:
               </svg>'''
               
               return svg
-          
+
           contributors = get_contributors()
           svg_content = generate_svg(contributors)
-          
+
           with open('contributors-widget.svg', 'w') as f:
               f.write(svg_content)
-          
+
           print(f"Generated SVG with {len(contributors)} contributors")
           EOF
-          
+
           python3 generate_svg.py
 
       - name: Generate Custom Badges
@@ -194,7 +194,7 @@ jobs:
           cat > generate_badges.py << 'EOF'
           import subprocess
           import json
-          
+
           def get_top_contributors():
               result = subprocess.run(['git', 'shortlog', '-s', '-n'], capture_output=True, text=True)
               contributors = []
@@ -208,19 +208,19 @@ jobs:
                           contributors.append({'name': name, 'commits': commits})
               
               return sorted(contributors, key=lambda x: x['commits'], reverse=True)
-          
+
           def create_badge_svg(text, color, width=120, height=20):
               return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
               <rect width="{width}" height="{height}" fill="{color}" rx="3"/>
               <text x="{width//2}" y="{height//2 + 3}" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white" font-weight="bold">{text}</text>
               </svg>'''
-          
+
           contributors = get_top_contributors()
-          
+
           # Generate badges for top 3 contributors
           badges = []
           colors = ['#28a745', '#007bff', '#ffc107']  # Green, Blue, Yellow
-          
+
           for i, contributor in enumerate(contributors[:3]):
               if contributor['commits'] > 0:
                   badge_text = f"#{i+1} {contributor['name'][:8]} ({contributor['commits']} commits)"
@@ -230,10 +230,10 @@ jobs:
                       f.write(badge_svg)
                   
                   badges.append(f'badge-top-{i+1}.svg')
-          
+
           # Generate milestone badges
           total_commits = sum(c['commits'] for c in contributors)
-          
+
           milestone_badges = []
           if total_commits >= 100:
               milestone_badges.append(('100+ Commits', '#28a745'))
@@ -243,17 +243,17 @@ jobs:
               milestone_badges.append(('5+ Contributors', '#6f42c1'))
           if len(contributors) >= 10:
               milestone_badges.append(('10+ Contributors', '#fd7e14'))
-          
+
           for text, color in milestone_badges:
               badge_svg = create_badge_svg(text, color)
               filename = f'badge-{text.lower().replace("+", "plus").replace(" ", "-")}.svg'
               with open(filename, 'w') as f:
                   f.write(badge_svg)
               badges.append(filename)
-          
+
           print(f"Generated {len(badges)} badges")
           EOF
-          
+
           python3 generate_badges.py
 
       - name: Create Contributors File
@@ -298,6 +298,22 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add CONTRIBUTORS.md contributors-widget.svg badge-*.svg
-          git diff --staged --quiet || git commit -m "📊 Update contributor statistics, SVG widget, and badges [skip ci]"
-          git push
+
+          # Add files that exist
+          git add CONTRIBUTORS.md
+          git add contributors-widget.svg 2>/dev/null || true
+
+          # Add badge files if they exist
+          for badge in badge-*.svg; do
+            if [ -f "$badge" ]; then
+              git add "$badge"
+            fi
+          done
+
+          # Only commit if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "📊 Update contributor statistics, SVG widget, and badges [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
