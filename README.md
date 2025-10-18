@@ -62,67 +62,27 @@ O design, ainda em desenvolvimento, está no link do figma: https://www.figma.co
 
 Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possível!
 
-### Opção 1: Contribuidores com Avatares (Simples)
+### Contribuidores com Avatares
 
 ![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&anon=1)
 
-### Opção 2: Contribuidores com Estatísticas
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=8&anon=1&show_stats=true)
-
-### Opção 3: Contribuidores com Contadores de Commit
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true&stats=true)
-
-### Opção 4: Contribuidores Compacto (4 Colunas)
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=4&anon=1)
-
-### Opção 5: Contribuidores com Mais Detalhes
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=10&anon=1&show_stats=true&stats=true&max=20)
-
-### Opção 6: GitHub Nativo - Gráfico de Contribuidores
+### Gráfico de Contribuidores (GitHub Nativo)
 
 ![GitHub Contributors](https://github.com/ralfferreira/aquario/graphs/contributors)
 
-### Opção 7: GitHub Nativo - Estatísticas do Repositório
+### Estatísticas do Repositório
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=ralfferreira&show_icons=true&theme=default&hide_border=true)
+![Repository Stats](https://github-readme-stats.vercel.app/api/pin/?username=ralfferreira&repo=aquario&theme=default&hide_border=true)
 
-### Opção 8: Linguagens Mais Usadas
+### Linguagens Mais Usadas
 
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=ralfferreira&layout=compact&theme=default&hide_border=true)
 
-### Opção 9: Estatísticas do Repositório Específico
+## Como Contribuir
 
-![Repository Stats](https://github-readme-stats.vercel.app/api/pin/?username=ralfferreira&repo=aquario&theme=default&hide_border=true)
+O **Aquário** é um projeto open source e as contribuições são muito bem-vindas! Veja como você pode contribuir:
 
-### Opção 10: Contribuidores com Temas Personalizados
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=8&anon=1&show_stats=true&theme=dark)
-
-### Opção 11: Contribuidores com Bordas Arredondadas
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=6&anon=1&show_stats=true&border_radius=10)
-
-### Opção 12: Contribuidores com Cores Personalizadas
-
-![Contributors](https://contrib.rocks/image?repo=ralfferreira/aquario&columns=8&anon=1&show_stats=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9)
-
----
-
-## 📊 **Estatísticas Reais de Contribuidores**
-
-### Opção 17: GitHub Nativo - Gráfico de Contribuidores com Commits
-
-![GitHub Contributors](https://github.com/ralfferreira/aquario/graphs/contributors)
-
-### Opção 18: Estatísticas do Repositório (Commits, Stars, Forks)
-
-![Repository Stats](https://github-readme-stats.vercel.app/api/pin/?username=ralfferreira&repo=aquario&theme=default&hide_border=true)
-
-### Opção 19: Linguagens Mais Usadas no Projeto
+1. **Fork este repositório** e clone o fork para o seu ambiente local.
 
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=ralfferreira&layout=compact&theme=default&hide_border=true&langs_count=8)
 
@@ -144,15 +104,20 @@ Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possív
 # .github/workflows/contributor-stats.yml
 name: Contributor Statistics
 on:
+  push:
+    branches: [main, master]
   schedule:
-    - cron: "0 0 * * 0" # Weekly
+    - cron: "0 0 * * 0" # Weekly backup
 jobs:
   generate-stats:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Generate Contributor Stats
         run: |
           echo "# 📊 Estatísticas de Contribuidores" > CONTRIBUTOR_STATS.md
@@ -171,6 +136,16 @@ jobs:
             git log --author="$email" --pretty=tformat: --numstat | awk '{add+=$1; del+=$2} END {printf "Added: %d, Deleted: %d\n\n", add, del}'
           done >> CONTRIBUTOR_STATS.md
           echo '```' >> CONTRIBUTOR_STATS.md
+          echo "" >> CONTRIBUTOR_STATS.md
+          echo "*Última atualização: $(date)*" >> CONTRIBUTOR_STATS.md
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CONTRIBUTOR_STATS.md
+          git diff --staged --quiet || git commit -m "📊 Update contributor statistics [skip ci]"
+          git push
 ````
 
 ### Script Manual para Estatísticas
