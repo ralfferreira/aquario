@@ -16,11 +16,6 @@ This document explains the linting and formatting configuration for the Aquário
 - **Config**: `.eslintrc.json`
 - **Extends**: Next.js core web vitals + Prettier
 
-### Husky + lint-staged
-
-- **Purpose**: Pre-commit hooks for automatic formatting and linting
-- **Config**: `.husky/pre-commit` + `.lintstagedrc.json`
-
 ## 📋 Configuration Details
 
 ### Prettier Configuration (`.prettierrc`)
@@ -131,8 +126,6 @@ npm run format
 # Check if files are formatted correctly
 npm run format:check
 
-# Format only staged files
-npm run format:staged
 ```
 
 ### Linting
@@ -157,24 +150,6 @@ npm run type-check
 ```bash
 # Run all checks (lint + format + type-check)
 npm run check-all
-```
-
-## 🔧 Pre-commit Hooks
-
-When you commit code, the following happens automatically:
-
-1. **lint-staged** runs on staged files
-2. **ESLint** fixes issues automatically where possible
-3. **Prettier** formats the code
-4. If any issues remain, the commit is blocked
-
-### Manual Setup (if needed)
-
-```bash
-# Install husky
-npm run prepare
-
-# The pre-commit hook is already configured
 ```
 
 ## 📝 Usage Examples
@@ -228,11 +203,7 @@ Add to your VS Code settings:
    - Run `npm run type-check` to see detailed errors
    - Fix type issues before committing
 
-3. **Pre-commit hook fails**
-   - Fix the linting/formatting issues shown
-   - Re-stage and commit again
-
-4. **File naming issues**
+3. **File naming issues**
    - Check the naming conventions above
    - Rename files to follow the patterns
 
@@ -255,4 +226,3 @@ useEffect(() => {
 - [Prettier Documentation](https://prettier.io/docs/en/)
 - [ESLint Documentation](https://eslint.org/docs/)
 - [Next.js ESLint Config](https://nextjs.org/docs/basic-features/eslint)
-- [Husky Documentation](https://typicode.github.io/husky/)
