@@ -126,6 +126,15 @@ npm run dev
 | `npm run db:reset`  | Dropar banco, recriar, aplicar migrações (DESTRUTIVO!)              | Começar do zero (apenas dev)   |
 | `npm run db:status` | Mostrar quais migrações foram aplicadas                             | Verificar status das migrações |
 
+### Comandos de Qualidade de Código
+
+| Comando                | O que faz                                              | Quando usar                          |
+| ---------------------- | ------------------------------------------------------ | ------------------------------------ |
+| `npm run lint`         | Verificar problemas de código (ESLint)                 | Antes de commitar código             |
+| `npm run lint:fix`     | Corrigir automaticamente problemas de código possíveis | Corrigir problemas automaticamente   |
+| `npm run format`       | Formatar código com Prettier                           | Padronizar formatação do código      |
+| `npm run format:check` | Verificar se código está formatado corretamente        | Verificar formatação antes do commit |
+
 ## 🏗️ Estrutura do Projeto
 
 ```
@@ -223,6 +232,24 @@ npm run db:studio
 
 ```bash
 npm run dev:auto  # Gerencia tudo automaticamente
+```
+
+### 5. Qualidade de Código
+
+Antes de commitar código, execute:
+
+```bash
+# Verificar problemas de código
+npm run lint
+
+# Corrigir problemas automaticamente
+npm run lint:fix
+
+# Formatar código
+npm run format
+
+# Verificar se está formatado
+npm run format:check
 ```
 
 ## 📝 Guia Completo de Migrações

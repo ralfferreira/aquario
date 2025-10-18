@@ -28,7 +28,7 @@ export class AuthenticateController {
         {
           subject: usuario.id,
           expiresIn: '1d',
-        },
+        }
       );
 
       return response.status(200).json({ token });

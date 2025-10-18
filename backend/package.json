@@ -1,6 +1,7 @@
 {
   "name": "aquario-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "O backend do Aquário é construído seguindo os princípios do **Domain-Driven Design (DDD)**, organizado em uma arquitetura de camadas para garantir separação de responsabilidades, testabilidade e escalabilidade. A estrutura é modular, com cada funcionalidade (módulo) contida dentro de sua própria pasta nas camadas correspondentes.",
   "main": "index.js",
   "scripts": {
@@ -8,6 +9,10 @@
     "dev": "tsx watch src/infra/http/server.ts",
     "start": "node dist/infra/http/server.js",
     "build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
@@ -36,11 +41,16 @@
     "zod": "^4.1.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.38.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.4.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.1",
+    "eslint": "^9.38.0",
+    "prettier": "^3.6.2",
     "prisma": "^6.16.1",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"

@@ -1,4 +1,4 @@
-import { prisma } from "@/infra/database/prisma";
+import { prisma } from '@/infra/database/prisma';
 
 class SearchUseCase {
   async execute(query: string): Promise<any[]> {
@@ -8,62 +8,61 @@ class SearchUseCase {
 
     const lowercasedQuery = query.toLowerCase();
 
-    const [projetos, publicacoes, vagas, usuarios, entidades, guias] =
-      await Promise.all([
-        prisma.projeto.findMany({
-          where: {
-            OR: [
-              { titulo: { contains: lowercasedQuery, mode: "insensitive" } },
-              { descricao: { contains: lowercasedQuery, mode: "insensitive" } },
-            ],
-          },
-        }),
-        prisma.publicacao.findMany({
-          where: {
-            OR: [
-              { titulo: { contains: lowercasedQuery, mode: "insensitive" } },
-              { conteudo: { contains: lowercasedQuery, mode: "insensitive" } },
-            ],
-          },
-        }),
-        prisma.vaga.findMany({
-          where: {
-            OR: [
-              { titulo: { contains: lowercasedQuery, mode: "insensitive" } },
-              { descricao: { contains: lowercasedQuery, mode: "insensitive" } },
-            ],
-          },
-        }),
-        prisma.usuario.findMany({
-          where: {
-            nome: { contains: lowercasedQuery, mode: "insensitive" },
-          },
-        }),
-        prisma.entidade.findMany({
-          where: {
-            OR: [
-              { nome: { contains: lowercasedQuery, mode: "insensitive" } },
-              { descricao: { contains: lowercasedQuery, mode: "insensitive" } },
-            ],
-          },
-        }),
-        prisma.guia.findMany({
-          where: {
-            OR: [
-              { titulo: { contains: lowercasedQuery, mode: "insensitive" } },
-              { descricao: { contains: lowercasedQuery, mode: "insensitive" } },
-            ],
-          },
-        }),
-      ]);
+    const [projetos, publicacoes, vagas, usuarios, entidades, guias] = await Promise.all([
+      prisma.projeto.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.publicacao.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { conteudo: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.vaga.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.usuario.findMany({
+        where: {
+          nome: { contains: lowercasedQuery, mode: 'insensitive' },
+        },
+      }),
+      prisma.entidade.findMany({
+        where: {
+          OR: [
+            { nome: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+      prisma.guia.findMany({
+        where: {
+          OR: [
+            { titulo: { contains: lowercasedQuery, mode: 'insensitive' } },
+            { descricao: { contains: lowercasedQuery, mode: 'insensitive' } },
+          ],
+        },
+      }),
+    ]);
 
     const results = [
-      ...projetos.map((item) => ({ ...item, type: "projeto" })),
-      ...publicacoes.map((item) => ({ ...item, type: "publicacao" })),
-      ...vagas.map((item) => ({ ...item, type: "vaga" })),
-      ...usuarios.map((item) => ({ ...item, type: "usuario" })),
-      ...entidades.map((item) => ({ ...item, type: "entidade" })),
-      ...guias.map((item) => ({ ...item, type: "guia" })),
+      ...projetos.map(item => ({ ...item, type: 'projeto' })),
+      ...publicacoes.map(item => ({ ...item, type: 'publicacao' })),
+      ...vagas.map(item => ({ ...item, type: 'vaga' })),
+      ...usuarios.map(item => ({ ...item, type: 'usuario' })),
+      ...entidades.map(item => ({ ...item, type: 'entidade' })),
+      ...guias.map(item => ({ ...item, type: 'guia' })),
     ];
 
     return results;
