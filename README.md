@@ -1,5 +1,7 @@
 # Aquário
 
+> **👨‍💻 Desenvolvedores**: Para guia técnico completo, veja [README-DEV.md](README-DEV.md)
+
 ![Logo](assets/logo.png)
 
 ## Visão Geral

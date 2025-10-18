@@ -1,3 +1,7 @@
+# 🌊 Aquário Frontend
+
+> **👨‍💻 Desenvolvedores**: Para guia técnico completo, veja [README-DEV.md](README-DEV.md)
+
 ## 🎨 Frontend
 
 ### Tecnologias Principais
