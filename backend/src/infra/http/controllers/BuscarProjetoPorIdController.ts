@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 import { BuscarProjetoPorIdUseCase } from '@/application/projetos/use-cases/BuscarProjetoPorIdUseCase';
 import { PrismaProjetosRepository } from '@/infra/database/prisma/repositories/PrismaProjetosRepository';
+import { Projeto } from '@/domain/projetos/entities/Projeto';
 
 const paramsSchema = z.object({ id: z.string().uuid() });
 
@@ -24,7 +25,7 @@ export class BuscarProjetoPorIdController {
         ...projeto.props,
       };
 
-      (responseData as any).membros = (projeto as any).props.membros;
+      (responseData as Record<string, unknown>).membros = (projeto as Projeto).props.membros;
 
       return response.status(200).json(responseData);
     } catch (error) {

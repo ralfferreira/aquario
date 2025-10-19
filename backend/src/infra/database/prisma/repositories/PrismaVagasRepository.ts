@@ -1,5 +1,5 @@
 import { IVagasRepository } from '@/domain/vagas/repositories/IVagasRepository';
-import { Vaga } from '@/domain/vagas/entities/Vaga';
+import { Vaga, Publicador } from '@/domain/vagas/entities/Vaga';
 import { prisma } from '..';
 
 export class PrismaVagasRepository implements IVagasRepository {
@@ -18,7 +18,7 @@ export class PrismaVagasRepository implements IVagasRepository {
         titulo: vaga.titulo,
         descricao: vaga.descricao,
         tipoVaga: vaga.tipoVaga,
-        publicador: vaga.publicador as any,
+        publicador: vaga.publicador as Publicador,
         centroId: vaga.centroId,
         eAtiva: vaga.eAtiva,
         criadoEm: vaga.criadoEm,

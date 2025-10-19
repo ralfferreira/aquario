@@ -1,7 +1,17 @@
 import { prisma } from '@/infra/database/prisma';
 
+interface SearchResult {
+  id: string;
+  titulo?: string;
+  nome?: string;
+  descricao?: string;
+  conteudo?: string;
+  type: string;
+  [key: string]: unknown;
+}
+
 class SearchUseCase {
-  async execute(query: string): Promise<any[]> {
+  async execute(query: string): Promise<SearchResult[]> {
     if (!query) {
       return [];
     }
