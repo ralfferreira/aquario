@@ -19,7 +19,7 @@ export class PrismaProjetosRepository implements IProjetosRepository {
     return Projeto.create(
       {
         ...projeto,
-        membros: projeto.membros.map(membro => membro),
+        membros: projeto.membros.map(membro => membro.id),
       },
       projeto.id
     );
@@ -40,7 +40,7 @@ export class PrismaProjetosRepository implements IProjetosRepository {
       Projeto.create(
         {
           ...projeto,
-          membros: projeto.membros,
+          membros: projeto.membros.map(membro => membro.id),
         },
         projeto.id
       )
