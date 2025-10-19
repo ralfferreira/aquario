@@ -18,12 +18,23 @@ type HeaderProps = {
   academicCenter: string;
   courses: string[];
   currentCourse: string;
+  onCourseChange?: (course: string) => void;
 };
 
 const inter = Inter({ subsets: ["latin"] });
 
-function GradientHeaderComponent({ academicCenter, courses, currentCourse }: HeaderProps) {
+function GradientHeaderComponent({
+  academicCenter,
+  courses,
+  currentCourse,
+  onCourseChange,
+}: HeaderProps) {
   const [selectedCourse, setSelectedCourse] = React.useState(currentCourse);
+
+  const handleCourseSelect = (course: string) => {
+    setSelectedCourse(course);
+    onCourseChange?.(course);
+  };
   return (
     <div className="flex justify-start items-center w-full h-20 bg-gradient-to-r from-violet-500 to-[#C450DE] dark:bg-gradient-to-r dark:from-violet-500 dark:to-[#C450DE]">
       <div className="pl-[24px] text-lg flex text-white">
@@ -45,7 +56,7 @@ function GradientHeaderComponent({ academicCenter, courses, currentCourse }: Hea
               {courses.map((course, index) => (
                 <DropdownMenuItem
                   key={index}
-                  onClick={() => setSelectedCourse(course)}
+                  onClick={() => handleCourseSelect(course)}
                   className={`${inter.className}`}
                 >
                   {course}

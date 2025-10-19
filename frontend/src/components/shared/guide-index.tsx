@@ -1,43 +1,52 @@
 import * as React from "react";
 import { Inter } from "next/font/google";
 
-type Page = {
-  nomedapagina: string;
-  id: number;
+type SubSectionNode = {
+  titulo: string;
+  slug: string;
 };
 
-type Section = {
-  [key: string]: Page[];
+type SectionNode = {
+  titulo: string;
+  slug: string;
+  subsecoes?: SubSectionNode[];
+};
+
+type GuiaNode = {
+  titulo: string;
+  slug: string;
+  secoes: SectionNode[];
 };
 
 type GuideIndexProps = {
-  data: Section[];
+  cursoSlug: string;
+  guias: GuiaNode[];
 };
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const GuideIndex: React.FC<GuideIndexProps> = ({ data }) => {
+export const GuideIndex: React.FC<GuideIndexProps> = ({ cursoSlug, guias }) => {
   return (
     <div className="flex h-[100vh] overflow-y-auto ">
       <div className={`space-y-4 w-full top-0 left-0 p-4 ${inter.className}`}>
-        {data.map((section, sectionIndex) => {
-          return Object.keys(section).map(sectionName => (
-            <div key={sectionName + sectionIndex}>
-              <p className="text-sm mb-1 ml-6 text-gray-500">{sectionName}</p>
-              {section[sectionName].map(page => (
-                <a href="https://google.com" key={page.id + sectionIndex + "a"}>
-                  <p key={page.id + sectionIndex} className="ml-6 py-1.5 hover:underline">
-                    {page.nomedapagina}
-                  </p>
+        {guias.map(guia => (
+          <div key={guia.slug}>
+            <p className="text-sm mb-1 ml-6 text-gray-500">{guia.titulo}</p>
+            {guia.secoes.map(secao => (
+              <div key={secao.slug} className="ml-6">
+                <a href={`/guias/${cursoSlug}/${secao.slug}`}>
+                  <p className="py-1.5 hover:underline">{secao.titulo}</p>
                 </a>
-              ))}
-              <div
-                key={sectionName + sectionIndex + "1"}
-                className="h-[1.5px] w-full rounded bg-gray-500 opacity-30 mt-2 ml-2"
-              ></div>
-            </div>
-          ));
-        })}
+                {secao.subsecoes?.map(sub => (
+                  <a key={sub.slug} href={`/guias/${cursoSlug}/${secao.slug}/${sub.slug}`}>
+                    <p className="ml-4 py-1 hover:underline">{sub.titulo}</p>
+                  </a>
+                ))}
+              </div>
+            ))}
+            <div className="h-[1.5px] w-full rounded bg-gray-500 opacity-30 mt-2 ml-2"></div>
+          </div>
+        ))}
       </div>
     </div>
   );
