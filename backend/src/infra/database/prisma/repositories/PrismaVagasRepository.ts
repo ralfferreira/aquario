@@ -77,7 +77,7 @@ export class PrismaVagasRepository implements IVagasRepository {
           titulo: vaga.titulo,
           descricao: vaga.descricao,
           tipoVaga: vaga.tipoVaga,
-          publicador: vaga.publicador as any,
+          publicador: vaga.publicador as Publicador,
           centroId: vaga.centroId,
           eAtiva: vaga.eAtiva,
           criadoEm: vaga.criadoEm,

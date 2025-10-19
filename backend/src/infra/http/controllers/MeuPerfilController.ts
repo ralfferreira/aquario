@@ -13,7 +13,7 @@ export class MeuPerfilController {
         return response.status(404).json({ message: 'Usuário não encontrado.' });
       }
 
-      const { senhaHash, ...usuarioSemSenha } = usuario.props;
+      const { senhaHash: _, ...usuarioSemSenha } = usuario.props;
 
       return response.status(200).json(usuarioSemSenha);
     } catch {
