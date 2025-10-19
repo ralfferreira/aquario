@@ -49,7 +49,7 @@ export class Publicacao extends Entity<PublicacaoProps> {
         criadoEm: props.criadoEm ?? new Date(),
         atualizadoEm: props.atualizadoEm ?? new Date(),
       },
-      id,
+      id
     );
 
     return publicacao;

@@ -32,7 +32,7 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
       },
     });
 
-    return publicacoes.map((publicacao) =>
+    return publicacoes.map(publicacao =>
       Publicacao.create(
         {
           titulo: publicacao.titulo,
@@ -42,8 +42,8 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
           criadoEm: publicacao.criadoEm,
           atualizadoEm: publicacao.atualizadoEm,
         },
-        publicacao.id,
-      ),
+        publicacao.id
+      )
     );
   }
 
@@ -74,7 +74,7 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
         criadoEm: publicacao.criadoEm,
         atualizadoEm: publicacao.atualizadoEm,
       },
-      publicacao.id,
+      publicacao.id
     );
   }
 

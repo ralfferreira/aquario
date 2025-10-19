@@ -21,7 +21,10 @@ export class AtualizarStatusItemAchadoEPerdidoController {
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
       const usuariosRepository = new PrismaUsuariosRepository();
-      const atualizarStatusUseCase = new AtualizarStatusItemAchadoEPerdidoUseCase(itensRepository, usuariosRepository);
+      const atualizarStatusUseCase = new AtualizarStatusItemAchadoEPerdidoUseCase(
+        itensRepository,
+        usuariosRepository
+      );
 
       await atualizarStatusUseCase.execute({ itemId: id, usuarioId, titulo, descricao, status });
 

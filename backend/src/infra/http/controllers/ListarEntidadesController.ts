@@ -10,13 +10,13 @@ export class ListarEntidadesController {
 
       const { entidades } = await useCase.execute();
 
-      const responseData = entidades.map((entidade) => ({
+      const responseData = entidades.map(entidade => ({
         id: entidade.id,
         ...entidade.props,
       }));
 
       return response.status(200).json(responseData);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

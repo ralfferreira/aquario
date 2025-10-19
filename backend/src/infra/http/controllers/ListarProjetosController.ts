@@ -10,7 +10,7 @@ export class ListarProjetosController {
 
       const projetos = await listarProjetosUseCase.execute();
 
-      const projetosData = projetos.map((projeto) => ({
+      const projetosData = projetos.map(projeto => ({
         id: projeto.id,
         titulo: projeto.titulo,
         descricao: projeto.descricao,
@@ -25,7 +25,7 @@ export class ListarProjetosController {
       }));
 
       return response.status(200).json(projetosData);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

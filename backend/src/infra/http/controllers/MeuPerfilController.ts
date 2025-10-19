@@ -16,7 +16,7 @@ export class MeuPerfilController {
       const { senhaHash, ...usuarioSemSenha } = usuario.props;
 
       return response.status(200).json(usuarioSemSenha);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

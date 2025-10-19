@@ -1,4 +1,4 @@
-import { SubSecaoGuia } from "../entities/SubSecaoGuia";
+import { SubSecaoGuia } from '../entities/SubSecaoGuia';
 
 export interface ISubSecoesGuiaRepository {
   create(subSecaoGuia: SubSecaoGuia): Promise<void>;

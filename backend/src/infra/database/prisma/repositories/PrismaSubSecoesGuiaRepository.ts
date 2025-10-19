@@ -1,6 +1,6 @@
-import { ISubSecoesGuiaRepository } from "@/domain/guias/repositories/ISubSecoesGuiaRepository";
-import { prisma } from "..";
-import { SubSecaoGuia } from "@/domain/guias/entities/SubSecaoGuia";
+import { ISubSecoesGuiaRepository } from '@/domain/guias/repositories/ISubSecoesGuiaRepository';
+import { prisma } from '..';
+import { SubSecaoGuia } from '@/domain/guias/entities/SubSecaoGuia';
 
 export class PrismaSubSecoesGuiaRepository implements ISubSecoesGuiaRepository {
   async create(subSecaoGuia: SubSecaoGuia): Promise<void> {
@@ -21,11 +21,11 @@ export class PrismaSubSecoesGuiaRepository implements ISubSecoesGuiaRepository {
   async findMany(): Promise<SubSecaoGuia[]> {
     const subSecoes = await prisma.subSecaoGuia.findMany({
       orderBy: {
-        ordem: "asc",
+        ordem: 'asc',
       },
     });
 
-    return subSecoes.map((subSecao) =>
+    return subSecoes.map(subSecao =>
       SubSecaoGuia.create(
         {
           secaoId: subSecao.secaoId,
@@ -46,11 +46,11 @@ export class PrismaSubSecoesGuiaRepository implements ISubSecoesGuiaRepository {
     const subSecoes = await prisma.subSecaoGuia.findMany({
       where: { secaoId },
       orderBy: {
-        ordem: "asc",
+        ordem: 'asc',
       },
     });
 
-    return subSecoes.map((subSecao) =>
+    return subSecoes.map(subSecao =>
       SubSecaoGuia.create(
         {
           secaoId: subSecao.secaoId,

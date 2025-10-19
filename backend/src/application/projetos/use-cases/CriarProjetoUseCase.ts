@@ -22,7 +22,7 @@ export class CriarProjetoUseCase {
   constructor(
     private projetosRepository: IProjetosRepository,
     private usuariosRepository: IUsuariosRepository,
-    private centrosRepository: ICentrosRepository,
+    private centrosRepository: ICentrosRepository
   ) {}
 
   async execute({

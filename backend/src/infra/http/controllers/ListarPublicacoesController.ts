@@ -10,13 +10,13 @@ export class ListarPublicacoesController {
 
       const { publicacoes } = await listarPublicacoesUseCase.execute();
 
-      const responseData = publicacoes.map((p) => ({
+      const responseData = publicacoes.map(p => ({
         id: p.id,
         ...p.props,
       }));
 
       return response.status(200).json(responseData);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

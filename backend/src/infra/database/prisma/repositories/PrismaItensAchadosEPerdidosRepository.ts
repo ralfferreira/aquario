@@ -2,9 +2,7 @@ import { ItemAchadoEPerdido } from '@/domain/achados-e-perdidos/entities/ItemAch
 import { IItensAchadosEPerdidosRepository } from '@/domain/achados-e-perdidos/repositories/IItensAchadosEPerdidosRepository';
 import { prisma } from '..';
 
-export class PrismaItensAchadosEPerdidosRepository
-  implements IItensAchadosEPerdidosRepository
-{
+export class PrismaItensAchadosEPerdidosRepository implements IItensAchadosEPerdidosRepository {
   async create(item: ItemAchadoEPerdido): Promise<void> {
     await prisma.itemAchadoEPerdido.create({
       data: {
@@ -36,7 +34,7 @@ export class PrismaItensAchadosEPerdidosRepository
       },
     });
 
-    return itens.map((item) =>
+    return itens.map(item =>
       ItemAchadoEPerdido.create(
         {
           titulo: item.titulo,
@@ -47,8 +45,8 @@ export class PrismaItensAchadosEPerdidosRepository
           criadoEm: item.criadoEm,
           atualizadoEm: item.atualizadoEm,
         },
-        item.id,
-      ),
+        item.id
+      )
     );
   }
 
@@ -79,7 +77,7 @@ export class PrismaItensAchadosEPerdidosRepository
         criadoEm: item.criadoEm,
         atualizadoEm: item.atualizadoEm,
       },
-      item.id,
+      item.id
     );
   }
 

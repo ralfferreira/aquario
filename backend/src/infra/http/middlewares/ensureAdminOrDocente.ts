@@ -4,7 +4,7 @@ import { PrismaUsuariosRepository } from '../../database/prisma/repositories/Pri
 export async function ensureAdminOrDocente(
   request: Request,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ) {
   const { id } = request.usuario;
 

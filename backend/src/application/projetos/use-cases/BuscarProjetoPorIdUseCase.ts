@@ -12,7 +12,9 @@ interface BuscarProjetoPorIdUseCaseResponse {
 export class BuscarProjetoPorIdUseCase {
   constructor(private projetosRepository: IProjetosRepository) {}
 
-  async execute({ id }: BuscarProjetoPorIdUseCaseRequest): Promise<BuscarProjetoPorIdUseCaseResponse> {
+  async execute({
+    id,
+  }: BuscarProjetoPorIdUseCaseRequest): Promise<BuscarProjetoPorIdUseCaseResponse> {
     const projeto = await this.projetosRepository.findById(id);
     return { projeto };
   }

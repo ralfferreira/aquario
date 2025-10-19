@@ -1,6 +1,6 @@
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
-import { prisma } from "..";
-import { Guia } from "@/domain/guias/entities/Guia";
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
+import { prisma } from '..';
+import { Guia } from '@/domain/guias/entities/Guia';
 
 export class PrismaGuiasRepository implements IGuiasRepository {
   async create(guia: Guia): Promise<void> {
@@ -29,11 +29,11 @@ export class PrismaGuiasRepository implements IGuiasRepository {
         },
       },
       orderBy: {
-        criadoEm: "desc",
+        criadoEm: 'desc',
       },
     });
 
-    return guias.map((guia) =>
+    return guias.map(guia =>
       Guia.create(
         {
           titulo: guia.titulo,
@@ -126,11 +126,11 @@ export class PrismaGuiasRepository implements IGuiasRepository {
         },
       },
       orderBy: {
-        criadoEm: "desc",
+        criadoEm: 'desc',
       },
     });
 
-    return guias.map((guia) =>
+    return guias.map(guia =>
       Guia.create(
         {
           titulo: guia.titulo,

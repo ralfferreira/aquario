@@ -1,7 +1,7 @@
-import { SubSecaoGuia } from "@/domain/guias/entities/SubSecaoGuia";
-import { ISubSecoesGuiaRepository } from "@/domain/guias/repositories/ISubSecoesGuiaRepository";
-import { ISecoesGuiaRepository } from "@/domain/guias/repositories/ISecoesGuiaRepository";
-import { StatusGuia } from "@prisma/client";
+import { SubSecaoGuia } from '@/domain/guias/entities/SubSecaoGuia';
+import { ISubSecoesGuiaRepository } from '@/domain/guias/repositories/ISubSecoesGuiaRepository';
+import { ISecoesGuiaRepository } from '@/domain/guias/repositories/ISecoesGuiaRepository';
+import { StatusGuia } from '@prisma/client';
 
 interface CriarSubSecaoGuiaUseCaseRequest {
   secaoId: string;
@@ -30,7 +30,7 @@ export class CriarSubSecaoGuiaUseCase {
   }: CriarSubSecaoGuiaUseCaseRequest): Promise<CriarSubSecaoGuiaUseCaseResponse> {
     const secaoGuia = await this.secoesGuiaRepository.findById(secaoId);
     if (!secaoGuia) {
-      throw new Error("Seção não encontrada.");
+      throw new Error('Seção não encontrada.');
     }
 
     const subSecaoGuia = SubSecaoGuia.create({

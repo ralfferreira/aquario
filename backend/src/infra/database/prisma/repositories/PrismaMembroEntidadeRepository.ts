@@ -1,4 +1,7 @@
-import { IMembroEntidadeRepository, MembroComUsuario } from '@/domain/entidades/repositories/IMembroEntidadeRepository';
+import {
+  IMembroEntidadeRepository,
+  MembroComUsuario,
+} from '@/domain/entidades/repositories/IMembroEntidadeRepository';
 import { prisma } from '..';
 
 export class PrismaMembroEntidadeRepository implements IMembroEntidadeRepository {
@@ -19,7 +22,7 @@ export class PrismaMembroEntidadeRepository implements IMembroEntidadeRepository
       },
     });
 
-    return membros.map((membro) => ({
+    return membros.map(membro => ({
       id: membro.id,
       papel: membro.papel,
       usuario: {

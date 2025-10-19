@@ -10,7 +10,7 @@ export class ListarVagasController {
 
       const vagas = await listarVagasUseCase.execute();
 
-      const vagasData = vagas.map((vaga) => ({
+      const vagasData = vagas.map(vaga => ({
         id: vaga.id,
         titulo: vaga.titulo,
         descricao: vaga.descricao,
@@ -23,7 +23,7 @@ export class ListarVagasController {
       }));
 
       return response.status(200).json(vagasData);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

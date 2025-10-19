@@ -14,7 +14,10 @@ export class DeletarItemAchadoEPerdidoController {
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
       const usuariosRepository = new PrismaUsuariosRepository();
-      const deletarItemUseCase = new DeletarItemAchadoEPerdidoUseCase(itensRepository, usuariosRepository);
+      const deletarItemUseCase = new DeletarItemAchadoEPerdidoUseCase(
+        itensRepository,
+        usuariosRepository
+      );
 
       await deletarItemUseCase.execute({ itemId: id, usuarioId });
 

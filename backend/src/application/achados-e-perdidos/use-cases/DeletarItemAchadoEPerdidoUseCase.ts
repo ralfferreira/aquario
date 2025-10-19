@@ -8,11 +8,10 @@ interface DeletarItemAchadoEPerdidoUseCaseRequest {
 
 type DeletarItemAchadoEPerdidoUseCaseResponse = void;
 
-
 export class DeletarItemAchadoEPerdidoUseCase {
   constructor(
     private itensRepository: IItensAchadosEPerdidosRepository,
-    private usuariosRepository: IUsuariosRepository,
+    private usuariosRepository: IUsuariosRepository
   ) {}
 
   async execute({

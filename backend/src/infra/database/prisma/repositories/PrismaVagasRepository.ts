@@ -24,7 +24,7 @@ export class PrismaVagasRepository implements IVagasRepository {
         criadoEm: vaga.criadoEm,
         atualizadoEm: vaga.atualizadoEm,
       },
-      vaga.id,
+      vaga.id
     );
   }
 
@@ -71,7 +71,7 @@ export class PrismaVagasRepository implements IVagasRepository {
       orderBy: { criadoEm: 'desc' },
     });
 
-    return vagas.map((vaga) =>
+    return vagas.map(vaga =>
       Vaga.create(
         {
           titulo: vaga.titulo,
@@ -83,8 +83,8 @@ export class PrismaVagasRepository implements IVagasRepository {
           criadoEm: vaga.criadoEm,
           atualizadoEm: vaga.atualizadoEm,
         },
-        vaga.id,
-      ),
+        vaga.id
+      )
     );
   }
 }

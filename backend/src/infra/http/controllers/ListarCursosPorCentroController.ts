@@ -13,14 +13,12 @@ export class ListarCursosPorCentroController {
       const { id } = listarCursosPorCentroParamsSchema.parse(request.params);
 
       const cursosRepository = new PrismaCursosRepository();
-      const listarCursosPorCentroUseCase = new ListarCursosPorCentroUseCase(
-        cursosRepository,
-      );
+      const listarCursosPorCentroUseCase = new ListarCursosPorCentroUseCase(cursosRepository);
 
       const cursos = await listarCursosPorCentroUseCase.execute({ centroId: id });
 
       return response.status(200).json(cursos);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

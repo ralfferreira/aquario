@@ -1,6 +1,6 @@
-import { ISecoesGuiaRepository } from "@/domain/guias/repositories/ISecoesGuiaRepository";
-import { prisma } from "..";
-import { SecaoGuia } from "@/domain/guias/entities/SecaoGuia";
+import { ISecoesGuiaRepository } from '@/domain/guias/repositories/ISecoesGuiaRepository';
+import { prisma } from '..';
+import { SecaoGuia } from '@/domain/guias/entities/SecaoGuia';
 
 export class PrismaSecoesGuiaRepository implements ISecoesGuiaRepository {
   async create(secaoGuia: SecaoGuia): Promise<void> {
@@ -21,11 +21,11 @@ export class PrismaSecoesGuiaRepository implements ISecoesGuiaRepository {
   async findMany(): Promise<SecaoGuia[]> {
     const secoes = await prisma.secaoGuia.findMany({
       orderBy: {
-        ordem: "asc",
+        ordem: 'asc',
       },
     });
 
-    return secoes.map((secao) =>
+    return secoes.map(secao =>
       SecaoGuia.create(
         {
           guiaId: secao.guiaId,
@@ -46,11 +46,11 @@ export class PrismaSecoesGuiaRepository implements ISecoesGuiaRepository {
     const secoes = await prisma.secaoGuia.findMany({
       where: { guiaId },
       orderBy: {
-        ordem: "asc",
+        ordem: 'asc',
       },
     });
 
-    return secoes.map((secao) =>
+    return secoes.map(secao =>
       SecaoGuia.create(
         {
           guiaId: secao.guiaId,

@@ -23,7 +23,7 @@ export class CriarPublicacaoController {
       const criarPublicacaoUseCase = new CriarPublicacaoUseCase(
         publicacoesRepository,
         usuariosRepository,
-        centrosRepository,
+        centrosRepository
       );
 
       await criarPublicacaoUseCase.execute({

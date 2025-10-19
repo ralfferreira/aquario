@@ -1,5 +1,5 @@
-import { Guia } from "@/domain/guias/entities/Guia";
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
+import { Guia } from '@/domain/guias/entities/Guia';
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
 
 interface BuscarGuiaPorSlugUseCaseResponse {
   guia: Guia;
@@ -12,7 +12,7 @@ export class BuscarGuiaPorSlugUseCase {
     const guia = await this.guiasRepository.findBySlug(slug);
 
     if (!guia) {
-      throw new Error("Guia não encontrada.");
+      throw new Error('Guia não encontrada.');
     }
 
     return { guia };

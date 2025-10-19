@@ -38,7 +38,7 @@ export class PrismaEntidadesRepository implements IEntidadesRepository {
       {
         ...entidade,
       },
-      entidade.id,
+      entidade.id
     );
   }
 
@@ -49,7 +49,7 @@ export class PrismaEntidadesRepository implements IEntidadesRepository {
       },
     });
 
-    return entidades.map((entidade) =>
+    return entidades.map(entidade =>
       Entidade.create(
         {
           nome: entidade.nome,
@@ -60,8 +60,8 @@ export class PrismaEntidadesRepository implements IEntidadesRepository {
           centroId: entidade.centroId,
           criadorId: entidade.criadorId,
         },
-        entidade.id,
-      ),
+        entidade.id
+      )
     );
   }
 }

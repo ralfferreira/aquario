@@ -23,7 +23,7 @@ export class RegisterUseCase {
   constructor(
     private usuariosRepository: IUsuariosRepository,
     private centrosRepository: ICentrosRepository,
-    private cursosRepository: ICursosRepository,
+    private cursosRepository: ICursosRepository
   ) {}
 
   async execute({

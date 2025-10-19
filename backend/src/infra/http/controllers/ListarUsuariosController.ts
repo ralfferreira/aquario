@@ -10,7 +10,7 @@ export class ListarUsuariosController {
 
       const { usuarios } = await useCase.execute();
 
-      const responseData = usuarios.map((usuario) => ({
+      const responseData = usuarios.map(usuario => ({
         id: usuario.id,
         nome: usuario.props.nome,
         email: usuario.props.email,
@@ -23,7 +23,7 @@ export class ListarUsuariosController {
       }));
 
       return response.status(200).json(responseData);
-    } catch (error) {
+    } catch {
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

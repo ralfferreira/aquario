@@ -22,7 +22,7 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
     };
 
     return next();
-  } catch (error) {
+  } catch {
     return response.status(401).json({ message: 'Token inválido.' });
   }
 }

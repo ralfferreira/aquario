@@ -12,11 +12,10 @@ interface AtualizarStatusItemAchadoEPerdidoUseCaseRequest {
 
 type AtualizarStatusItemAchadoEPerdidoUseCaseResponse = void;
 
-
 export class AtualizarStatusItemAchadoEPerdidoUseCase {
   constructor(
     private itensRepository: IItensAchadosEPerdidosRepository,
-    private usuariosRepository: IUsuariosRepository,
+    private usuariosRepository: IUsuariosRepository
   ) {}
 
   async execute({
@@ -36,7 +35,6 @@ export class AtualizarStatusItemAchadoEPerdidoUseCase {
       throw new Error('Item não encontrado.');
     }
 
-    
     if (titulo) item.props.titulo = titulo;
     if (descricao) item.props.descricao = descricao;
     if (status) item.status = status;

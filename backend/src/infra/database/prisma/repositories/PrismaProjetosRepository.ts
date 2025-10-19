@@ -19,9 +19,9 @@ export class PrismaProjetosRepository implements IProjetosRepository {
     return Projeto.create(
       {
         ...projeto,
-        membros: projeto.membros.map((membro) => membro),
+        membros: projeto.membros.map(membro => membro),
       },
-      projeto.id,
+      projeto.id
     );
   }
 
@@ -36,14 +36,14 @@ export class PrismaProjetosRepository implements IProjetosRepository {
       },
     });
 
-    return projetos.map((projeto) =>
+    return projetos.map(projeto =>
       Projeto.create(
         {
           ...projeto,
           membros: projeto.membros,
         },
-        projeto.id,
-      ),
+        projeto.id
+      )
     );
   }
 
@@ -60,7 +60,7 @@ export class PrismaProjetosRepository implements IProjetosRepository {
         url: projeto.props.url,
         urlFoto: projeto.props.urlFoto,
         membros: {
-          connect: projeto.props.membros?.map((id) => ({ id })) || [],
+          connect: projeto.props.membros?.map(id => ({ id })) || [],
         },
       },
     });
@@ -73,7 +73,7 @@ export class PrismaProjetosRepository implements IProjetosRepository {
       data: {
         ...data,
         membros: {
-          set: membros?.map((id) => ({ id })) ?? [],
+          set: membros?.map(id => ({ id })) ?? [],
         },
       },
     });

@@ -1,4 +1,4 @@
-import { ISubSecoesGuiaRepository } from "@/domain/guias/repositories/ISubSecoesGuiaRepository";
+import { ISubSecoesGuiaRepository } from '@/domain/guias/repositories/ISubSecoesGuiaRepository';
 
 type DeletarSubSecaoGuiaUseCaseResponse = void;
 
@@ -9,7 +9,7 @@ export class DeletarSubSecaoGuiaUseCase {
     const subSecaoGuia = await this.subSecoesGuiaRepository.findById(id);
 
     if (!subSecaoGuia) {
-      throw new Error("Subseção não encontrada.");
+      throw new Error('Subseção não encontrada.');
     }
 
     await this.subSecoesGuiaRepository.delete(id);

@@ -6,7 +6,7 @@ export class GerarFeedUseCase {
   constructor(
     private projetosRepository: IProjetosRepository,
     private vagasRepository: IVagasRepository,
-    private publicacoesRepository: IPublicacoesRepository,
+    private publicacoesRepository: IPublicacoesRepository
   ) {}
 
   async execute() {
@@ -22,7 +22,7 @@ export class GerarFeedUseCase {
         const dateB = b.props.criadoEm || new Date(0);
         return dateB.getTime() - dateA.getTime();
       })
-      .map((item) => {
+      .map(item => {
         let type = '';
         if (item.constructor.name === 'Projeto') type = 'projeto';
         if (item.constructor.name === 'Vaga') type = 'vaga';

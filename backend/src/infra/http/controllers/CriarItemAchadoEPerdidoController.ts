@@ -13,14 +13,16 @@ const criarItemAchadoEPerdidoBodySchema = z.object({
 export class CriarItemAchadoEPerdidoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { titulo, descricao, urlsFotos } = criarItemAchadoEPerdidoBodySchema.parse(request.body);
+      const { titulo, descricao, urlsFotos } = criarItemAchadoEPerdidoBodySchema.parse(
+        request.body
+      );
       const autorId = request.usuario.id;
 
       const itensRepository = new PrismaItensAchadosEPerdidosRepository();
       const usuariosRepository = new PrismaUsuariosRepository();
       const criarItemUseCase = new CriarItemAchadoEPerdidoUseCase(
         itensRepository,
-        usuariosRepository,
+        usuariosRepository
       );
 
       await criarItemUseCase.execute({ titulo, descricao, autorId, urlsFotos });
@@ -28,8 +30,8 @@ export class CriarItemAchadoEPerdidoController {
       return response.status(201).send();
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return response.status(400).json({ 
-          message: 'Validation error.', 
+        return response.status(400).json({
+          message: 'Validation error.',
           issues: error.format(),
         });
       }

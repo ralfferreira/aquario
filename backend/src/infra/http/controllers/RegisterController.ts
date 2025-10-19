@@ -21,7 +21,8 @@ const registerBodySchema = z.object({
 export class RegisterController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { nome, email, senha, papel, centroId, bio, urlFotoPerfil, cursoId, periodo } = registerBodySchema.parse(request.body);
+      const { nome, email, senha, papel, centroId, bio, urlFotoPerfil, cursoId, periodo } =
+        registerBodySchema.parse(request.body);
 
       const usuariosRepository = new PrismaUsuariosRepository();
       const centrosRepository = new PrismaCentrosRepository();
@@ -29,10 +30,20 @@ export class RegisterController {
       const registerUseCase = new RegisterUseCase(
         usuariosRepository,
         centrosRepository,
-        cursosRepository,
+        cursosRepository
       );
 
-      await registerUseCase.execute({ nome, email, senha, papel, centroId, bio, urlFotoPerfil, cursoId, periodo });
+      await registerUseCase.execute({
+        nome,
+        email,
+        senha,
+        papel,
+        centroId,
+        bio,
+        urlFotoPerfil,
+        cursoId,
+        periodo,
+      });
 
       return response.status(201).send();
     } catch (error) {

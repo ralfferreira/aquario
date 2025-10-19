@@ -1,4 +1,4 @@
-import { Guia } from "../entities/Guia";
+import { Guia } from '../entities/Guia';
 
 export interface IGuiasRepository {
   create(guia: Guia): Promise<void>;

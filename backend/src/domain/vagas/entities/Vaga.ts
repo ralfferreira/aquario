@@ -81,7 +81,7 @@ export class Vaga extends Entity<VagaProps> {
         ...props,
         eAtiva: props.eAtiva ?? true,
       },
-      id,
+      id
     );
     return vaga;
   }
