@@ -26,7 +26,12 @@ export default function NovaVagaPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const canPostJob = user?.papel === "DOCENTE" || user?.permissoes.includes("ADMIN");
+  const canPostJob = !!(
+    user &&
+    (user.papel === "DOCENTE" ||
+      user.permissoes.includes("ADMIN") ||
+      user.papelPlataforma === "MASTER_ADMIN")
+  );
 
   useEffect(() => {
     if (!isAuthLoading && !canPostJob) {

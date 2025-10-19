@@ -43,7 +43,10 @@ export default function TadeaPage() {
   const [statusFilter, setStatusFilter] = useState("TODOS");
   const { token } = useAuth();
 
-  const isAdmin = !!user?.permissoes.includes("ADMIN");
+  const isAdmin = !!(
+    user &&
+    (user.permissoes.includes("ADMIN") || user.papelPlataforma === "MASTER_ADMIN")
+  );
 
   const handleStatusChange = async (id: string, status: StatusItem) => {
     try {

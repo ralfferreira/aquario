@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
+import { env } from '@/config/env';
 import { publicacoesRouter } from './routes/publicacoes.routes';
 import { achadosEPerdidosRouter } from './routes/achados-e-perdidos.routes';
 import { authRouter } from './routes/auth.routes';
@@ -13,7 +14,7 @@ import { searchRoutes } from './routes/search.routes';
 import { guiasRouter } from './routes/guias.routes';
 
 const app: Express = express();
-const port = process.env.PORT || 3001;
+const port = env.PORT;
 
 app.use(cors());
 app.use(express.json());

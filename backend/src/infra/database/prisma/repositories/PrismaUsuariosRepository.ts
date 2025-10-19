@@ -29,6 +29,7 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
             bio: usuario.bio,
             urlFotoPerfil: usuario.urlFotoPerfil,
             periodo: usuario.periodo,
+            papelPlataforma: usuario.papelPlataforma,
           },
           usuario.id
         )
@@ -44,6 +45,7 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
         senhaHash: usuario.props.senhaHash,
         papel: usuario.props.papel,
         permissoes: usuario.props.permissoes,
+        papelPlataforma: usuario.props.papelPlataforma,
         centroId: usuario.props.centro.id,
         bio: usuario.props.bio,
         urlFotoPerfil: usuario.props.urlFotoPerfil,
@@ -73,6 +75,7 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
         senhaHash: usuario.senhaHash,
         papel: usuario.papel,
         permissoes: usuario.permissoes,
+        papelPlataforma: usuario.papelPlataforma,
         centro: usuario.centro,
         curso: usuario.curso,
         bio: usuario.bio,
@@ -84,8 +87,10 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
   }
 
   async findByEmail(email: string): Promise<Usuario | null> {
+    const normalizedEmail = email.trim().toLowerCase();
+
     const usuario = await prisma.usuario.findUnique({
-      where: { email },
+      where: { email: normalizedEmail },
       include: {
         centro: true,
         curso: true,
@@ -103,6 +108,7 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
         senhaHash: usuario.senhaHash,
         papel: usuario.papel,
         permissoes: usuario.permissoes,
+        papelPlataforma: usuario.papelPlataforma,
         centro: usuario.centro,
         curso: usuario.curso,
         bio: usuario.bio,

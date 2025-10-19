@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 import { AuthenticateUseCase } from '@/application/usuarios/use-cases/AuthenticateUseCase';
 import { PrismaUsuariosRepository } from '@/infra/database/prisma/repositories/PrismaUsuariosRepository';
-import { sign } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+import { env } from '@/config/env';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -19,12 +20,13 @@ export class AuthenticateController {
 
       const { usuario } = await authenticateUseCase.execute({ email, senha });
 
-      const token = sign(
+      const token = jwt.sign(
         {
           papel: usuario.props.papel,
           permissoes: usuario.props.permissoes,
+          papelPlataforma: usuario.props.papelPlataforma,
         },
-        process.env.JWT_SECRET as string,
+        env.JWT_SECRET,
         {
           subject: usuario.id,
           expiresIn: '1d',

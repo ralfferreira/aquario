@@ -9,7 +9,10 @@ import { PapelUsuario } from '@prisma/client';
 const registerBodySchema = z.object({
   nome: z.string(),
   email: z.string().email(),
-  senha: z.string().min(6),
+  senha: z
+    .string()
+    .min(8, 'A senha deve ter pelo menos 8 caracteres.')
+    .max(128, 'A senha deve ter no máximo 128 caracteres.'),
   papel: z.nativeEnum(PapelUsuario),
   centroId: z.string().uuid(),
   bio: z.string().optional(),

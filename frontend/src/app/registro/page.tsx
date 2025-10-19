@@ -33,6 +33,7 @@ export default function Registro() {
   const [papel, setPapel] = useState<"DISCENTE" | "DOCENTE">("DISCENTE");
   const [centroId, setCentroId] = useState("");
   const [cursoId, setCursoId] = useState("");
+  const [periodo, setPeriodo] = useState("");
 
   const [centros, setCentros] = useState<Centro[]>([]);
   const [cursos, setCursos] = useState<Curso[]>([]);
@@ -94,6 +95,7 @@ export default function Registro() {
           papel,
           centroId,
           cursoId: papel === "DISCENTE" ? cursoId : undefined,
+          periodo: papel === "DISCENTE" ? parseInt(periodo) : undefined,
         }),
       });
 
@@ -113,7 +115,7 @@ export default function Registro() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-2 bg-gray-50 dark:bg-transparent">
+    <div className="flex items-center justify-center min-h-screen p-2">
       <div className="grid w-full max-w-7xl h-auto gap-0 lg:grid-cols-2 border border-gray-200 dark:border-gray-700 dark:bg-transparent rounded-lg overflow-hidden my-12">
         <div className="relative hidden lg:flex items-center justify-center bg-sky-300 dark:bg-sky-800">
           <Image
@@ -193,25 +195,40 @@ export default function Registro() {
                 </Select>
               </div>
               {papel === "DISCENTE" && (
-                <div className="space-y-2">
-                  <Label>Curso</Label>
-                  <Select
-                    onValueChange={setCursoId}
-                    value={cursoId}
-                    disabled={!centroId || cursos.length === 0}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione seu curso" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {cursos.map(curso => (
-                        <SelectItem key={curso.id} value={curso.id}>
-                          {curso.nome}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <>
+                  <div className="space-y-2">
+                    <Label>Curso</Label>
+                    <Select
+                      onValueChange={setCursoId}
+                      value={cursoId}
+                      disabled={!centroId || cursos.length === 0}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione seu curso" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {cursos.map(curso => (
+                          <SelectItem key={curso.id} value={curso.id}>
+                            {curso.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="periodo">Período</Label>
+                    <Input
+                      id="periodo"
+                      type="number"
+                      min="1"
+                      max="10"
+                      value={periodo}
+                      onChange={e => setPeriodo(e.target.value)}
+                      placeholder="Ex: 1, 2, 3..."
+                      required
+                    />
+                  </div>
+                </>
               )}
               {error && <p className="text-sm text-red-500 text-center">{error}</p>}
               <Button type="submit" className="w-full">

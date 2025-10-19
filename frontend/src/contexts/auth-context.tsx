@@ -18,6 +18,7 @@ type User = {
   nome: string;
   email: string;
   papel: "DISCENTE" | "DOCENTE";
+  papelPlataforma: "USER" | "MASTER_ADMIN";
   urlFotoPerfil?: string | null;
   centro: Centro;
   curso?: Curso | null;

@@ -18,7 +18,9 @@ export class AuthenticateUseCase {
     email,
     senha,
   }: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
-    const usuario = await this.usuariosRepository.findByEmail(email);
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const usuario = await this.usuariosRepository.findByEmail(normalizedEmail);
 
     if (!usuario) {
       throw new Error('E-mail ou senha inválidos.');

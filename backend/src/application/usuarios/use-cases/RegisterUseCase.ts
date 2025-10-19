@@ -1,7 +1,7 @@
 import { hash } from 'bcryptjs';
 import { IUsuariosRepository } from '@/domain/usuarios/repositories/IUsuariosRepository';
 import { Usuario } from '@/domain/usuarios/entities/Usuario';
-import { PapelUsuario } from '@prisma/client';
+import { PapelUsuario, PapelPlataforma } from '@prisma/client';
 import { ICentrosRepository } from '@/domain/centros/repositories/ICentrosRepository';
 import { ICursosRepository } from '@/domain/cursos/repositories/ICursosRepository';
 
@@ -37,11 +37,13 @@ export class RegisterUseCase {
     cursoId,
     periodo,
   }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
+    const normalizedEmail = email.trim().toLowerCase();
+
     if (papel === 'DISCENTE' && (!cursoId || !periodo)) {
       throw new Error('Discentes devem fornecer curso e período.');
     }
 
-    const usuarioComMesmoEmail = await this.usuariosRepository.findByEmail(email);
+    const usuarioComMesmoEmail = await this.usuariosRepository.findByEmail(normalizedEmail);
     if (usuarioComMesmoEmail) {
       throw new Error('Este e-mail já está em uso.');
     }
@@ -63,10 +65,11 @@ export class RegisterUseCase {
 
     const usuario = Usuario.create({
       nome,
-      email,
+      email: normalizedEmail,
       senhaHash,
       papel,
       permissoes: [],
+      papelPlataforma: PapelPlataforma.USER,
       centro,
       curso,
       bio,
