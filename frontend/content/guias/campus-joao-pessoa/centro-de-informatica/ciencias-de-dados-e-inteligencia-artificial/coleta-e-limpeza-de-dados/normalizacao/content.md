@@ -1,0 +1,3 @@
+## Normalização
+
+Min-Max, Z-score...

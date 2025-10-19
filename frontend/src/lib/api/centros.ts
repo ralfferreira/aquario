@@ -1,5 +1,5 @@
 import { Centro } from "../types";
-import { API_URL, ENDPOINTS } from "../constants";
+import { API_URL, ENDPOINTS } from "../config/constants";
 
 export const centrosService = {
   getAll: async (): Promise<Centro[]> => {

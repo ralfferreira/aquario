@@ -1,28 +1,42 @@
 import { Guia, Secao, SubSecao } from "../types";
-import { API_URL, ENDPOINTS } from "../constants";
+import { GuiasDataProvider } from "./providers/guias-provider.interface";
+import { BackendGuiasProvider } from "./providers/backend-guias-provider";
+import { LocalFileGuiasProvider } from "./providers/local-file-guias-provider";
+import { DATA_PROVIDER_CONFIG } from "../config/env";
+
+// Provider factory
+function createProvider(): GuiasDataProvider {
+  switch (DATA_PROVIDER_CONFIG.PROVIDER) {
+    case DATA_PROVIDER_CONFIG.PROVIDERS.LOCAL:
+      return new LocalFileGuiasProvider();
+    case DATA_PROVIDER_CONFIG.PROVIDERS.BACKEND:
+    default:
+      return new BackendGuiasProvider();
+  }
+}
+
+const provider = createProvider();
 
 export const guiasService = {
-  getByCurso: async (cursoId: string): Promise<Guia[]> => {
-    const response = await fetch(`${API_URL}${ENDPOINTS.GUIAS(cursoId)}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch guias");
-    }
-    return response.json();
+  getByCurso: async (cursoSlug: string): Promise<Guia[]> => {
+    return await provider.getByCurso(cursoSlug);
   },
 
-  getSecoes: async (guiaId: string): Promise<Secao[]> => {
-    const response = await fetch(`${API_URL}${ENDPOINTS.SECOES(guiaId)}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch secoes");
-    }
-    return response.json();
+  getSecoes: async (guiaSlug: string): Promise<Secao[]> => {
+    return await provider.getSecoes(guiaSlug);
   },
 
-  getSubSecoes: async (secaoId: string): Promise<SubSecao[]> => {
-    const response = await fetch(`${API_URL}${ENDPOINTS.SUBSECOES(secaoId)}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch subSecoes");
-    }
-    return response.json();
+  getSubSecoes: async (secaoSlug: string): Promise<SubSecao[]> => {
+    return await provider.getSubSecoes(secaoSlug);
+  },
+
+  getCentros: async (): Promise<Array<{ id: string; nome: string; sigla: string }>> => {
+    return await provider.getCentros();
+  },
+
+  getCursos: async (
+    centroSigla: string
+  ): Promise<Array<{ id: string; nome: string; centroId: string }>> => {
+    return await provider.getCursos(centroSigla);
   },
 };

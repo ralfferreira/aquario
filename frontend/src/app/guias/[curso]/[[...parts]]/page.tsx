@@ -49,8 +49,8 @@ export default function GuiasCursoPage() {
     // Find the section by slug
     let targetSecao = null;
     if (secoesData) {
-      for (const guiaId in secoesData) {
-        const secoes = secoesData[guiaId];
+      for (const guiaSlug in secoesData) {
+        const secoes = secoesData[guiaSlug];
         const secao = secoes.find(s => s.slug === secaoSlug);
         if (secao) {
           targetSecao = secao;
@@ -68,8 +68,8 @@ export default function GuiasCursoPage() {
     }
 
     // Find the subsection by slug
-    if (subSecoesData && subSecoesData[targetSecao.id]) {
-      const subSecoes = subSecoesData[targetSecao.id];
+    if (subSecoesData && subSecoesData[targetSecao.slug]) {
+      const subSecoes = subSecoesData[targetSecao.slug];
       const subSecao = subSecoes.find(s => s.slug === subSlug);
       if (subSecao) {
         return subSecao.conteudo || "# Conteúdo não disponível";

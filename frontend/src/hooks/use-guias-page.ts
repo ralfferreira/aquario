@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useGuias } from "./use-guias";
-import { useCursos } from "./use-cursos";
-import { useCentros } from "./use-centros";
 import { guiasService } from "../lib/api";
 import { queryKeys } from "../lib/query-keys";
 import { GuiaTree, Secao, SubSecao } from "../lib/types";
@@ -18,26 +16,28 @@ export const useGuiasPage = (cursoSlug: string) => {
     []
   );
 
-  // Get centros first
-  const { data: centros, isLoading: centrosLoading, error: centrosError } = useCentros();
-
-  // Find CI centro
-  const ci = centros?.find(c => c.sigla === "CI");
-
-  // Get cursos for CI
-  const { data: cursos, isLoading: cursosLoading, error: cursosError } = useCursos(ci?.id || "");
+  // Hardcoded cursos - no backend dependency
+  const cursos = [
+    { id: "ciencia-da-computacao", nome: "Ciência da Computação", centroId: "ci" },
+    { id: "engenharia-da-computacao", nome: "Engenharia da Computação", centroId: "ci" },
+    {
+      id: "ciencias-de-dados-e-inteligencia-artificial",
+      nome: "Ciências de Dados e Inteligência Artificial",
+      centroId: "ci",
+    },
+  ];
 
   // Find the specific curso
-  const curso = cursos?.find(
+  const curso = cursos.find(
     c => c.nome === cursoSlugToNome[cursoSlug as keyof typeof cursoSlugToNome]
   );
 
-  // Get guias for the curso
-  const { data: guias, isLoading: guiasLoading, error: guiasError } = useGuias(curso?.id || "");
+  // Get guias for the curso - now using cursoSlug directly for local provider
+  const { data: guias, isLoading: guiasLoading, error: guiasError } = useGuias(cursoSlug);
 
   // Fetch all sections for all guias using useQueries
   const secoesQueries = useQuery({
-    queryKey: queryKeys.guias.secoes(curso?.id || "none"),
+    queryKey: queryKeys.guias.secoes(cursoSlug || "none"),
     queryFn: async () => {
       if (!guias) {
         return {};
@@ -45,8 +45,8 @@ export const useGuiasPage = (cursoSlug: string) => {
 
       const secoesMap: Record<string, Secao[]> = {};
       for (const guia of guias) {
-        const secoes = await guiasService.getSecoes(guia.id);
-        secoesMap[guia.id] = secoes;
+        const secoes = await guiasService.getSecoes(guia.slug);
+        secoesMap[guia.slug] = secoes;
       }
       return secoesMap;
     },
@@ -55,18 +55,18 @@ export const useGuiasPage = (cursoSlug: string) => {
 
   // Fetch all subsections for all sections
   const subSecoesQueries = useQuery({
-    queryKey: queryKeys.guias.subSecoes(curso?.id || "none"),
+    queryKey: queryKeys.guias.subSecoes(cursoSlug || "none"),
     queryFn: async () => {
       if (!secoesQueries.data) {
         return {};
       }
 
       const subSecoesMap: Record<string, SubSecao[]> = {};
-      for (const guiaId in secoesQueries.data) {
-        const secoes = secoesQueries.data[guiaId];
+      for (const guiaSlug in secoesQueries.data) {
+        const secoes = secoesQueries.data[guiaSlug];
         for (const secao of secoes) {
-          const subSecoes = await guiasService.getSubSecoes(secao.id);
-          subSecoesMap[secao.id] = subSecoes;
+          const subSecoes = await guiasService.getSubSecoes(secao.slug);
+          subSecoesMap[secao.slug] = subSecoes;
         }
       }
       return subSecoesMap;
@@ -81,13 +81,13 @@ export const useGuiasPage = (cursoSlug: string) => {
     }
 
     return guias.map(guia => {
-      const secoes = secoesQueries.data[guia.id] || [];
+      const secoes = secoesQueries.data[guia.slug] || [];
 
       return {
         titulo: guia.titulo,
         slug: guia.slug,
         secoes: secoes.map(secao => {
-          const subSecoes = subSecoesQueries.data[secao.id] || [];
+          const subSecoes = subSecoesQueries.data[secao.slug] || [];
 
           return {
             titulo: secao.titulo,
@@ -103,15 +103,9 @@ export const useGuiasPage = (cursoSlug: string) => {
   }, [guias, secoesQueries.data, subSecoesQueries.data]);
 
   // Determine loading and error states
-  const isLoading =
-    centrosLoading ||
-    cursosLoading ||
-    guiasLoading ||
-    secoesQueries.isLoading ||
-    subSecoesQueries.isLoading;
+  const isLoading = guiasLoading || secoesQueries.isLoading || subSecoesQueries.isLoading;
 
-  const error =
-    centrosError || cursosError || guiasError || secoesQueries.error || subSecoesQueries.error;
+  const error = guiasError || secoesQueries.error || subSecoesQueries.error;
 
   return {
     guiaTree,

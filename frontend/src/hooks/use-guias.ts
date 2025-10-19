@@ -2,26 +2,26 @@ import { useQuery } from "@tanstack/react-query";
 import { guiasService } from "../lib/api";
 import { queryKeys } from "../lib/query-keys";
 
-export const useGuias = (cursoId: string) => {
+export const useGuias = (cursoSlug: string) => {
   return useQuery({
-    queryKey: queryKeys.guias.byCurso(cursoId),
-    queryFn: () => guiasService.getByCurso(cursoId),
-    enabled: !!cursoId,
+    queryKey: queryKeys.guias.byCurso(cursoSlug),
+    queryFn: () => guiasService.getByCurso(cursoSlug),
+    enabled: !!cursoSlug,
   });
 };
 
-export const useSecoes = (guiaId: string) => {
+export const useSecoes = (guiaSlug: string) => {
   return useQuery({
-    queryKey: queryKeys.guias.secoes(guiaId),
-    queryFn: () => guiasService.getSecoes(guiaId),
-    enabled: !!guiaId,
+    queryKey: queryKeys.guias.secoes(guiaSlug),
+    queryFn: () => guiasService.getSecoes(guiaSlug),
+    enabled: !!guiaSlug,
   });
 };
 
-export const useSubSecoes = (secaoId: string) => {
+export const useSubSecoes = (secaoSlug: string) => {
   return useQuery({
-    queryKey: queryKeys.guias.subSecoes(secaoId),
-    queryFn: () => guiasService.getSubSecoes(secaoId),
-    enabled: !!secaoId,
+    queryKey: queryKeys.guias.subSecoes(secaoSlug),
+    queryFn: () => guiasService.getSubSecoes(secaoSlug),
+    enabled: !!secaoSlug,
   });
 };
