@@ -1,9 +1,14 @@
 import { Usuario } from '@/domain/usuarios/entities/Usuario';
 import { IUsuariosRepository } from '@/domain/usuarios/repositories/IUsuariosRepository';
 import { prisma } from '..';
+import { logger } from '@/infra/logger';
+
+const log = logger.child('repository:usuarios');
 
 export class PrismaUsuariosRepository implements IUsuariosRepository {
   async findMany(): Promise<Usuario[]> {
+    log.debug('Listando usuários');
+
     const usuarios = await prisma.usuario.findMany({
       include: {
         centro: true,
@@ -37,6 +42,12 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
   }
 
   async create(usuario: Usuario): Promise<void> {
+    log.info('Criando usuário', {
+      id: usuario.id,
+      email: usuario.props.email,
+      centroId: usuario.props.centro.id,
+    });
+
     await prisma.usuario.create({
       data: {
         id: usuario.id,
@@ -56,6 +67,8 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
   }
 
   async findById(id: string): Promise<Usuario | null> {
+    log.debug('Buscando usuário por ID', { id });
+
     const usuario = await prisma.usuario.findUnique({
       where: { id },
       include: {
@@ -65,6 +78,7 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
     });
 
     if (!usuario || !usuario.centro) {
+      log.warn('Usuário não encontrado por ID ou sem centro', { id });
       return null;
     }
 
@@ -89,6 +103,8 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
   async findByEmail(email: string): Promise<Usuario | null> {
     const normalizedEmail = email.trim().toLowerCase();
 
+    log.debug('Buscando usuário por e-mail', { email: normalizedEmail });
+
     const usuario = await prisma.usuario.findUnique({
       where: { email: normalizedEmail },
       include: {
@@ -98,6 +114,7 @@ export class PrismaUsuariosRepository implements IUsuariosRepository {
     });
 
     if (!usuario || !usuario.centro) {
+      log.warn('Usuário não encontrado por e-mail ou sem centro', { email: normalizedEmail });
       return null;
     }
 

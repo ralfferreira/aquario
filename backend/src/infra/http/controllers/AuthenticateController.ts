@@ -4,21 +4,28 @@ import { AuthenticateUseCase } from '@/application/usuarios/use-cases/Authentica
 import { PrismaUsuariosRepository } from '@/infra/database/prisma/repositories/PrismaUsuariosRepository';
 import jwt from 'jsonwebtoken';
 import { env } from '@/config/env';
+import { logger } from '@/infra/logger';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
   senha: z.string(),
 });
 
+const authLogger = logger.child('controller:authenticate');
+
 export class AuthenticateController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { email, senha } = authenticateBodySchema.parse(request.body);
 
+      authLogger.info('Tentativa de autenticação recebida', { email });
+
       const usuariosRepository = new PrismaUsuariosRepository();
       const authenticateUseCase = new AuthenticateUseCase(usuariosRepository);
 
       const { usuario } = await authenticateUseCase.execute({ email, senha });
+
+      authLogger.info('Usuário autenticado com sucesso', { usuarioId: usuario.id });
 
       const token = jwt.sign(
         {
@@ -36,11 +43,16 @@ export class AuthenticateController {
       return response.status(200).json({ token });
     } catch (error) {
       if (error instanceof z.ZodError) {
+        authLogger.warn('Falha de validação ao autenticar usuário', {
+          issues: error.issues.map(issue => issue.message),
+        });
         return response.status(400).json({ message: 'Validation error.', issues: error.format() });
       }
       if (error instanceof Error) {
+        authLogger.warn('Autenticação negada', { message: error.message });
         return response.status(401).json({ message: error.message });
       }
+      authLogger.error('Erro inesperado durante autenticação', error);
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

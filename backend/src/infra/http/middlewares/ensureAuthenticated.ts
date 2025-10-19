@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { env } from '@/config/env';
+import { logger } from '@/infra/logger';
 
 interface IPayload {
   sub: string;
@@ -9,16 +10,27 @@ interface IPayload {
   permissoes?: string[];
 }
 
+const authLogger = logger.child('auth:middleware');
+
 export function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
   const authToken = request.headers.authorization;
 
   if (!authToken) {
+    authLogger.warn('Token ausente na requisição', {
+      method: request.method,
+      url: request.originalUrl,
+    });
     return response.status(401).json({ message: 'Token de autenticação não fornecido.' });
   }
 
   const [scheme, token] = authToken.split(' ');
 
   if (!token || scheme !== 'Bearer') {
+    authLogger.warn('Token com formato inválido', {
+      method: request.method,
+      url: request.originalUrl,
+      scheme,
+    });
     return response.status(401).json({ message: 'Token de autenticação inválido.' });
   }
 
@@ -30,8 +42,18 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
       papelPlataforma: papelPlataforma ?? 'USER',
     };
 
+    authLogger.debug('Token validado com sucesso', {
+      usuarioId: sub,
+      method: request.method,
+      url: request.originalUrl,
+    });
+
     return next();
   } catch {
+    authLogger.warn('Token inválido fornecido', {
+      method: request.method,
+      url: request.originalUrl,
+    });
     return response.status(401).json({ message: 'Token inválido.' });
   }
 }

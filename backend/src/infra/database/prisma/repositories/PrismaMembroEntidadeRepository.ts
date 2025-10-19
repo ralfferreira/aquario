@@ -3,9 +3,14 @@ import {
   MembroComUsuario,
 } from '@/domain/entidades/repositories/IMembroEntidadeRepository';
 import { prisma } from '..';
+import { logger } from '@/infra/logger';
+
+const log = logger.child('repository:membros-entidade');
 
 export class PrismaMembroEntidadeRepository implements IMembroEntidadeRepository {
   async findManyByEntidadeId(entidadeId: string): Promise<MembroComUsuario[]> {
+    log.debug('Listando membros por entidade', { entidadeId });
+
     const membros = await prisma.membroEntidade.findMany({
       where: { entidadeId },
       include: {
@@ -22,6 +27,7 @@ export class PrismaMembroEntidadeRepository implements IMembroEntidadeRepository
       },
     });
 
+    log.info('Membros carregados para entidade', { entidadeId, quantidade: membros.length });
     return membros.map(membro => ({
       id: membro.id,
       papel: membro.papel,

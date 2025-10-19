@@ -1,9 +1,14 @@
 import { IProjetosRepository } from '@/domain/projetos/repositories/IProjetosRepository';
 import { Projeto } from '@/domain/projetos/entities/Projeto';
 import { prisma } from '..';
+import { logger } from '@/infra/logger';
+
+const log = logger.child('repository:projetos');
 
 export class PrismaProjetosRepository implements IProjetosRepository {
   async findById(id: string): Promise<Projeto | null> {
+    log.debug('Buscando projeto por ID', { id });
+
     const projeto = await prisma.projeto.findUnique({
       where: { id },
       include: {
@@ -13,6 +18,7 @@ export class PrismaProjetosRepository implements IProjetosRepository {
     });
 
     if (!projeto) {
+      log.warn('Projeto não encontrado', { id });
       return null;
     }
 
@@ -26,6 +32,8 @@ export class PrismaProjetosRepository implements IProjetosRepository {
   }
 
   async findMany(): Promise<Projeto[]> {
+    log.debug('Listando projetos');
+
     const projetos = await prisma.projeto.findMany({
       include: {
         membros: true,
@@ -36,6 +44,7 @@ export class PrismaProjetosRepository implements IProjetosRepository {
       },
     });
 
+    log.info('Projetos carregados', { quantidade: projetos.length });
     return projetos.map(projeto =>
       Projeto.create(
         {
@@ -48,6 +57,11 @@ export class PrismaProjetosRepository implements IProjetosRepository {
   }
 
   async create(projeto: Projeto): Promise<void> {
+    log.info('Criando projeto', {
+      id: projeto.id,
+      criadorId: projeto.props.criadorId,
+    });
+
     await prisma.projeto.create({
       data: {
         id: projeto.id,
@@ -68,6 +82,9 @@ export class PrismaProjetosRepository implements IProjetosRepository {
 
   async save(projeto: Projeto): Promise<void> {
     const { membros, ...data } = projeto.props;
+
+    log.info('Atualizando projeto', { id: projeto.id });
+
     await prisma.projeto.update({
       where: { id: projeto.id },
       data: {
@@ -80,6 +97,8 @@ export class PrismaProjetosRepository implements IProjetosRepository {
   }
 
   async delete(id: string): Promise<void> {
+    log.warn('Removendo projeto', { id });
+
     await prisma.projeto.delete({ where: { id } });
   }
 }

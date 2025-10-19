@@ -1,9 +1,17 @@
 import { IPublicacoesRepository } from '@/domain/publicacoes/repositories/IPublicacoesRepository';
 import { prisma } from '..';
 import { Publicacao } from '@/domain/publicacoes/entities/Publicacao';
+import { logger } from '@/infra/logger';
+
+const log = logger.child('repository:publicacoes');
 
 export class PrismaPublicacoesRepository implements IPublicacoesRepository {
   async create(publicacao: Publicacao): Promise<void> {
+    log.info('Criando publicação', {
+      id: publicacao.id,
+      autorId: publicacao.props.autor.id,
+    });
+
     await prisma.publicacao.create({
       data: {
         id: publicacao.id,
@@ -17,6 +25,8 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
   }
 
   async findMany(): Promise<Publicacao[]> {
+    log.debug('Buscando lista de publicações');
+
     const publicacoes = await prisma.publicacao.findMany({
       include: {
         autor: {
@@ -48,6 +58,8 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
   }
 
   async findById(id: string): Promise<Publicacao | null> {
+    log.debug('Buscando publicação por ID', { id });
+
     const publicacao = await prisma.publicacao.findUnique({
       where: { id },
       include: {
@@ -62,6 +74,7 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
     });
 
     if (!publicacao) {
+      log.warn('Publicação não encontrada', { id });
       return null;
     }
 
@@ -79,6 +92,8 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
   }
 
   async save(publicacao: Publicacao): Promise<void> {
+    log.info('Atualizando publicação', { id: publicacao.id });
+
     await prisma.publicacao.update({
       where: {
         id: publicacao.id,
@@ -91,6 +106,8 @@ export class PrismaPublicacoesRepository implements IPublicacoesRepository {
   }
 
   async delete(id: string): Promise<void> {
+    log.warn('Removendo publicação', { id });
+
     await prisma.publicacao.delete({
       where: { id },
     });
