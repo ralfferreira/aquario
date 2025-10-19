@@ -39,9 +39,8 @@ async function main() {
   await prisma.curso.createMany({
     data: [
       { nome: 'Ciência da Computação', centroId: ci.id },
-      { nome: 'Engenharia de Computação', centroId: ci.id },
-      { nome: 'Matemática Computacional', centroId: ci.id },
-      { nome: 'Ciência de Dados e Inteligência Artificial', centroId: ci.id },
+      { nome: 'Engenharia da Computação', centroId: ci.id },
+      { nome: 'Ciências de Dados e Inteligência Artificial', centroId: ci.id },
     ],
   });
 
@@ -128,6 +127,12 @@ async function main() {
   const cc = await prisma.curso.findUnique({
     where: { nome: 'Ciência da Computação' },
   });
+  const ec = await prisma.curso.findUnique({
+    where: { nome: 'Engenharia da Computação' },
+  });
+  const cdia = await prisma.curso.findUnique({
+    where: { nome: 'Ciências de Dados e Inteligência Artificial' },
+  });
 
   const thais = await prisma.usuario.findUnique({
     where: { email: 'thais@ci.ufpb.br' },
@@ -136,7 +141,7 @@ async function main() {
     where: { email: 'itamar@aquario.com' },
   });
 
-  if (!user || !tadea || !rivailda || !cc || !thais || !itamar)
+  if (!user || !tadea || !rivailda || !cc || !ec || !cdia || !thais || !itamar)
     throw new Error('Erro ao buscar entidades no seed.');
 
   const aria = await prisma.entidade.create({
@@ -187,7 +192,7 @@ async function main() {
 
   console.log('Membros de entidades criados.');
 
-  // Create example guides
+  // Create example guides (CC)
   const guia1 = await prisma.guia.create({
     data: {
       titulo: 'Guia de Introdução à Programação',
@@ -207,6 +212,50 @@ async function main() {
       status: 'ATIVO',
       cursoId: cc.id,
       tags: ['estruturas de dados', 'algoritmos', 'avançado'],
+    },
+  });
+
+  // Create example guides (EC)
+  const guiaEc1 = await prisma.guia.create({
+    data: {
+      titulo: 'Sistemas Digitais',
+      slug: 'sistemas-digitais',
+      descricao: 'Portas lógicas, circuitos combinacionais e sequenciais',
+      status: 'ATIVO',
+      cursoId: ec.id,
+      tags: ['hardware', 'eletrônica'],
+    },
+  });
+  const guiaEc2 = await prisma.guia.create({
+    data: {
+      titulo: 'Arquitetura de Computadores',
+      slug: 'arquitetura-de-computadores',
+      descricao: 'Organização e arquitetura de computadores',
+      status: 'ATIVO',
+      cursoId: ec.id,
+      tags: ['arquitetura', 'organização'],
+    },
+  });
+
+  // Create example guides (CDIA)
+  const guiaCd1 = await prisma.guia.create({
+    data: {
+      titulo: 'Introdução à Ciência de Dados',
+      slug: 'introducao-a-ciencia-de-dados',
+      descricao: 'Pipeline de dados, análise exploratória e visualização',
+      status: 'ATIVO',
+      cursoId: cdia.id,
+      tags: ['ciência de dados', 'EDA', 'visualização'],
+    },
+  });
+  const guiaCd2 = await prisma.guia.create({
+    data: {
+      titulo: 'Fundamentos de IA',
+      slug: 'fundamentos-de-ia',
+      descricao: 'Conceitos básicos de IA e aprendizagem de máquina',
+      status: 'ATIVO',
+      cursoId: cdia.id,
+      tags: ['IA', 'ML'],
     },
   });
 
@@ -256,18 +305,111 @@ async function main() {
     },
   });
 
-  console.log('Guias de exemplo criados.');
+  // Create sections for EC
+  const ecSec1 = await prisma.secaoGuia.create({
+    data: {
+      guiaId: guiaEc1.id,
+      titulo: 'Portas Lógicas',
+      slug: 'portas-logicas',
+      ordem: 1,
+      conteudo: '# Portas Lógicas\n\nAND, OR, NOT, NAND, NOR, XOR, XNOR...',
+      status: 'ATIVO',
+    },
+  });
+  await prisma.subSecaoGuia.create({
+    data: {
+      secaoId: ecSec1.id,
+      titulo: 'Tabelas Verdade',
+      slug: 'tabelas-verdade',
+      ordem: 1,
+      conteudo: '## Tabelas Verdade\n\nExemplos e exercícios...',
+      status: 'ATIVO',
+    },
+  });
+  const ecSec2 = await prisma.secaoGuia.create({
+    data: {
+      guiaId: guiaEc2.id,
+      titulo: 'Circuitos Combinacionais',
+      slug: 'circuitos-combinacionais',
+      ordem: 2,
+      conteudo: '# Circuitos Combinacionais\n\nSomadores, multiplexadores...',
+      status: 'ATIVO',
+    },
+  });
+
+  // Create subsection for ecSec2
+  await prisma.subSecaoGuia.create({
+    data: {
+      secaoId: ecSec2.id,
+      titulo: 'Somadores',
+      slug: 'somadores',
+      ordem: 1,
+      conteudo: '## Somadores\n\nHalf-adder, full-adder...',
+      status: 'ATIVO',
+    },
+  });
+
+  await prisma.secaoGuia.create({
+    data: {
+      guiaId: guiaEc2.id,
+      titulo: 'Conjunto de Instruções',
+      slug: 'conjunto-de-instrucoes',
+      ordem: 1,
+      conteudo: '# ISA\n\nTipos de instruções, modos de endereçamento...',
+      status: 'ATIVO',
+    },
+  });
+
+  // Create sections for CDIA
+  const cdSec1 = await prisma.secaoGuia.create({
+    data: {
+      guiaId: guiaCd1.id,
+      titulo: 'Coleta e Limpeza de Dados',
+      slug: 'coleta-e-limpeza-de-dados',
+      ordem: 1,
+      conteudo: '# Coleta e Limpeza\n\nTratamento de valores ausentes, outliers...',
+      status: 'ATIVO',
+    },
+  });
+  await prisma.subSecaoGuia.create({
+    data: {
+      secaoId: cdSec1.id,
+      titulo: 'Normalização',
+      slug: 'normalizacao',
+      ordem: 1,
+      conteudo: '## Normalização\n\nMin-Max, Z-score...',
+      status: 'ATIVO',
+    },
+  });
+  await prisma.secaoGuia.create({
+    data: {
+      guiaId: guiaCd2.id,
+      titulo: 'Aprendizagem Supervisionada',
+      slug: 'aprendizagem-supervisionada',
+      ordem: 1,
+      conteudo: '# Supervisionada\n\nRegressão, classificação...',
+      status: 'ATIVO',
+    },
+  });
+
+  console.log('Guias de exemplo criados (CC, EC, CDIA).');
 
   console.log(`
 --- IDs para Teste ---
 `);
   console.log(`Centro de Informática (centroId): ${ci.id}`);
   console.log(`Curso de CC (cursoId):          ${cc.id}`);
+  console.log(`Curso de EC (cursoId):          ${ec.id}`);
+  console.log(`Curso de CDIA (cursoId):        ${cdia.id}`);
   console.log(`Usuário de Teste (NÃO AUTORIZADO): ${user.id}`);
   console.log(`Usuário Tadea (AUTORIZADO):       ${tadea.id}`);
   console.log(`Usuário Rivailda (AUTORIZADO):    ${rivailda.id}`);
-  console.log(`Guia 1 (guiaId):                 ${guia1.id}`);
-  console.log(`Guia 2 (guiaId):                 ${guia2.id}`);
+  console.log(`Guia CC 1 (guiaId):              ${guia1.id}`);
+  console.log(`Guia CC 2 (guiaId):              ${guia2.id}`);
+  console.log(`Guia EC 1 (guiaId):              ${guiaEc1.id}`);
+  console.log(`Guia EC 2 (guiaId):              ${guiaEc2.id}`);
+  console.log(`Guia CDIA 1 (guiaId):            ${guiaCd1.id}`);
+  console.log(`Guia CDIA 2 (guiaId):            ${guiaCd2.id}`);
   console.log(`Seção 1 (secaoId):               ${secao1.id}`);
   console.log(`Seção 2 (secaoId):               ${secao2.id}`);
   console.log(`

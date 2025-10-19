@@ -6,6 +6,7 @@ import NavWrapper from "@/components/shared/nav-wrapper";
 import { AuthProvider } from "@/contexts/auth-context";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { SearchProvider } from "@/contexts/search-context";
+import { ReactQueryProvider } from "@/components/providers/react-query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,21 +23,23 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SearchProvider>
-              <div className="flex flex-1 flex-col">
-                <NavWrapper />
-                {children}
-              </div>
-            </SearchProvider>
-          </ThemeProvider>
-        </AuthProvider>
+        <ReactQueryProvider>
+          <AuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SearchProvider>
+                <div className="flex flex-1 flex-col">
+                  <NavWrapper />
+                  {children}
+                </div>
+              </SearchProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
