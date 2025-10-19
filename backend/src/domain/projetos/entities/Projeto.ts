@@ -6,7 +6,7 @@ export interface ProjetoProps {
   descricao: string;
   tipo: TipoProjeto;
   criadorId: string;
-  membros?: any[];
+  membros?: string[];
   tags: string[];
   urlFoto?: string | null;
   url?: string | null;

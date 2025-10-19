@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import { z } from "zod";
-import { EditarGuiaUseCase } from "@/application/guias/use-cases/EditarGuiaUseCase";
-import { PrismaGuiasRepository } from "@/infra/database/prisma/repositories/PrismaGuiasRepository";
-import { PrismaCursosRepository } from "@/infra/database/prisma/repositories/PrismaCursosRepository";
-import { StatusGuia } from "@prisma/client";
+import { Request, Response } from 'express';
+import { z } from 'zod';
+import { EditarGuiaUseCase } from '@/application/guias/use-cases/EditarGuiaUseCase';
+import { PrismaGuiasRepository } from '@/infra/database/prisma/repositories/PrismaGuiasRepository';
+import { PrismaCursosRepository } from '@/infra/database/prisma/repositories/PrismaCursosRepository';
+import { StatusGuia } from '@prisma/client';
 
 const editarGuiaBodySchema = z.object({
   titulo: z.string().optional(),
@@ -22,10 +22,7 @@ export class EditarGuiaController {
 
       const guiasRepository = new PrismaGuiasRepository();
       const cursosRepository = new PrismaCursosRepository();
-      const editarGuiaUseCase = new EditarGuiaUseCase(
-        guiasRepository,
-        cursosRepository
-      );
+      const editarGuiaUseCase = new EditarGuiaUseCase(guiasRepository, cursosRepository);
 
       await editarGuiaUseCase.execute({
         id,
@@ -36,19 +33,16 @@ export class EditarGuiaController {
     } catch (error) {
       if (error instanceof z.ZodError) {
         return response.status(400).json({
-          message: "Validation error.",
+          message: 'Validation error.',
           issues: error.format(),
         });
       }
       if (error instanceof Error) {
-        if (
-          error.message === "Guia não encontrada." ||
-          error.message === "Curso não encontrado."
-        ) {
+        if (error.message === 'Guia não encontrada.' || error.message === 'Curso não encontrado.') {
           return response.status(404).json({ message: error.message });
         }
       }
-      return response.status(500).json({ message: "Internal server error." });
+      return response.status(500).json({ message: 'Internal server error.' });
     }
   }
 }

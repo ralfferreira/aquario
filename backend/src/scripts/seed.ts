@@ -58,6 +58,7 @@ async function main() {
       permissoes: [],
       eVerificado: true,
       centroId: ci.id,
+      papelPlataforma: 'MASTER_ADMIN' as const,
     },
     {
       nome: 'Itamar',
@@ -68,6 +69,7 @@ async function main() {
       permissoes: [],
       eVerificado: true,
       centroId: ci.id,
+      papelPlataforma: 'USER' as const,
     },
     {
       nome: 'Usuário de Teste',
@@ -78,6 +80,7 @@ async function main() {
       permissoes: [],
       eVerificado: true,
       centroId: ci.id,
+      papelPlataforma: 'USER' as const,
     },
     {
       nome: 'Tadea Silva',
@@ -87,6 +90,7 @@ async function main() {
       permissoes: ['ADMIN'],
       eVerificado: true,
       centroId: ci.id,
+      papelPlataforma: 'USER' as const,
     },
     {
       nome: 'Rivailda Rocha',
@@ -96,6 +100,7 @@ async function main() {
       permissoes: ['ADMIN'],
       eVerificado: true,
       centroId: ci.id,
+      papelPlataforma: 'USER' as const,
     },
   ];
 

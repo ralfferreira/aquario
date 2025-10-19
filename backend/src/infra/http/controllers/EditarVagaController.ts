@@ -43,10 +43,7 @@ export class EditarVagaController {
         });
       }
       if (error instanceof Error) {
-        if (
-          error.message === 'Vaga não encontrada.' ||
-          error.message === 'Ação não autorizada.'
-        ) {
+        if (error.message === 'Vaga não encontrada.' || error.message === 'Ação não autorizada.') {
           return response.status(403).json({ message: error.message });
         }
       }

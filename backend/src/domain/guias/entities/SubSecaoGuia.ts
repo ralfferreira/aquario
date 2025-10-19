@@ -1,5 +1,5 @@
-import { Entity } from "@/core/entities/Entity";
-import { StatusGuia } from "@prisma/client";
+import { Entity } from '@/core/entities/Entity';
+import { StatusGuia } from '@prisma/client';
 
 export interface SubSecaoGuiaProps {
   secaoId: string;

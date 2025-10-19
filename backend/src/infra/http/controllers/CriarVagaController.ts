@@ -25,7 +25,7 @@ export class CriarVagaController {
       const criarVagaUseCase = new CriarVagaUseCase(
         vagasRepository,
         usuariosRepository,
-        centrosRepository,
+        centrosRepository
       );
 
       await criarVagaUseCase.execute({

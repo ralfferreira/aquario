@@ -1,4 +1,4 @@
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
 
 type DeletarGuiaUseCaseResponse = void;
 
@@ -9,7 +9,7 @@ export class DeletarGuiaUseCase {
     const guia = await this.guiasRepository.findById(id);
 
     if (!guia) {
-      throw new Error("Guia não encontrada.");
+      throw new Error('Guia não encontrada.');
     }
 
     await this.guiasRepository.delete(id);

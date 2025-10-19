@@ -1,5 +1,5 @@
-import { SecaoGuia } from "@/domain/guias/entities/SecaoGuia";
-import { ISecoesGuiaRepository } from "@/domain/guias/repositories/ISecoesGuiaRepository";
+import { SecaoGuia } from '@/domain/guias/entities/SecaoGuia';
+import { ISecoesGuiaRepository } from '@/domain/guias/repositories/ISecoesGuiaRepository';
 
 interface ListarSecoesGuiaUseCaseRequest {
   guiaId: string;

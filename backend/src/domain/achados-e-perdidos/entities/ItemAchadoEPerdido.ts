@@ -42,7 +42,7 @@ export class ItemAchadoEPerdido extends Entity<ItemAchadoEPerdidoProps> {
         criadoEm: props.criadoEm ?? new Date(),
         atualizadoEm: props.atualizadoEm ?? new Date(),
       },
-      id,
+      id
     );
 
     return item;

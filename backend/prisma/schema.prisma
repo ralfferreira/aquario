@@ -12,6 +12,11 @@ enum PapelUsuario {
   DOCENTE
 }
 
+enum PapelPlataforma {
+  USER
+  MASTER_ADMIN
+}
+
 enum TipoVaga {
   ESTAGIO
   TRAINEE
@@ -91,6 +96,7 @@ model Usuario {
   senhaHash         String
   papel             PapelUsuario
   permissoes        String[]         @default([])
+  papelPlataforma   PapelPlataforma  @default(USER)
   eVerificado       Boolean          @default(false)
   bio               String?
   urlFotoPerfil     String?

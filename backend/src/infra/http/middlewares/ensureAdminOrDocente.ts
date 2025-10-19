@@ -4,7 +4,7 @@ import { PrismaUsuariosRepository } from '../../database/prisma/repositories/Pri
 export async function ensureAdminOrDocente(
   request: Request,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ) {
   const { id } = request.usuario;
 
@@ -15,7 +15,8 @@ export async function ensureAdminOrDocente(
     return response.status(404).json({ message: 'Usuário não encontrado.' });
   }
 
-  const isAdmin = usuario.props.permissoes.includes('ADMIN');
+  const isAdmin =
+    usuario.props.permissoes.includes('ADMIN') || usuario.props.papelPlataforma === 'MASTER_ADMIN';
   const isDocente = usuario.props.papel === 'DOCENTE';
 
   if (!isAdmin && !isDocente) {

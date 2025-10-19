@@ -20,7 +20,8 @@ const criarProjetoBodySchema = z.object({
 export class CriarProjetoController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { titulo, descricao, tipo, centroId, tags, urlFoto, url, membroIds } = criarProjetoBodySchema.parse(request.body);
+      const { titulo, descricao, tipo, centroId, tags, urlFoto, url, membroIds } =
+        criarProjetoBodySchema.parse(request.body);
       const criadorId = request.usuario.id;
 
       const projetosRepository = new PrismaProjetosRepository();
@@ -29,7 +30,7 @@ export class CriarProjetoController {
       const criarProjetoUseCase = new CriarProjetoUseCase(
         projetosRepository,
         usuariosRepository,
-        centrosRepository,
+        centrosRepository
       );
 
       await criarProjetoUseCase.execute({
@@ -55,7 +56,10 @@ export class CriarProjetoController {
       console.error('Erro ao criar projeto:', error);
 
       if (error instanceof Error) {
-        if (error.message === 'Criador não encontrado.' || error.message === 'Centro não encontrado.') {
+        if (
+          error.message === 'Criador não encontrado.' ||
+          error.message === 'Centro não encontrado.'
+        ) {
           return response.status(404).json({ message: error.message });
         }
       }

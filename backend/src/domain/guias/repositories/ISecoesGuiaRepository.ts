@@ -1,4 +1,4 @@
-import { SecaoGuia } from "../entities/SecaoGuia";
+import { SecaoGuia } from '../entities/SecaoGuia';
 
 export interface ISecoesGuiaRepository {
   create(secaoGuia: SecaoGuia): Promise<void>;

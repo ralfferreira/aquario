@@ -9,8 +9,8 @@ export interface EntidadeProps {
   contato?: string | null;
   centroId: string;
   criadorId: string;
-  projetos?: any[];
-  publicacoes?: any[];
+  projetos?: Record<string, unknown>[];
+  publicacoes?: Record<string, unknown>[];
 }
 
 export class Entidade extends Entity<EntidadeProps> {

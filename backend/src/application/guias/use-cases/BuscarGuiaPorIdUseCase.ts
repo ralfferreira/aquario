@@ -1,5 +1,5 @@
-import { Guia } from "@/domain/guias/entities/Guia";
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
+import { Guia } from '@/domain/guias/entities/Guia';
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
 
 interface BuscarGuiaPorIdUseCaseResponse {
   guia: Guia;
@@ -12,7 +12,7 @@ export class BuscarGuiaPorIdUseCase {
     const guia = await this.guiasRepository.findById(id);
 
     if (!guia) {
-      throw new Error("Guia não encontrada.");
+      throw new Error('Guia não encontrada.');
     }
 
     return { guia };

@@ -18,7 +18,10 @@ export default function EditarItemPage({ params }: { params: { id: string } }) {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const isAdmin = !!user?.permissoes.includes("ADMIN");
+  const isAdmin = !!(
+    user &&
+    (user.permissoes.includes("ADMIN") || user.papelPlataforma === "MASTER_ADMIN")
+  );
 
   useEffect(() => {
     if (!isAuthLoading && !isAdmin) {

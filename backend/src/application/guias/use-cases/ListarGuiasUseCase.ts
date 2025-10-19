@@ -1,5 +1,5 @@
-import { Guia } from "@/domain/guias/entities/Guia";
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
+import { Guia } from '@/domain/guias/entities/Guia';
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
 
 interface ListarGuiasUseCaseRequest {
   cursoId?: string;
@@ -12,9 +12,7 @@ interface ListarGuiasUseCaseResponse {
 export class ListarGuiasUseCase {
   constructor(private guiasRepository: IGuiasRepository) {}
 
-  async execute({
-    cursoId,
-  }: ListarGuiasUseCaseRequest = {}): Promise<ListarGuiasUseCaseResponse> {
+  async execute({ cursoId }: ListarGuiasUseCaseRequest = {}): Promise<ListarGuiasUseCaseResponse> {
     let guias: Guia[];
 
     if (cursoId) {

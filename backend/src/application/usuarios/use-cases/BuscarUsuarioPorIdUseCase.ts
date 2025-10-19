@@ -12,7 +12,9 @@ interface BuscarUsuarioPorIdUseCaseResponse {
 export class BuscarUsuarioPorIdUseCase {
   constructor(private usuariosRepository: IUsuariosRepository) {}
 
-  async execute({ id }: BuscarUsuarioPorIdUseCaseRequest): Promise<BuscarUsuarioPorIdUseCaseResponse> {
+  async execute({
+    id,
+  }: BuscarUsuarioPorIdUseCaseRequest): Promise<BuscarUsuarioPorIdUseCaseResponse> {
     const usuario = await this.usuariosRepository.findById(id);
 
     return { usuario };

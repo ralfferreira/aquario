@@ -14,7 +14,12 @@ export default function VagasPage() {
   const [vagas, setVagas] = useState<Vaga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
-  const canPostJob = user?.papel === "DOCENTE" || user?.permissoes.includes("ADMIN") || false;
+  const canPostJob = !!(
+    user &&
+    (user.papel === "DOCENTE" ||
+      user.permissoes.includes("ADMIN") ||
+      user.papelPlataforma === "MASTER_ADMIN")
+  );
 
   useEffect(() => {
     const fetchVagas = async () => {

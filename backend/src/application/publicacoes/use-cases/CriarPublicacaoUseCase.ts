@@ -16,7 +16,7 @@ export class CriarPublicacaoUseCase {
   constructor(
     private publicacoesRepository: IPublicacoesRepository,
     private usuariosRepository: IUsuariosRepository,
-    private centrosRepository: ICentrosRepository,
+    private centrosRepository: ICentrosRepository
   ) {}
 
   async execute({

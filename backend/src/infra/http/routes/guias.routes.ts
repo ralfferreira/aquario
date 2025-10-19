@@ -1,20 +1,20 @@
-import { Router } from "express";
-import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
-import { ensureAdminOrDocente } from "../middlewares/ensureAdminOrDocente";
-import { CriarGuiaController } from "../controllers/CriarGuiaController";
-import { ListarGuiasController } from "../controllers/ListarGuiasController";
-import { BuscarGuiaPorIdController } from "../controllers/BuscarGuiaPorIdController";
-import { BuscarGuiaPorSlugController } from "../controllers/BuscarGuiaPorSlugController";
-import { EditarGuiaController } from "../controllers/EditarGuiaController";
-import { DeletarGuiaController } from "../controllers/DeletarGuiaController";
-import { CriarSecaoGuiaController } from "../controllers/CriarSecaoGuiaController";
-import { ListarSecoesGuiaController } from "../controllers/ListarSecoesGuiaController";
-import { EditarSecaoGuiaController } from "../controllers/EditarSecaoGuiaController";
-import { DeletarSecaoGuiaController } from "../controllers/DeletarSecaoGuiaController";
-import { CriarSubSecaoGuiaController } from "../controllers/CriarSubSecaoGuiaController";
-import { ListarSubSecoesGuiaController } from "../controllers/ListarSubSecoesGuiaController";
-import { EditarSubSecaoGuiaController } from "../controllers/EditarSubSecaoGuiaController";
-import { DeletarSubSecaoGuiaController } from "../controllers/DeletarSubSecaoGuiaController";
+import { Router } from 'express';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+import { ensureAdminOrDocente } from '../middlewares/ensureAdminOrDocente';
+import { CriarGuiaController } from '../controllers/CriarGuiaController';
+import { ListarGuiasController } from '../controllers/ListarGuiasController';
+import { BuscarGuiaPorIdController } from '../controllers/BuscarGuiaPorIdController';
+import { BuscarGuiaPorSlugController } from '../controllers/BuscarGuiaPorSlugController';
+import { EditarGuiaController } from '../controllers/EditarGuiaController';
+import { DeletarGuiaController } from '../controllers/DeletarGuiaController';
+import { CriarSecaoGuiaController } from '../controllers/CriarSecaoGuiaController';
+import { ListarSecoesGuiaController } from '../controllers/ListarSecoesGuiaController';
+import { EditarSecaoGuiaController } from '../controllers/EditarSecaoGuiaController';
+import { DeletarSecaoGuiaController } from '../controllers/DeletarSecaoGuiaController';
+import { CriarSubSecaoGuiaController } from '../controllers/CriarSubSecaoGuiaController';
+import { ListarSubSecoesGuiaController } from '../controllers/ListarSubSecoesGuiaController';
+import { EditarSubSecaoGuiaController } from '../controllers/EditarSubSecaoGuiaController';
+import { DeletarSubSecaoGuiaController } from '../controllers/DeletarSubSecaoGuiaController';
 
 const guiasRouter = Router();
 
@@ -37,50 +37,32 @@ const editarSubSecaoGuiaController = new EditarSubSecaoGuiaController();
 const deletarSubSecaoGuiaController = new DeletarSubSecaoGuiaController();
 
 // Public routes
-guiasRouter.get("/", listarGuiasController.handle);
-guiasRouter.get("/slug/:slug", buscarGuiaPorSlugController.handle);
-guiasRouter.get("/:id", buscarGuiaPorIdController.handle);
-guiasRouter.get("/:guiaId/secoes", listarSecoesGuiaController.handle);
-guiasRouter.get(
-  "/secoes/:secaoId/subsecoes",
-  listarSubSecoesGuiaController.handle
-);
+guiasRouter.get('/', listarGuiasController.handle);
+guiasRouter.get('/slug/:slug', buscarGuiaPorSlugController.handle);
+guiasRouter.get('/:id', buscarGuiaPorIdController.handle);
+guiasRouter.get('/:guiaId/secoes', listarSecoesGuiaController.handle);
+guiasRouter.get('/secoes/:secaoId/subsecoes', listarSubSecoesGuiaController.handle);
 
 // Protected routes (admin/docente only)
-guiasRouter.post(
-  "/",
-  ensureAuthenticated,
-  ensureAdminOrDocente,
-  criarGuiaController.handle
-);
-guiasRouter.put(
-  "/:id",
-  ensureAuthenticated,
-  ensureAdminOrDocente,
-  editarGuiaController.handle
-);
-guiasRouter.delete(
-  "/:id",
-  ensureAuthenticated,
-  ensureAdminOrDocente,
-  deletarGuiaController.handle
-);
+guiasRouter.post('/', ensureAuthenticated, ensureAdminOrDocente, criarGuiaController.handle);
+guiasRouter.put('/:id', ensureAuthenticated, ensureAdminOrDocente, editarGuiaController.handle);
+guiasRouter.delete('/:id', ensureAuthenticated, ensureAdminOrDocente, deletarGuiaController.handle);
 
 // Section routes
 guiasRouter.post(
-  "/:guiaId/secoes",
+  '/:guiaId/secoes',
   ensureAuthenticated,
   ensureAdminOrDocente,
   criarSecaoGuiaController.handle
 );
 guiasRouter.put(
-  "/secoes/:id",
+  '/secoes/:id',
   ensureAuthenticated,
   ensureAdminOrDocente,
   editarSecaoGuiaController.handle
 );
 guiasRouter.delete(
-  "/secoes/:id",
+  '/secoes/:id',
   ensureAuthenticated,
   ensureAdminOrDocente,
   deletarSecaoGuiaController.handle
@@ -88,19 +70,19 @@ guiasRouter.delete(
 
 // Subsection routes
 guiasRouter.post(
-  "/secoes/:secaoId/subsecoes",
+  '/secoes/:secaoId/subsecoes',
   ensureAuthenticated,
   ensureAdminOrDocente,
   criarSubSecaoGuiaController.handle
 );
 guiasRouter.put(
-  "/subsecoes/:id",
+  '/subsecoes/:id',
   ensureAuthenticated,
   ensureAdminOrDocente,
   editarSubSecaoGuiaController.handle
 );
 guiasRouter.delete(
-  "/subsecoes/:id",
+  '/subsecoes/:id',
   ensureAuthenticated,
   ensureAdminOrDocente,
   deletarSubSecaoGuiaController.handle

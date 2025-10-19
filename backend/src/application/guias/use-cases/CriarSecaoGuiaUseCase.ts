@@ -1,7 +1,7 @@
-import { SecaoGuia } from "@/domain/guias/entities/SecaoGuia";
-import { ISecoesGuiaRepository } from "@/domain/guias/repositories/ISecoesGuiaRepository";
-import { IGuiasRepository } from "@/domain/guias/repositories/IGuiasRepository";
-import { StatusGuia } from "@prisma/client";
+import { SecaoGuia } from '@/domain/guias/entities/SecaoGuia';
+import { ISecoesGuiaRepository } from '@/domain/guias/repositories/ISecoesGuiaRepository';
+import { IGuiasRepository } from '@/domain/guias/repositories/IGuiasRepository';
+import { StatusGuia } from '@prisma/client';
 
 interface CriarSecaoGuiaUseCaseRequest {
   guiaId: string;
@@ -30,7 +30,7 @@ export class CriarSecaoGuiaUseCase {
   }: CriarSecaoGuiaUseCaseRequest): Promise<CriarSecaoGuiaUseCaseResponse> {
     const guia = await this.guiasRepository.findById(guiaId);
     if (!guia) {
-      throw new Error("Guia não encontrada.");
+      throw new Error('Guia não encontrada.');
     }
 
     const secaoGuia = SecaoGuia.create({

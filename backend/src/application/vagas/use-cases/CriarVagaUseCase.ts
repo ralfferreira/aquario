@@ -18,7 +18,7 @@ export class CriarVagaUseCase {
   constructor(
     private vagasRepository: IVagasRepository,
     private usuariosRepository: IUsuariosRepository,
-    private centrosRepository: ICentrosRepository,
+    private centrosRepository: ICentrosRepository
   ) {}
 
   async execute({

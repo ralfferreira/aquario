@@ -5,11 +5,15 @@ import { PrismaUsuariosRepository } from '../../database/prisma/repositories/Pri
 import { PrismaCentrosRepository } from '../../database/prisma/repositories/PrismaCentrosRepository';
 import { PrismaCursosRepository } from '../../database/prisma/repositories/PrismaCursosRepository';
 import { PapelUsuario } from '@prisma/client';
+import { logger } from '@/infra/logger';
 
 const registerBodySchema = z.object({
   nome: z.string(),
   email: z.string().email(),
-  senha: z.string().min(6),
+  senha: z
+    .string()
+    .min(8, 'A senha deve ter pelo menos 8 caracteres.')
+    .max(128, 'A senha deve ter no máximo 128 caracteres.'),
   papel: z.nativeEnum(PapelUsuario),
   centroId: z.string().uuid(),
   bio: z.string().optional(),
@@ -18,10 +22,20 @@ const registerBodySchema = z.object({
   periodo: z.number().optional(),
 });
 
+const registerLogger = logger.child('controller:register');
+
 export class RegisterController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { nome, email, senha, papel, centroId, bio, urlFotoPerfil, cursoId, periodo } = registerBodySchema.parse(request.body);
+      const { nome, email, senha, papel, centroId, bio, urlFotoPerfil, cursoId, periodo } =
+        registerBodySchema.parse(request.body);
+
+      registerLogger.info('Tentativa de registro recebida', {
+        email,
+        papel,
+        centroId,
+        cursoId,
+      });
 
       const usuariosRepository = new PrismaUsuariosRepository();
       const centrosRepository = new PrismaCentrosRepository();
@@ -29,19 +43,37 @@ export class RegisterController {
       const registerUseCase = new RegisterUseCase(
         usuariosRepository,
         centrosRepository,
-        cursosRepository,
+        cursosRepository
       );
 
-      await registerUseCase.execute({ nome, email, senha, papel, centroId, bio, urlFotoPerfil, cursoId, periodo });
+      await registerUseCase.execute({
+        nome,
+        email,
+        senha,
+        papel,
+        centroId,
+        bio,
+        urlFotoPerfil,
+        cursoId,
+        periodo,
+      });
+
+      registerLogger.info('Usuário registrado com sucesso', { email });
 
       return response.status(201).send();
     } catch (error) {
       if (error instanceof z.ZodError) {
+        registerLogger.warn('Falha de validação no registro de usuário', {
+          email: request.body?.email,
+          issues: error.issues.map(issue => issue.message),
+        });
         return response.status(400).json({ message: 'Validation error.', issues: error.format() });
       }
       if (error instanceof Error) {
+        registerLogger.warn('Erro de negócio ao registrar usuário', { message: error.message });
         return response.status(409).json({ message: error.message });
       }
+      registerLogger.error('Erro inesperado ao registrar usuário', error);
       return response.status(500).json({ message: 'Internal server error.' });
     }
   }

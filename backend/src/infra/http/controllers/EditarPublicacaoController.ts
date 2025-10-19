@@ -27,8 +27,8 @@ export class EditarPublicacaoController {
       return response.status(204).send();
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return response.status(400).json({ 
-          message: 'Validation error.', 
+        return response.status(400).json({
+          message: 'Validation error.',
           issues: error.format(),
         });
       }

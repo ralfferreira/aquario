@@ -12,11 +12,10 @@ interface CriarItemAchadoEPerdidoUseCaseRequest {
 
 type CriarItemAchadoEPerdidoUseCaseResponse = void;
 
-
 export class CriarItemAchadoEPerdidoUseCase {
   constructor(
     private itensRepository: IItensAchadosEPerdidosRepository,
-    private usuariosRepository: IUsuariosRepository,
+    private usuariosRepository: IUsuariosRepository
   ) {}
 
   async execute({

@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { ListarGuiasUseCase } from "@/application/guias/use-cases/ListarGuiasUseCase";
-import { PrismaGuiasRepository } from "@/infra/database/prisma/repositories/PrismaGuiasRepository";
+import { Request, Response } from 'express';
+import { ListarGuiasUseCase } from '@/application/guias/use-cases/ListarGuiasUseCase';
+import { PrismaGuiasRepository } from '@/infra/database/prisma/repositories/PrismaGuiasRepository';
 
 export class ListarGuiasController {
   async handle(request: Request, response: Response): Promise<Response> {
@@ -14,14 +14,14 @@ export class ListarGuiasController {
         cursoId: cursoId as string,
       });
 
-      const responseData = guias.map((g) => ({
+      const responseData = guias.map(g => ({
         id: g.id,
         ...g.props,
       }));
 
       return response.status(200).json(responseData);
-    } catch (error) {
-      return response.status(500).json({ message: "Internal server error." });
+    } catch {
+      return response.status(500).json({ message: 'Internal server error.' });
     }
   }
 }
