@@ -18,8 +18,7 @@ export default function GuiasCursoPage() {
 
   const {
     guiaTree,
-    curso: 
-    ,
+    curso: _curso,
     isLoading,
     error,
     cursoSlugToNome,
