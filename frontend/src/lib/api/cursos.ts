@@ -1,5 +1,5 @@
 import { Curso } from "../types";
-import { API_URL, ENDPOINTS } from "../constants";
+import { API_URL, ENDPOINTS } from "../config/constants";
 
 export const cursosService = {
   getByCentro: async (centroId: string): Promise<Curso[]> => {

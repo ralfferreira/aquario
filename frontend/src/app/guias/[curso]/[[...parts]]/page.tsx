@@ -44,18 +44,20 @@ export default function GuiasCursoPage() {
       return "# Selecione uma seção à esquerda";
     }
 
-    const [secaoSlug, subSlug] = parts;
+    // URL structure: /guias/{curso}/{guia}/{secao}/{subsecao?}
+    const [guiaSlug, secaoSlug, subSlug] = parts;
 
-    // Find the section by slug
+    if (!guiaSlug) {
+      return "# Guia não especificado";
+    }
+
+    // Find the section within the specific guia
     let targetSecao = null;
-    if (secoesData) {
-      for (const guiaId in secoesData) {
-        const secoes = secoesData[guiaId];
-        const secao = secoes.find(s => s.slug === secaoSlug);
-        if (secao) {
-          targetSecao = secao;
-          break;
-        }
+    if (secoesData && secoesData[guiaSlug]) {
+      const secoes = secoesData[guiaSlug];
+      const secao = secoes.find(s => s.slug === secaoSlug);
+      if (secao) {
+        targetSecao = secao;
       }
     }
 
@@ -68,8 +70,8 @@ export default function GuiasCursoPage() {
     }
 
     // Find the subsection by slug
-    if (subSecoesData && subSecoesData[targetSecao.id]) {
-      const subSecoes = subSecoesData[targetSecao.id];
+    if (subSecoesData && subSecoesData[targetSecao.slug]) {
+      const subSecoes = subSecoesData[targetSecao.slug];
       const subSecao = subSecoes.find(s => s.slug === subSlug);
       if (subSecao) {
         return subSecao.conteudo || "# Conteúdo não disponível";
