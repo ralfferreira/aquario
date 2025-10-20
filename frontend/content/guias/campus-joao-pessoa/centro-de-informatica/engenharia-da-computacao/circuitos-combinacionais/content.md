@@ -1,3 +1,0 @@
-# Circuitos Combinacionais
-
-Somadores, multiplexadores...

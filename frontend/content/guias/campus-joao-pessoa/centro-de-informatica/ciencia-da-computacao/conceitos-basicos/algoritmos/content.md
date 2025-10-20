@@ -1,3 +1,0 @@
-## Algoritmos
-
-Um algoritmo é uma sequência de passos...

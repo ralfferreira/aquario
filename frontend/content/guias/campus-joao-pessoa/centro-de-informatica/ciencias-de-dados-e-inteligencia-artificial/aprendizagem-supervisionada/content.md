@@ -1,3 +1,0 @@
-# Aprendizagem Supervisionada
-
-Regressão, classificação...

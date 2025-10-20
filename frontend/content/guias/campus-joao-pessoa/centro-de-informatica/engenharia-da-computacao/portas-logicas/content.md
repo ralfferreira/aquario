@@ -1,3 +1,0 @@
-# Portas Lógicas
-
-AND, OR, NOT, NAND, NOR, XOR, XNOR...

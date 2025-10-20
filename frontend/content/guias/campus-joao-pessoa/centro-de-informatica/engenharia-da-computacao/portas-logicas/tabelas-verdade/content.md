@@ -1,3 +1,0 @@
-## Tabelas Verdade
-
-Exemplos e exercícios...

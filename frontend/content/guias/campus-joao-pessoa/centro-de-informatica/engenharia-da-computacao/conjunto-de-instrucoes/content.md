@@ -1,3 +1,0 @@
-# ISA
-
-Tipos de instruções, modos de endereçamento...
