@@ -22,16 +22,40 @@ export class BackendGuiasProvider implements GuiasDataProvider {
     return response.json();
   }
 
-  async getSecoes(guiaId: string): Promise<Secao[]> {
-    const response = await fetch(`${API_URL}${ENDPOINTS.SECOES(guiaId)}`);
+  async getSecoes(guiaSlug: string): Promise<Secao[]> {
+    // For backend, we need to find the guia by slug and get its ID
+    const guias = await this.getByCurso("ciencia-da-computacao"); // Get all guias to find the one with matching slug
+    const guia = guias.find(g => g.slug === guiaSlug);
+    if (!guia) {
+      throw new Error(`Guia with slug '${guiaSlug}' not found`);
+    }
+
+    const response = await fetch(`${API_URL}${ENDPOINTS.SECOES(guia.id)}`);
     if (!response.ok) {
       throw new Error("Failed to fetch secoes");
     }
     return response.json();
   }
 
-  async getSubSecoes(secaoId: string): Promise<SubSecao[]> {
-    const response = await fetch(`${API_URL}${ENDPOINTS.SUBSECOES(secaoId)}`);
+  async getSubSecoes(secaoSlug: string): Promise<SubSecao[]> {
+    // For backend, we need to find the secao by slug and get its ID
+    const guias = await this.getByCurso("ciencia-da-computacao"); // Get all guias
+    let targetSecao = null;
+
+    for (const guia of guias) {
+      const secoes = await this.getSecoes(guia.slug);
+      const secao = secoes.find(s => s.slug === secaoSlug);
+      if (secao) {
+        targetSecao = secao;
+        break;
+      }
+    }
+
+    if (!targetSecao) {
+      throw new Error(`Secao with slug '${secaoSlug}' not found`);
+    }
+
+    const response = await fetch(`${API_URL}${ENDPOINTS.SUBSECOES(targetSecao.id)}`);
     if (!response.ok) {
       throw new Error("Failed to fetch subSecoes");
     }
