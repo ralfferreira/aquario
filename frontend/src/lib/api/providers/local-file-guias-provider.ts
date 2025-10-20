@@ -204,8 +204,10 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
     return Promise.resolve(centros);
   }
 
-  getCursos(centroSigla: string): Promise<Array<{ id: string; nome: string; centroId: string }>> {
-    const cursos: Array<{ id: string; nome: string; centroId: string }> = [];
+  getCursos(
+    centroSigla: string
+  ): Promise<Array<{ id: string; nome: string; centroId: string; realId: string }>> {
+    const cursos: Array<{ id: string; nome: string; centroId: string; realId: string }> = [];
     const cursoNames = new Set<string>();
 
     // Extract unique curso names from file paths
@@ -223,6 +225,7 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
         id: cursoName,
         nome: this.slugToName(cursoName),
         centroId: centroSigla.toLowerCase(),
+        realId: cursoName, // For local provider, realId is same as id
       });
     });
 

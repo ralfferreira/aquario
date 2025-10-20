@@ -13,7 +13,9 @@ export class BackendGuiasProvider implements GuiasDataProvider {
     }
 
     // Use the real course ID for the API call
-    const response = await fetch(`${API_URL}${ENDPOINTS.GUIAS((curso as any).realId)}`);
+    const response = await fetch(
+      `${API_URL}${ENDPOINTS.GUIAS((curso as { realId: string }).realId)}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch guias");
     }
@@ -46,14 +48,14 @@ export class BackendGuiasProvider implements GuiasDataProvider {
 
   async getCursos(
     centroSigla: string
-  ): Promise<Array<{ id: string; nome: string; centroId: string }>> {
+  ): Promise<Array<{ id: string; nome: string; centroId: string; realId: string }>> {
     // First get the centro ID by sigla
     const centrosResponse = await fetch(`${API_URL}${ENDPOINTS.CENTROS}`);
     if (!centrosResponse.ok) {
       throw new Error("Failed to fetch centros");
     }
     const centros = await centrosResponse.json();
-    const centro = centros.find((c: any) => c.sigla === centroSigla);
+    const centro = centros.find((c: { sigla: string }) => c.sigla === centroSigla);
 
     if (!centro) {
       throw new Error(`Centro with sigla '${centroSigla}' not found`);
@@ -67,7 +69,7 @@ export class BackendGuiasProvider implements GuiasDataProvider {
     const cursos = await cursosResponse.json();
 
     // Map the real course data to include slug-based IDs for frontend compatibility
-    return cursos.map((curso: any) => ({
+    return cursos.map((curso: { id: string; nome: string; centroId: string }) => ({
       id: this.nomeToSlug(curso.nome), // Convert nome to slug for frontend compatibility
       nome: curso.nome,
       centroId: curso.centroId,
