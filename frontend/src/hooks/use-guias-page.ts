@@ -45,7 +45,7 @@ export const useGuiasPage = (cursoSlug: string) => {
 
       const secoesMap: Record<string, Secao[]> = {};
       for (const guia of guias) {
-        const secoes = await guiasService.getSecoes(guia.slug); // Use guia.slug for both providers
+        const secoes = await guiasService.getSecoes(guia.slug, cursoSlug); // Pass course context
         secoesMap[guia.slug] = secoes;
       }
       return secoesMap;
@@ -65,7 +65,7 @@ export const useGuiasPage = (cursoSlug: string) => {
       for (const guiaSlug in secoesQueries.data) {
         const secoes = secoesQueries.data[guiaSlug];
         for (const secao of secoes) {
-          const subSecoes = await guiasService.getSubSecoes(secao.slug); // Use secao.slug for both providers
+          const subSecoes = await guiasService.getSubSecoes(secao.slug, cursoSlug); // Pass course context
           subSecoesMap[secao.slug] = subSecoes;
         }
       }

@@ -29,7 +29,9 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
   getByCurso(cursoSlug: string): Promise<Guia[]> {
     // Find all section folders for this course (these become the guias)
     const courseFiles = Object.keys(this.contentFiles).filter(
-      key => key.includes(`/${cursoSlug}/`) && key.endsWith("/content.md")
+      key =>
+        (key.includes(`/${cursoSlug}/`) || key.startsWith(`./${cursoSlug}/`)) &&
+        key.endsWith("/content.md")
     );
 
     const sections = new Set<string>();
@@ -60,11 +62,16 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
     return Promise.resolve(guias);
   }
 
-  getSecoes(guiaSlug: string): Promise<Secao[]> {
-    // Find all content files under this guia (group)
-    const courseFiles = Object.keys(this.contentFiles).filter(
-      key => key.includes(`/${guiaSlug}/`) && key.endsWith("/content.md")
-    );
+  getSecoes(guiaSlug: string, cursoSlug?: string): Promise<Secao[]> {
+    // Find all content files under this guia (group), optionally filtered by course
+    const courseFiles = Object.keys(this.contentFiles).filter(key => {
+      const hasGuia = key.includes(`/${guiaSlug}/`);
+      const isContentFile = key.endsWith("/content.md");
+      const isFromCorrectCourse =
+        !cursoSlug || key.includes(`/${cursoSlug}/`) || key.startsWith(`./${cursoSlug}/`);
+
+      return hasGuia && isContentFile && isFromCorrectCourse;
+    });
 
     const sections = new Set<string>();
     courseFiles.forEach(filePath => {
@@ -92,19 +99,26 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
       let conteudo = mainContentFile ? this.contentFiles[mainContentFile] : null;
 
       if (!conteudo) {
-        // Find subsections for this section
-        const subsectionFiles = Object.keys(this.contentFiles).filter(
-          key =>
-            key.includes(`/${guiaSlug}/${sectionSlug}/`) &&
-            key.endsWith("/content.md") &&
-            !key.endsWith(`/${sectionSlug}/content.md`)
-        );
+        // Find subsections for this section, filtered by course
+        const subsectionFiles = Object.keys(this.contentFiles).filter(key => {
+          const hasGuiaAndSection = key.includes(`/${guiaSlug}/${sectionSlug}/`);
+          const isContentFile = key.endsWith("/content.md");
+          const isNotMainSection = !key.endsWith(`/${sectionSlug}/content.md`);
+          const isFromCorrectCourse =
+            !cursoSlug || key.includes(`/${cursoSlug}/`) || key.startsWith(`./${cursoSlug}/`);
+
+          return hasGuiaAndSection && isContentFile && isNotMainSection && isFromCorrectCourse;
+        });
 
         if (subsectionFiles.length > 0) {
           const subsections = subsectionFiles.map(filePath => {
             const parts = filePath.split("/");
             const subsectionSlug = parts[parts.length - 2];
-            return `- [${this.slugToName(subsectionSlug)}](${subsectionSlug})`;
+            // Generate absolute URL: /guias/{curso}/{guia}/{secao}/{subsecao}
+            const absoluteUrl = cursoSlug
+              ? `/guias/${cursoSlug}/${guiaSlug}/${sectionSlug}/${subsectionSlug}`
+              : subsectionSlug;
+            return `- [${this.slugToName(subsectionSlug)}](${absoluteUrl})`;
           });
 
           conteudo = `# ${this.slugToName(sectionSlug)}\n\n## Conteúdo disponível\n\n${subsections.join("\n")}`;
@@ -127,14 +141,17 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
     return Promise.resolve(secoes);
   }
 
-  getSubSecoes(secaoSlug: string): Promise<SubSecao[]> {
-    // Find all content files under this section
-    const subsectionFiles = Object.keys(this.contentFiles).filter(
-      key =>
-        key.includes(`/${secaoSlug}/`) &&
-        key.endsWith("/content.md") &&
-        !key.endsWith(`/${secaoSlug}/content.md`) // Exclude the main section file
-    );
+  getSubSecoes(secaoSlug: string, cursoSlug?: string): Promise<SubSecao[]> {
+    // Find all content files under this section, optionally filtered by course
+    const subsectionFiles = Object.keys(this.contentFiles).filter(key => {
+      const hasSection = key.includes(`/${secaoSlug}/`);
+      const isContentFile = key.endsWith("/content.md");
+      const isNotMainSection = !key.endsWith(`/${secaoSlug}/content.md`);
+      const isFromCorrectCourse =
+        !cursoSlug || key.includes(`/${cursoSlug}/`) || key.startsWith(`./${cursoSlug}/`);
+
+      return hasSection && isContentFile && isNotMainSection && isFromCorrectCourse;
+    });
 
     const subSecoes: SubSecao[] = [];
     let ordem = 1;

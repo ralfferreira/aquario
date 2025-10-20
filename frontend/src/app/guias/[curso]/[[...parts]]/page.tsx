@@ -44,18 +44,20 @@ export default function GuiasCursoPage() {
       return "# Selecione uma seção à esquerda";
     }
 
-    const [secaoSlug, subSlug] = parts;
+    // URL structure: /guias/{curso}/{guia}/{secao}/{subsecao?}
+    const [guiaSlug, secaoSlug, subSlug] = parts;
 
-    // Find the section by slug
+    if (!guiaSlug) {
+      return "# Guia não especificado";
+    }
+
+    // Find the section within the specific guia
     let targetSecao = null;
-    if (secoesData) {
-      for (const guiaSlug in secoesData) {
-        const secoes = secoesData[guiaSlug];
-        const secao = secoes.find(s => s.slug === secaoSlug);
-        if (secao) {
-          targetSecao = secao;
-          break;
-        }
+    if (secoesData && secoesData[guiaSlug]) {
+      const secoes = secoesData[guiaSlug];
+      const secao = secoes.find(s => s.slug === secaoSlug);
+      if (secao) {
+        targetSecao = secao;
       }
     }
 

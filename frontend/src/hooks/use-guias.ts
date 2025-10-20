@@ -10,18 +10,18 @@ export const useGuias = (cursoSlug: string) => {
   });
 };
 
-export const useSecoes = (guiaSlug: string) => {
+export const useSecoes = (guiaSlug: string, cursoSlug?: string) => {
   return useQuery({
     queryKey: queryKeys.guias.secoes(guiaSlug),
-    queryFn: () => guiasService.getSecoes(guiaSlug),
+    queryFn: () => guiasService.getSecoes(guiaSlug, cursoSlug),
     enabled: !!guiaSlug,
   });
 };
 
-export const useSubSecoes = (secaoSlug: string) => {
+export const useSubSecoes = (secaoSlug: string, cursoSlug?: string) => {
   return useQuery({
     queryKey: queryKeys.guias.subSecoes(secaoSlug),
-    queryFn: () => guiasService.getSubSecoes(secaoSlug),
+    queryFn: () => guiasService.getSubSecoes(secaoSlug, cursoSlug),
     enabled: !!secaoSlug,
   });
 };
