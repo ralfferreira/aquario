@@ -95,6 +95,11 @@ O **Aquário** é um projeto open source e as contribuições são muito bem-vin
 
 Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
+O **código-fonte** pode ser copiado, modificado e redistribuído livremente, desde que o aviso de direitos autorais e o texto da licença sejam mantidos.
+
+No entanto, o **nome "Aquário"**, seu **logotipo** e demais elementos de **identidade visual e de marca** **não estão cobertos** por esta licença.  
+Você pode criar forks ou reutilizar o código conforme os termos da Licença MIT, mas **não é permitido usar o nome "Aquário"** ou apresentar trabalhos derivados como se fossem o projeto original.
+
 ## Contato
 
 Se você tiver alguma dúvida, sugestão ou feedback, sinta-se à vontade para abrir uma [issue](https://github.com/ralfferreira/aquario/issues) ou enviar um e-mail para [ralf.ferreira@academico.ufpb.br](mailto:ralf.ferreira@academico.ufpb.br).
