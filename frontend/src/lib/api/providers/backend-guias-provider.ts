@@ -22,7 +22,7 @@ export class BackendGuiasProvider implements GuiasDataProvider {
     return response.json();
   }
 
-  async getSecoes(guiaSlug: string, cursoSlug?: string): Promise<Secao[]> {
+  async getSecoes(guiaSlug: string, _cursoSlug?: string): Promise<Secao[]> {
     // For backend, we need to find the guia by slug and get its ID
     const guias = await this.getByCurso("ciencia-da-computacao"); // Get all guias to find the one with matching slug
     const guia = guias.find(g => g.slug === guiaSlug);
@@ -37,7 +37,7 @@ export class BackendGuiasProvider implements GuiasDataProvider {
     return response.json();
   }
 
-  async getSubSecoes(secaoSlug: string, cursoSlug?: string): Promise<SubSecao[]> {
+  async getSubSecoes(secaoSlug: string, _cursoSlug?: string): Promise<SubSecao[]> {
     // For backend, we need to find the secao by slug and get its ID
     const guias = await this.getByCurso("ciencia-da-computacao"); // Get all guias
     let targetSecao = null;
