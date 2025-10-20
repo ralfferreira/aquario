@@ -89,11 +89,13 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
 
     sections.forEach(sectionSlug => {
       // Main sections can have content or be containers
-      const mainContentFile = Object.keys(this.contentFiles).find(
-        key =>
-          key.includes(`/${guiaSlug}/${sectionSlug}/content.md`) &&
-          key.endsWith(`/${sectionSlug}/content.md`) // Direct content file
-      );
+      const mainContentFile = Object.keys(this.contentFiles).find(key => {
+        const hasGuiaAndSection = key.includes(`/${guiaSlug}/${sectionSlug}/content.md`);
+        const isDirectContent = key.endsWith(`/${sectionSlug}/content.md`);
+        const isFromCorrectCourse =
+          !cursoSlug || key.includes(`/${cursoSlug}/`) || key.startsWith(`./${cursoSlug}/`);
+        return hasGuiaAndSection && isDirectContent && isFromCorrectCourse;
+      });
 
       // If no direct content, generate an index of subsections
       let conteudo = mainContentFile ? this.contentFiles[mainContentFile] : null;
