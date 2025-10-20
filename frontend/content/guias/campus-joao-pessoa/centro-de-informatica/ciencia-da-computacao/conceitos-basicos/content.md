@@ -1,3 +1,0 @@
-# Conceitos Básicos
-
-Este capítulo aborda os fundamentos da programação...

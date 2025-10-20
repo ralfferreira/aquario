@@ -27,15 +27,11 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
   }
 
   getByCurso(cursoSlug: string): Promise<Guia[]> {
-    // Find all files for this course
+    // Find all section folders for this course (these become the guias)
     const courseFiles = Object.keys(this.contentFiles).filter(
       key => key.includes(`/${cursoSlug}/`) && key.endsWith("/content.md")
     );
 
-    const guias: Guia[] = [];
-    const cursoName = this.slugToName(cursoSlug);
-
-    // Group files by section (parent directory)
     const sections = new Set<string>();
     courseFiles.forEach(filePath => {
       const parts = filePath.split("/");
@@ -45,11 +41,14 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
       }
     });
 
+    const guias: Guia[] = [];
+    const cursoName = this.slugToName(cursoSlug);
+
     sections.forEach(sectionSlug => {
       const guiaId = `guia-${sectionSlug}`;
       guias.push({
         id: guiaId,
-        titulo: this.slugToName(sectionSlug),
+        titulo: this.slugToName(sectionSlug), // Group titles like "Conceitos Básicos"
         slug: sectionSlug,
         descricao: `Guia para ${this.slugToName(sectionSlug)}`,
         status: "ATIVO",
@@ -62,30 +61,74 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
   }
 
   getSecoes(guiaSlug: string): Promise<Secao[]> {
-    // Find the main content file for this section
-    const mainContentFile = Object.keys(this.contentFiles).find(key =>
-      key.includes(`/${guiaSlug}/content.md`)
+    // Find all content files under this guia (group)
+    const courseFiles = Object.keys(this.contentFiles).filter(
+      key => key.includes(`/${guiaSlug}/`) && key.endsWith("/content.md")
     );
 
-    if (!mainContentFile) {
-      return Promise.resolve([]);
-    }
+    const sections = new Set<string>();
+    courseFiles.forEach(filePath => {
+      const parts = filePath.split("/");
+      const guiaIndex = parts.indexOf(guiaSlug);
 
-    const secao: Secao = {
-      id: `secao-${guiaSlug}`,
-      guiaId: `guia-${guiaSlug}`,
-      titulo: this.slugToName(guiaSlug),
-      slug: guiaSlug,
-      ordem: 1,
-      conteudo: this.contentFiles[mainContentFile] || "# Conteúdo não disponível",
-      status: "ATIVO",
-    };
+      // Get the next level after the guia (main sections)
+      if (guiaIndex + 1 < parts.length) {
+        sections.add(parts[guiaIndex + 1]);
+      }
+    });
 
-    return Promise.resolve([secao]);
+    const secoes: Secao[] = [];
+    let ordem = 1;
+
+    sections.forEach(sectionSlug => {
+      // Main sections can have content or be containers
+      const mainContentFile = Object.keys(this.contentFiles).find(
+        key =>
+          key.includes(`/${guiaSlug}/${sectionSlug}/content.md`) &&
+          key.endsWith(`/${sectionSlug}/content.md`) // Direct content file
+      );
+
+      // If no direct content, generate an index of subsections
+      let conteudo = mainContentFile ? this.contentFiles[mainContentFile] : null;
+
+      if (!conteudo) {
+        // Find subsections for this section
+        const subsectionFiles = Object.keys(this.contentFiles).filter(
+          key =>
+            key.includes(`/${guiaSlug}/${sectionSlug}/`) &&
+            key.endsWith("/content.md") &&
+            !key.endsWith(`/${sectionSlug}/content.md`)
+        );
+
+        if (subsectionFiles.length > 0) {
+          const subsections = subsectionFiles.map(filePath => {
+            const parts = filePath.split("/");
+            const subsectionSlug = parts[parts.length - 2];
+            return `- [${this.slugToName(subsectionSlug)}](${subsectionSlug})`;
+          });
+
+          conteudo = `# ${this.slugToName(sectionSlug)}\n\n## Conteúdo disponível\n\n${subsections.join("\n")}`;
+        }
+      }
+
+      const secao: Secao = {
+        id: `secao-${sectionSlug}`,
+        guiaId: `guia-${guiaSlug}`,
+        titulo: this.slugToName(sectionSlug),
+        slug: sectionSlug,
+        ordem: ordem++,
+        conteudo: conteudo,
+        status: "ATIVO",
+      };
+
+      secoes.push(secao);
+    });
+
+    return Promise.resolve(secoes);
   }
 
   getSubSecoes(secaoSlug: string): Promise<SubSecao[]> {
-    // Find all subsection files for this section
+    // Find all content files under this section
     const subsectionFiles = Object.keys(this.contentFiles).filter(
       key =>
         key.includes(`/${secaoSlug}/`) &&
@@ -94,21 +137,44 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
     );
 
     const subSecoes: SubSecao[] = [];
+    let ordem = 1;
 
-    subsectionFiles.forEach((filePath, index) => {
+    subsectionFiles.forEach(filePath => {
       const parts = filePath.split("/");
-      const subsectionSlug = parts[parts.length - 2]; // Get the subsection folder name
+      const secaoIndex = parts.indexOf(secaoSlug);
 
-      const subSecao: SubSecao = {
-        id: `subsecao-${subsectionSlug}`,
-        secaoId: `secao-${secaoSlug}`,
-        titulo: this.slugToName(subsectionSlug),
-        slug: subsectionSlug,
-        ordem: index + 1,
-        conteudo: this.contentFiles[filePath] || "# Conteúdo não disponível",
-        status: "ATIVO",
-      };
-      subSecoes.push(subSecao);
+      // Get the main section slug (the folder name after the section)
+      const mainSectionSlug = parts[secaoIndex + 1];
+
+      // Check if this is a sub-section (3 levels deep: section/main-section/sub-section/content.md)
+      const isSubSection = parts.length > secaoIndex + 3;
+
+      if (isSubSection) {
+        // This is a sub-section (level 3)
+        const subSectionSlug = parts[secaoIndex + 2];
+        const subSecao: SubSecao = {
+          id: `subsecao-${subSectionSlug}`,
+          secaoId: `secao-${secaoSlug}`,
+          titulo: this.slugToName(subSectionSlug),
+          slug: subSectionSlug,
+          ordem: ordem++,
+          conteudo: this.contentFiles[filePath] || "# Conteúdo não disponível",
+          status: "ATIVO",
+        };
+        subSecoes.push(subSecao);
+      } else {
+        // This is a main section (level 2) - treat as subsection for now
+        const subSecao: SubSecao = {
+          id: `subsecao-${mainSectionSlug}`,
+          secaoId: `secao-${secaoSlug}`,
+          titulo: this.slugToName(mainSectionSlug),
+          slug: mainSectionSlug,
+          ordem: ordem++,
+          conteudo: this.contentFiles[filePath] || "# Conteúdo não disponível",
+          status: "ATIVO",
+        };
+        subSecoes.push(subSecao);
+      }
     });
 
     return Promise.resolve(subSecoes);

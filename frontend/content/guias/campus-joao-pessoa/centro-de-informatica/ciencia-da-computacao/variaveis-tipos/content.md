@@ -1,3 +1,0 @@
-# Variáveis e Tipos
-
-As variáveis são fundamentais na programação...
