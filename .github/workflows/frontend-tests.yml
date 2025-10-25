@@ -73,7 +73,7 @@ jobs:
       - name: Run integration tests
         run: |
           cd frontend
-          npm run test:integration -- --run --reporter=verbose
+          npm run test:integration -- --run --reporter=verbose --pool=forks
 
       - name: Upload integration test results
         uses: actions/upload-artifact@v4
