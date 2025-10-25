@@ -8,6 +8,9 @@ on:
         required: false
         default: "chore: update aquario-guias submodule"
 
+permissions:
+  contents: write
+
 jobs:
   update-submodule:
     runs-on: ubuntu-latest
