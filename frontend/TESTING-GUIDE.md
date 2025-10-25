@@ -657,6 +657,37 @@ npm run test:e2e:ui
 npm run test:e2e:headed
 ```
 
+### CI/CD (GitHub Actions)
+
+Tests run automatically on every push and pull request to `main` or `develop` branches when frontend files change.
+
+**Workflow:** `.github/workflows/frontend-tests.yml`
+
+**What runs:**
+
+- ✅ Unit Tests (Jest) - with coverage report
+- ✅ Integration Tests (Vitest) - with verbose output
+- ✅ E2E Tests (Playwright) - all 3 browsers (Chromium, Firefox, WebKit)
+- ✅ Test Summary - aggregated results
+
+**Artifacts uploaded:**
+
+- Unit test coverage reports (7 days retention)
+- Integration test results (7 days retention)
+- E2E test results (7 days retention)
+- Playwright HTML report (7 days retention)
+
+**Viewing results:**
+
+1. Go to the **Actions** tab in GitHub
+2. Click on the workflow run
+3. View the summary for pass/fail status
+4. Download artifacts for detailed reports
+
+**Manual trigger:**
+
+The workflow runs automatically, but you can also trigger it manually from the Actions tab if needed.
+
 ---
 
 ## Common Patterns
