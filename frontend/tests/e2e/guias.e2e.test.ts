@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /**
  * E2E Tests for Guias Module
  * Tests critical user flows in a real browser environment
