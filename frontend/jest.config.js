@@ -13,7 +13,12 @@ const customJestConfig = {
     "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
     "<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}",
   ],
-  testPathIgnorePatterns: ["/node_modules/", "/__tests__/utils/", "/__mocks__/"],
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/__tests__/utils/",
+    "/__mocks__/",
+    "\\.integration\\.test\\.(ts|tsx)$",
+  ],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
