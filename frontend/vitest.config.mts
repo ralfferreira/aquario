@@ -13,6 +13,12 @@ export default defineConfig({
     globals: true,
     include: ["src/**/*.integration.test.{ts,tsx}"],
     exclude: ["**/node_modules/**", "**/dist/**"],
+    pool: "forks",
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
   },
   resolve: {
     alias: {

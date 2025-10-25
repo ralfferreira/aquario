@@ -1,6 +1,12 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
+// Ensure global Map is available for jsdom (CI environment fix)
+if (typeof global.Map === "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (global as any).Map = Map;
+}
+
 // Mock require.context for Webpack-specific features
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (global.require as any) = global.require || {};
