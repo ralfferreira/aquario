@@ -65,7 +65,7 @@ import {
   assertValidSubSecao,
   findGuiaBySlug,
   findSecaoBySlug,
-} from "../../../../__tests__/utils/test-helpers";
+} from "../../../../__tests__/utils/guias-test-helpers";
 
 describe("LocalFileGuiasProvider", () => {
   let provider: LocalFileGuiasProvider;
