@@ -10,7 +10,7 @@ export const API_CONFIG = {
 // Data Provider Configuration
 console.log("NEXT_PUBLIC_GUIAS_DATA_PROVIDER:", process.env.NEXT_PUBLIC_GUIAS_DATA_PROVIDER);
 export const DATA_PROVIDER_CONFIG = {
-  PROVIDER: process.env.NEXT_PUBLIC_GUIAS_DATA_PROVIDER || "backend",
+  PROVIDER: process.env.NEXT_PUBLIC_GUIAS_DATA_PROVIDER || "local",
   PROVIDERS: {
     BACKEND: "backend",
     LOCAL: "local",

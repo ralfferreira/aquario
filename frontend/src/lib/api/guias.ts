@@ -1,7 +1,7 @@
 import { Guia, Secao, SubSecao } from "../types";
-import { GuiasDataProvider } from "./providers/guias-provider.interface";
-import { BackendGuiasProvider } from "./providers/backend-guias-provider";
-import { LocalFileGuiasProvider } from "./providers/local-file-guias-provider";
+import { GuiasDataProvider } from "./guias_providers/guias-provider.interface";
+import { BackendGuiasProvider } from "./guias_providers/backend-guias-provider";
+import { LocalFileGuiasProvider } from "./guias_providers/local-file-guias-provider";
 import { DATA_PROVIDER_CONFIG } from "../config/env";
 
 // Provider factory

@@ -13,7 +13,7 @@ declare const require: {
   };
 };
 
-const contentContext = require.context("../../../../content/guias", true, /\.md$/);
+const contentContext = require.context("../../../../content/aquario-guias", true, /\.md$/);
 
 export class LocalFileGuiasProvider implements GuiasDataProvider {
   private contentFiles: Record<string, string> = {};
@@ -200,27 +200,14 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
   }
 
   getCentros(): Promise<Array<{ id: string; nome: string; sigla: string }>> {
-    const centros: Array<{ id: string; nome: string; sigla: string }> = [];
-    const centroNames = new Set<string>();
-
-    // Extract unique centro names from file paths
-    Object.keys(this.contentFiles).forEach(filePath => {
-      const parts = filePath.split("/");
-      const centroIndex = parts.indexOf("centro-de-informatica");
-      if (centroIndex !== -1) {
-        centroNames.add(parts[centroIndex]);
-      }
-    });
-
-    centroNames.forEach(centroName => {
-      centros.push({
-        id: centroName.toLowerCase(),
-        nome: this.slugToName(centroName),
-        sigla: centroName.toUpperCase(),
-      });
-    });
-
-    return Promise.resolve(centros);
+    // Since we no longer have centro hierarchy, return a default centro
+    return Promise.resolve([
+      {
+        id: "centro-informatica",
+        nome: "Centro de Informática",
+        sigla: "CI",
+      },
+    ]);
   }
 
   getCursos(
@@ -229,13 +216,12 @@ export class LocalFileGuiasProvider implements GuiasDataProvider {
     const cursos: Array<{ id: string; nome: string; centroId: string; realId: string }> = [];
     const cursoNames = new Set<string>();
 
-    // Extract unique curso names from file paths
+    // Extract unique curso names from file paths (they're now at the root level)
     Object.keys(this.contentFiles).forEach(filePath => {
-      const parts = filePath.split("/");
-      const centroIndex = parts.indexOf("centro-de-informatica");
-      if (centroIndex !== -1 && centroIndex + 1 < parts.length) {
-        const cursoName = parts[centroIndex + 1];
-        cursoNames.add(cursoName);
+      const parts = filePath.split("/").filter(p => p && p !== ".");
+      // First part after removing dots should be the course slug
+      if (parts.length > 0) {
+        cursoNames.add(parts[0]);
       }
     });
 
