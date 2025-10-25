@@ -9,7 +9,11 @@ echo "🔄 Updating aquario-guias submodule..."
 cd "$(dirname "$0")/.."
 
 # Update the submodule to the latest commit from the remote
-git submodule update --remote --merge frontend/content/aquario-guias
+cd frontend/content/aquario-guias
+git fetch origin
+git checkout origin/main
+cd ../../..
+git add frontend/content/aquario-guias
 
 echo "✅ Submodule updated successfully!"
 echo ""
