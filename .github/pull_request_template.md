@@ -1,43 +1,43 @@
-## 📝 Description
+## 📝 Descrição
 
 <!--
 
-Brief description of what this PR does. Please follow the template for all applicable sections. Feel free to change, add or edit if NEEDED. For writing a good description, try to think of these points:
+Breve descrição do que este PR faz. Por favor, siga o template para todas as seções aplicáveis. Sinta-se à vontade para alterar, adicionar ou editar se NECESSÁRIO. Para escrever uma boa descrição, tente pensar nestes pontos:
 
-- What is the problem/motivation for this?
-- What was your solution?
-- What was the result?
+- Qual é o problema/motivação para isso?
+- Qual foi sua solução?
+- Qual foi o resultado?
 
 -->
 
-## 🔗 Related Issue
+## 🔗 Issue Relacionada
 
-Closes #(issue number)
+Closes #(número da issue)
 
-## 🧪 Testing
+## 🧪 Testes
 
-- [ ] Unit tests pass
-- [ ] Integration tests pass
-- [ ] E2E tests pass
-- [ ] Manual testing completed
+- [ ] Testes unitários passam
+- [ ] Testes de integração passam
+- [ ] Testes E2E passam
+- [ ] Testes manuais concluídos
 
-## 📸 Screenshots (if applicable)
+## 📸 Screenshots (se aplicável)
 
-<!-- Add screenshots to help explain your changes -->
+<!-- Adicione screenshots para ajudar a explicar suas mudanças -->
 
 ## 📋 Checklist
 
-- [ ] Code follows the project's style guidelines
-- [ ] Self-review completed
-- [ ] Code is properly commented
-- [ ] No console.log statements left in code
-- [ ] All tests pass locally
-- [ ] Build passes without errors
+- [ ] Código segue as diretrizes de estilo do projeto
+- [ ] Revisão própria concluída
+- [ ] Código está devidamente comentado
+- [ ] Nenhum console.log deixado no código
+- [ ] Todos os testes passam localmente
+- [ ] Build passa sem erros
 
-## 🚀 Deployment Notes
+## 🚀 Notas de Deploy
 
-<!-- Any special deployment considerations -->
+<!-- Quaisquer considerações especiais de deploy -->
 
-## 📚 Additional Context
+## 📚 Contexto Adicional
 
-<!-- Add any other context about the PR here -->
+<!-- Adicione qualquer outro contexto sobre o PR aqui -->
